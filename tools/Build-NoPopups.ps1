@@ -1,0 +1,162 @@
+[CmdletBinding(SupportsShouldProcess)]
+param(
+    # Build: apply data\no-popups.json and pack NoPopups_P.
+    # Install/Uninstall: copy the pak into, or out of, the game's ~mods folder. Status: show what is installed.
+    [ValidateSet('Build', 'Install', 'Uninstall', 'Status')]
+    [string]$Mode = 'Build',
+    # Machine paths, JSON (default tools\build-config.local.json; see build-config.example.json).
+    [string]$ConfigPath = $null
+)
+
+$ErrorActionPreference = 'Stop'
+Set-StrictMode -Version 2
+
+$ModRoot = Split-Path $PSScriptRoot -Parent
+if (-not $ConfigPath) { $ConfigPath = Join-Path $PSScriptRoot 'build-config.local.json' }
+$Config = [ordered]@{
+    GameRoot    = $null  # FF7 Rebirth install folder
+    VanillaRoot = $null  # FModel raw export root containing End\Content\DataObject\Resident
+    UnrealReZen = $null  # UnrealReZen.exe
+    BuildRoot   = (Join-Path $ModRoot 'build')
+}
+if (Test-Path -LiteralPath $ConfigPath) {
+    $local = Get-Content -LiteralPath $ConfigPath -Raw | ConvertFrom-Json
+    foreach ($p in $local.PSObject.Properties) { $Config[$p.Name] = $p.Value }
+}
+if (-not $Config.GameRoot) { throw "Set GameRoot in $ConfigPath (see build-config.example.json)." }
+
+$PackageName = 'NoPopups_P'
+$Spec = Join-Path $ModRoot 'data\no-popups.json'
+$Tables = @('HubConfig')
+$BuilderBin = Join-Path $Config.BuildRoot 'DataBuilderBin'
+$Builder = Join-Path $BuilderBin 'DataBuilder.dll'
+$Paks = Join-Path $Config.GameRoot 'End\Content\Paks'
+$ModsDir = Join-Path $Paks '~mods'
+$Package = Join-Path $Config.BuildRoot 'Package'
+# Rebirth's own containers start with these 10 bytes.
+$HeaderSource = Join-Path $Paks 'pakchunk4optional-WindowsNoEditor.ucas'
+$ExpectedHeader = '8C-06-00-97-A6-88-97-A4-D3-00'
+
+function Get-Triplet([string]$Directory) {
+    '.pak', '.ucas', '.utoc' | ForEach-Object { Join-Path $Directory ($PackageName + $_) }
+}
+function Get-Sha([string]$Path) { (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash }
+
+function Read-Bytes([string]$Path, [int]$Count) {
+    $bytes = New-Object byte[] $Count
+    $stream = [IO.File]::OpenRead($Path)
+    try { if ($stream.Read($bytes, 0, $Count) -ne $Count) { throw "Too short: $Path" } } finally { $stream.Dispose() }
+    , $bytes
+}
+
+# UnrealReZen's .utoc lists two compressed blocks: block 0 is its 44-byte
+# container header chunk at .ucas offset 0, block 1 the table. Its container
+# header crashed this game at start-up when kept intact (2026-11-12: the same
+# container with Rebirth's 16-byte prefix prepended and the block offsets
+# shifted crashed at ff7rebirth_+0x884281). Training Dummy's step, writing
+# Rebirth's 10 header bytes over the start of the .ucas, loads: it spoils only
+# that header block, so check that the table's block starts after them.
+function Assert-TableBlockClear([string]$Toc) {
+    $t = [IO.File]::ReadAllBytes($Toc)
+    $entries = [BitConverter]::ToInt32($t, 24); $blocks = [BitConverter]::ToInt32($t, 28)
+    $start = 144 + $entries * 22
+    for ($i = 1; $i -lt $blocks; $i++) {
+        $at = $start + $i * 12
+        $offset = 0L; for ($j = 0; $j -lt 5; $j++) { $offset = $offset -bor ([long]$t[$at + $j] -shl (8 * $j)) }
+        if ($offset -lt 10) { throw "Block $i starts at $offset, inside the 10 bytes the header step overwrites" }
+    }
+    $first = 0L; for ($j = 0; $j -lt 5; $j++) { $first = $first -bor ([long]$t[$start + $j] -shl (8 * $j)) }
+    $usize = $t[$start + 8] -bor ($t[$start + 9] -shl 8) -bor ($t[$start + 10] -shl 16)
+    if ($first -ne 0 -or $usize -gt 64) { throw "Block 0 is not UnrealReZen's small container header (offset $first, $usize bytes)" }
+}
+
+function Invoke-Build {
+    foreach ($key in 'VanillaRoot', 'UnrealReZen') {
+        if (-not $Config[$key]) { throw "Set $key in $ConfigPath (see build-config.example.json)." }
+    }
+    $staging = Join-Path $Config.BuildRoot 'Staging'
+    foreach ($dir in $staging, $Package) {
+        if (Test-Path -LiteralPath $dir) { Remove-Item -LiteralPath $dir -Recurse -Force }
+        New-Item -ItemType Directory -Path $dir -Force | Out-Null
+    }
+
+    & dotnet build (Join-Path $PSScriptRoot 'DataBuilder') -c Release -o $BuilderBin --nologo -v quiet
+    if ($LASTEXITCODE -ne 0) { throw "DataBuilder build failed ($LASTEXITCODE)" }
+    & dotnet $Builder build $Spec $Config.VanillaRoot $staging
+    if ($LASTEXITCODE -ne 0) { throw "DataBuilder failed ($LASTEXITCODE); nothing was packed" }
+
+    # Only the rows the spec names may differ from vanilla.
+    foreach ($table in $Tables) {
+        $relative = "End\Content\DataObject\Resident\$table.uasset"
+        $lines = @(& dotnet $Builder compare (Join-Path $Config.VanillaRoot $relative) (Join-Path $staging $relative))
+        $lines | Write-Host
+    }
+
+    # UnrealReZen must run from its own folder so it finds its Oodle DLL.
+    Push-Location (Split-Path $Config.UnrealReZen -Parent)
+    try {
+        & $Config.UnrealReZen --content-path $staging --compression-format Zlib --engine-version GAME_UE4_26 `
+            --game-dir $Paks --output-path (Join-Path $Package "$PackageName.utoc")
+        if ($LASTEXITCODE -ne 0) { throw "UnrealReZen failed ($LASTEXITCODE)" }
+    } finally { Pop-Location }
+
+    Assert-TableBlockClear (Join-Path $Package "$PackageName.utoc")
+    $header = Read-Bytes $HeaderSource 10
+    if ([BitConverter]::ToString($header) -ne $ExpectedHeader) { throw "$HeaderSource no longer has the known Rebirth header" }
+    $ucas = Join-Path $Package "$PackageName.ucas"
+    $stream = [IO.File]::Open($ucas, 'Open', 'Write', 'None')
+    try { $stream.Write($header, 0, 10) } finally { $stream.Dispose() }
+    if ([BitConverter]::ToString((Read-Bytes $ucas 10)) -ne $ExpectedHeader) { throw "Header step did not apply to $ucas" }
+
+    $manifest = [ordered]@{
+        PackageName = $PackageName
+        BuiltAt = (Get-Date).ToString('o')
+        Spec = [ordered]@{ Path = 'data/no-popups.json'; SHA256 = (Get-Sha $Spec) }
+        Assets = @(Get-ChildItem -LiteralPath $staging -Recurse -File | ForEach-Object {
+            [ordered]@{ Path = $_.FullName.Substring($staging.Length + 1); SHA256 = (Get-Sha $_.FullName) } })
+        Files = @(Get-Triplet $Package | ForEach-Object {
+            [ordered]@{ Name = Split-Path $_ -Leaf; Length = (Get-Item -LiteralPath $_).Length; SHA256 = (Get-Sha $_) } })
+    }
+    $manifest | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath (Join-Path $Package 'manifest.json') -Encoding utf8
+    Write-Host "Built $PackageName in $Package"
+}
+
+function Assert-GameClosed {
+    if (Get-Process -Name 'ff7rebirth_' -ErrorAction SilentlyContinue) { throw 'Close the game first.' }
+}
+
+function Invoke-Install {
+    Assert-GameClosed
+    $manifest = Get-Content -LiteralPath (Join-Path $Package 'manifest.json') -Raw | ConvertFrom-Json
+    New-Item -ItemType Directory -Path $ModsDir -Force | Out-Null
+    foreach ($file in $manifest.Files) {
+        $source = Join-Path $Package $file.Name
+        if ((Get-Sha $source) -ne $file.SHA256) { throw "Built $($file.Name) does not match its manifest" }
+        if ($PSCmdlet.ShouldProcess($ModsDir, "Copy $($file.Name)")) {
+            Copy-Item -LiteralPath $source -Destination $ModsDir -Force
+            if ((Get-Sha (Join-Path $ModsDir $file.Name)) -ne $file.SHA256) { throw "Installed $($file.Name) does not match the build" }
+        }
+    }
+    Write-Host "Installed $PackageName"
+}
+
+function Invoke-Uninstall {
+    Assert-GameClosed
+    foreach ($path in Get-Triplet $ModsDir) {
+        if ((Test-Path -LiteralPath $path) -and $PSCmdlet.ShouldProcess($path, 'Remove')) { Remove-Item -LiteralPath $path }
+    }
+    Write-Host "Removed $PackageName"
+}
+
+function Show-Status {
+    foreach ($path in Get-Triplet $ModsDir) {
+        if (Test-Path -LiteralPath $path) { "$(Split-Path $path -Leaf) $(Get-Sha $path)" } else { "missing: $path" }
+    }
+}
+
+switch ($Mode) {
+    'Build' { Invoke-Build }
+    'Install' { Invoke-Install }
+    'Uninstall' { Invoke-Uninstall }
+    'Status' { Show-Status }
+}

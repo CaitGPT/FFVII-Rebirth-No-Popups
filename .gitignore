@@ -1,0 +1,4 @@
+build/
+tools/build-config.local.json
+tools/DataBuilder/bin/
+tools/DataBuilder/obj/

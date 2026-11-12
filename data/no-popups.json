@@ -1,0 +1,31 @@
+{
+  // No Popups: table changes. Each row below is an existing vanilla row; only
+  // the listed fields change.
+  //
+  // HubConfig rows set how a world-intel "hub" (Lifespring, Remnawave Tower,
+  // Combat Assignment, ...) behaves. Hub.ConfigID picks one row per hub.
+  // DisableWorldReportNotify is already 1 on the vanilla rows used by hubs that
+  // never show the world intel notice (DisableNotification, ChocoboStop,
+  // levels, treasure spots), and 0 on the rows world intel uses. Setting it to
+  // 1 on those rows is meant to stop the "world intel complete" notice.
+  "tables": [
+    {
+      "asset": "DataObject/Resident/HubConfig.uasset",
+      "rows": [
+        { "name": "HubConfig_WorldNormal", "set": { "DisableWorldReportNotify": "1" } },
+        { "name": "HubConfig_WorldNormal_Demo", "set": { "DisableWorldReportNotify": "1" } },
+        { "name": "HubConfig_WorldNormal_Media", "set": { "DisableWorldReportNotify": "1" } },
+        { "name": "HubConfig_WorldReport_SysOpen", "set": { "DisableWorldReportNotify": "1" } },
+        { "name": "HubConfig_WorldReport_SysOpen_BattleOFF", "set": { "DisableWorldReportNotify": "1" } },
+        { "name": "HubConfig_WorldReport_SysOpen_AllowNotify_OutOfArea", "set": { "DisableWorldReportNotify": "1" } },
+        { "name": "HubConfig_WorldReport_SysOpen_Demo", "set": { "DisableWorldReportNotify": "1" } },
+        { "name": "HubConfig_WorldReport_SysOpen_Media", "set": { "DisableWorldReportNotify": "1" } },
+        { "name": "HubConfig_WorldReport_getoffChocobo", "set": { "DisableWorldReportNotify": "1" } },
+        { "name": "HubConfig_WorldReport_getoffChocobo_Demo", "set": { "DisableWorldReportNotify": "1" } },
+        { "name": "HubConfig_WorldReport_getoffChocobo_Media", "set": { "DisableWorldReportNotify": "1" } },
+        { "name": "HubConfig_WorldReport_moogleShop", "set": { "DisableWorldReportNotify": "1" } },
+        { "name": "HubConfig_WorldReport_moogleShop_Demo", "set": { "DisableWorldReportNotify": "1" } }
+      ]
+    }
+  ]
+}
