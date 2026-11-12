@@ -85,6 +85,36 @@ the Region Intel tutorial pause come from the harness's telemetry file, sampled 
 | Banner removed, call as earpiece | | about 30 s (the call held Cloud to its last line) |
 | 0.2: the first-Lifespring call removed | about 16 s (Region Intel banner, tutorial, the end of Cloud's pose) | about 10 s |
 
+## Completion sequences (0.3)
+
+A completion sequence gives control back only when every action it runs has ended. Besides the first Lifespring's
+call, these run Chadley calls: all four action lists of `HubGroup` rows, the four notify fields of `WorldReport` rows,
+and every action group that contains `actCmn_LifeSpot_Analysis_MotionOff` (for example
+`acg1200_LifeSpot_Analysis_Motionoff_PhotoModeRelease_Craft_1`, which runs `actCmn_Chadley_PV0502` after the second
+Grasslands Lifespring). `tools/make_spec.py` makes every converted call found there a type-12 action that keeps its
+end flags and triggers (25 calls). Calls whose chains fire a trigger (command 25) keep playing, as earpiece calls.
+
+The map that opens by itself to show new intel is `actHub_ShowNaviMap` / `actCmn_ShowNaviMap_<area>` (type 43). They
+become type 12 too.
+
+Tested on Grasslands Lifespring 4, same save, telemetry sampled every 0.2 s: from the Check press to control, 50 s
+with 0.2 (Chadley's "transmuter chip" call, the "Excavation Intel 1" banner, the map) and 25.6 s with 0.3, of which
+about 15 s is the minigame. What remains after the minigame: the reward list, a ~3 s "new intel" banner, the end of
+Cloud's pose.
+
+### Tried and reverted
+
+- **`Hub.NotifyOnActivated = 0`** on the 55 hubs that announce their activation. The "new intel" banner went, and
+  Cloud stayed frozen in the Lifespring pose for good: the hub group runs its after-notification actions, which
+  release him, only once that notice has shown.
+- **`HubGroup.Usage` 1 → 0** on the Lifespring groups (they are the only Usage-1 groups): the Region Intel banner
+  still showed.
+- **First-time tutorial tips** (`tools/tips_spec.py`, 119 tips: their Type-37 actions become Type 12 that set the
+  tips' view flags and fire their close trigger; WorldCondition tip steps become close-trigger steps). With it, a
+  Lifespring's minigame never started once and its completion sequence stalled once. Built with `-WithTips` only.
+- **A UE4SS hook on `EndUserWidget:AddToViewportEx`** to name the Region Intel banner's widget: it loads (with an empty
+  pre-callback, Junon Colosseum's pattern), but none of these widgets go through it.
+
 ## Junon Colosseum
 
 Junon Colosseum also replaces `Action` and `PlannerEvent`, and pak `JunonColosseum_999_P` loads after `NoPopups_P`
