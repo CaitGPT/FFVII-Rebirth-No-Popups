@@ -1,0 +1,2028 @@
+{
+ "tables": [
+  {
+   "asset": "DataObject/Resident/Action.uasset",
+   "rows": [
+    {
+     "name": "actCmn_Tutorial_Fld_00_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_00_0010",
+       "stfManual_Field_Tutorial_Fld_00_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_00_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_01_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_01_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_01_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_01_0020"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_01_0030",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_01_0030"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_01_0040",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_01_0040"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_01_0050",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_01_0050"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_01_0060",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_01_0060"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_01_0070",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_01_0070",
+       "stfManual_Base_Root"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_01_0080",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_01_0080"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_01_0095",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_01_0095"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_01_0100",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_01_0100"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_01_0110",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_01_0110",
+       "stfManual_Field_Tutorial_Fld_01_0110"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_02_0070",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_02_0070"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_02_0080",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_02_0080"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_02_0090",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_02_0090"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_02_0110",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_02_0110"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_02_0150",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_02_0150"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_02_0160",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_02_0160"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_02_0170",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_02_0170"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_02_0180",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_02_0180"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_02_0190",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_02_0190",
+       "stfManual_Field_Tutorial_Fld_02_0190"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_02_0210",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_02_0210"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_02_0235",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_02_0235"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_02_0240",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_02_0240"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_03_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_03_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_04_0030",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_04_0030"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_04_0510",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_04_0510"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_04_0530",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_04_0530"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_04_0540",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_04_0540"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_04_Demo1",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_04_Demo2",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_04_Demo3",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_05_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_05_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_06_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory2100_Tutorial_Fld_06_0010",
+       "stfManual_Field_Tutorial_Fld_06_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_06_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory2100_Tutorial_Fld_06_0020",
+       "stfManual_Field_Tutorial_Fld_06_0020"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_06_0030",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory2100_Tutorial_Fld_06_0030",
+       "stfManual_Field_Tutorial_Fld_06_0030"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_06_0040",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory2100_Tutorial_Fld_06_0040",
+       "stfStory2100_Ch06_CloudPart_ChangingRoom1",
+       "stfManual_Field_Tutorial_Fld_06_0040"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_06_0060",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory2100_Tutorial_Fld_06_0060",
+       "stfManual_Field_Tutorial_Fld_06_0060"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_06_0065",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory2100_Tutorial_Fld_06_0065",
+       "stfStory2100_Tutorial_Fld_06_0060",
+       "stfManual_Field_Tutorial_Fld_06_0065",
+       "stfManual_Field_Tutorial_Fld_06_0060"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_06_0070",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory2100_Tutorial_Fld_06_0070",
+       "stfManual_Field_Tutorial_Fld_06_0070"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_06_0080",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory2100_Tutorial_Fld_06_0080",
+       "stfManual_Field_Tutorial_Fld_06_0080"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_06_0090",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_06_0090"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_07_0005",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory2100_Tutorial_Fld_07_0005",
+       "stfManual_Field_Tutorial_Fld_07_0005"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_07_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory2100_Tutorial_Fld_07_0010",
+       "stfManual_Field_Tutorial_Fld_07_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_07_0011",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory2100_Tutorial_Fld_07_0010",
+       "stfManual_Field_Tutorial_Fld_07_0011"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_07_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_07_0020"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_07_0030",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_07_0030"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_07_0500",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_07_0500"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_08_0007",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_08_0007"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_08_0030",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_08_0030"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_08_1190",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_08_1190",
+       "stfManual_Field_Tutorial_Fld_08_1190"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_08_1200",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_08_1200",
+       "stfManual_Field_Tutorial_Fld_08_1200"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_08_1400",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_08_1400",
+       "stfManual_Field_Tutorial_Fld_08_1400"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_08_1500",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_08_1500",
+       "stfManual_Field_Tutorial_Fld_08_1500"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_09_0002",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_09_0002"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_09_0005",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_09_0005"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_09_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_09_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_10_0005",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_10_0005"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_10_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_10_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_10_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_10_0020"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_10_0030",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_10_0030"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_11_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_11_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_11_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_11_0020"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_11_0030",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_11_0030"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_11_0035",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_11_0035",
+       "stfManual_Field_Tutorial_Fld_11_0035"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_Fld_11_0035",
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_11_0040",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_11_0040"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_12_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_12_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_12_0015",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_12_0015"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_12_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_12_0020"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_12_0030",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_12_0030"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_12_0035",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_12_0035"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_12_0036",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_12_0036"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_13_0230",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_13_0230"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_13_0235",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_13_0235"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_13_0236",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_13_0236"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_14_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_14_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Chd02_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Chd02_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Chd03_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Chd03_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Chd03_0040",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Chd03_0040"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Chd05_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Chd05_0020"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Chd06_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Chd06_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Chd07_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory_Chadlie_GILGA_Tutorial_01",
+       "stfManual_Field_Tutorial_Fld_Chd07_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst15_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_Qst15_0010",
+       "stfManual_Field_Tutorial_Fld_Qst15_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst15_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_Qst15_0020",
+       "stfManual_Field_Tutorial_Fld_Qst15_0020"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst15_0030",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_Qst15_0030",
+       "stfManual_Field_Tutorial_Fld_Qst15_0030"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst15_0040",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Qst15_0040"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst17_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_Qst17_0010",
+       "stfManual_Field_Tutorial_Fld_Qst17_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst20_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_Qst20_0010",
+       "stfManual_Field_Tutorial_Fld_Qst20_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst22_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Qst22_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst24_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Qst24_0020"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst27_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Qst27_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst29_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Qst29_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst32_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Qst32_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst32_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Qst32_0020"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst34_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_Fld_Qst34_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst35_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory_Ch12_QST35_Tutorial_0010",
+       "stfManual_Field_Tutorial_Fld_Qst35_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Fld_Qst36_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_Fld_Qst36_0010",
+       "stfManual_Field_Tutorial_Fld_Qst36_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_Piano_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfCmn_Tutorial_Piano_0020_End",
+       "stfManual_Field_Tutorial_Fld_Piano_0020"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_VR_0010",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_VR_0010",
+       "stfManual_Field_Tutorial_VR_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_VR_0020",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfComn_Disped_Tutorial_VR_0020",
+       "stfManual_Field_Tutorial_VR_0020"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_World_AreaReport",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_World_0010"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_World_CampPoint",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfWorldMap_Tutorial_15_CampPoint",
+       "stfManual_Field_Tutorial_World_0160"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_World_CampPoint_Limited",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfWorldMap_Tutorial_15_CampPoint",
+       "stfManual_Field_Tutorial_World_0165"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_World_ChocoboCheck_Quest",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stf_Disable_ChocoboQuest_Check",
+       "stfManual_Field_Tutorial_World_0150"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_World_Chocobo_Forest",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_World_0055"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_World_Chocobo_Sky",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_World_0060"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_World_CraftMaterial",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfManual_Field_Tutorial_World_0170"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_World_HintAnimal",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfMg_HintAnimal_Tutorial_END",
+       "stfManual_Field_Tutorial_World_0130"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_World_ItemAnimal",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stf_Disable_ItemAnimal_Check",
+       "stfManual_Field_Tutorial_World_0140"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    },
+    {
+     "name": "actCmn_Tutorial_World_MoogleShop",
+     "set": {
+      "Type": "12",
+      "ExclusionID": "eclNone",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "EndStoryFlag_Array": [
+       "stfStory_Tutorial_World_MoogleShop",
+       "stfManual_Field_Tutorial_World_0040"
+      ],
+      "EndStateTriggerList_Array": [
+       "trgCmn_Tutorial_End"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "asset": "DataObject/Resident/WorldCondition.uasset",
+   "rows": [
+    {
+     "name": "wcCraft_Tutorial",
+     "set": {
+      "Action_Array": [
+       "2",
+       "2",
+       "2",
+       "2"
+      ],
+      "NameArgument_Array": [
+       "actCmn_Chocobo_1stTalk",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       ""
+      ],
+      "IntegerArgument_Array": [
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0"
+      ],
+      "CompleteStoryFlag_Array": [
+       "stfWorldMap_Tutorial_08_Craft",
+       "stfWorldMap_Tutorial_08_Craft",
+       "stfWorldMap_Tutorial_08_Craft_Reshow",
+       "stfManual_Field_Tutorial_Hub_0050"
+      ],
+      "WaitForFinish_Array": [
+       "1",
+       "1",
+       "0",
+       "0"
+      ]
+     }
+    },
+    {
+     "name": "wcLifeSpot_Tutorial",
+     "set": {
+      "Action_Array": [
+       "2",
+       "2",
+       "2",
+       "2"
+      ],
+      "NameArgument_Array": [
+       "actHub_InTalk_LifeSpot_Unknown_Chadlie",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       ""
+      ],
+      "IntegerArgument_Array": [
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0"
+      ],
+      "CompleteStoryFlag_Array": [
+       "stfWorldMap_Tutorial_05_LifeSpot_Intro",
+       "stfWorldMap_Tutorial_05_LifeSpot",
+       "stfWorldMap_Tutorial_05_LifeSpot_Reshow",
+       "stfManual_Field_Tutorial_Hub_0010"
+      ],
+      "WaitForFinish_Array": [
+       "1",
+       "1",
+       "0",
+       "0"
+      ]
+     }
+    },
+    {
+     "name": "wcMoogle_Tutorial",
+     "set": {
+      "Action_Array": [
+       "2",
+       "2",
+       "2"
+      ],
+      "NameArgument_Array": [
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       ""
+      ],
+      "IntegerArgument_Array": [
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0"
+      ],
+      "CompleteStoryFlag_Array": [
+       "stfWorldMap_Tutorial_03_ChocoboFeed",
+       "stfWorldMap_Tutorial_03_ChocoboFeed_Reshow",
+       "stfManual_Field_Tutorial_Hub_0030"
+      ],
+      "WaitForFinish_Array": [
+       "1",
+       "0",
+       "0"
+      ]
+     }
+    },
+    {
+     "name": "wcPhotoSpot_Tutorial",
+     "set": {
+      "Action_Array": [
+       "2",
+       "2",
+       "2"
+      ],
+      "NameArgument_Array": [
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       ""
+      ],
+      "IntegerArgument_Array": [
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0"
+      ],
+      "CompleteStoryFlag_Array": [
+       "stfWorldMap_Tutorial_14_PhotoSpot",
+       "stfWorldMap_Tutorial_14_PhotoSpot_Reshow",
+       "stfManual_Field_Tutorial_World_0090"
+      ],
+      "WaitForFinish_Array": [
+       "1",
+       "0",
+       "0"
+      ]
+     }
+    },
+    {
+     "name": "wcSecretSubjugation_Tutorial",
+     "set": {
+      "Action_Array": [
+       "2",
+       "2",
+       "2",
+       "2"
+      ],
+      "NameArgument_Array": [
+       "actHub_Guide_Common_02",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       ""
+      ],
+      "IntegerArgument_Array": [
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0"
+      ],
+      "CompleteStoryFlag_Array": [
+       "stfWorldMap_Tutorial_08_Craft_1stTalk",
+       "stfWorldMap_Tutorial_09_SecretEnemy",
+       "stfWorldMap_Tutorial_09_SecretEnemy_Reshow",
+       "stfManual_Field_Tutorial_Hub_0060"
+      ],
+      "WaitForFinish_Array": [
+       "1",
+       "1",
+       "0",
+       "0"
+      ]
+     }
+    },
+    {
+     "name": "wcSubjugation_Tutorial",
+     "set": {
+      "Action_Array": [
+       "2",
+       "2",
+       "2",
+       "2"
+      ],
+      "NameArgument_Array": [
+       "actHub_Guide_Common_01",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       ""
+      ],
+      "IntegerArgument_Array": [
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0"
+      ],
+      "CompleteStoryFlag_Array": [
+       "stfWorldMap_Tutorial_04_Battle_Intro",
+       "stfWorldMap_Tutorial_04_Battle",
+       "stfWorldMap_Tutorial_04_Battle_Reshow",
+       "stfManual_Field_Tutorial_Hub_0020"
+      ],
+      "WaitForFinish_Array": [
+       "1",
+       "1",
+       "0",
+       "0"
+      ]
+     }
+    },
+    {
+     "name": "wcSummonShrine_Tutorial",
+     "set": {
+      "Action_Array": [
+       "2",
+       "2",
+       "2"
+      ],
+      "NameArgument_Array": [
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       ""
+      ],
+      "IntegerArgument_Array": [
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0"
+      ],
+      "CompleteStoryFlag_Array": [
+       "stfWorldMap_Tutorial_07_Summon",
+       "stfWorldMap_Tutorial_07_Summon_Reshow",
+       "stfManual_Field_Tutorial_Hub_0040"
+      ],
+      "WaitForFinish_Array": [
+       "1",
+       "0",
+       "0"
+      ]
+     }
+    },
+    {
+     "name": "wcTreasure_Tutorial",
+     "set": {
+      "Action_Array": [
+       "2",
+       "2",
+       "2"
+      ],
+      "NameArgument_Array": [
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       "",
+       "actCmn_Tutorial_CloseTrigger",
+       ""
+      ],
+      "IntegerArgument_Array": [
+       "0",
+       "0",
+       "0",
+       "0",
+       "0",
+       "0"
+      ],
+      "CompleteStoryFlag_Array": [
+       "stfWorldMap_Tutorial_13_Treasure",
+       "stfWorldMap_Tutorial_13_Treasure_Reshow",
+       "stfManual_Field_Tutorial_World_0080"
+      ],
+      "WaitForFinish_Array": [
+       "1",
+       "0",
+       "0"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

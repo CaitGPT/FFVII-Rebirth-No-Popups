@@ -198,19 +198,64 @@ def main():
         area_rows[action] = {"Type": "12", "StringArgumentList_Array": [], "EndStoryFlag_Array": flags}
     report["region_intel"] = sorted(area_rows)
 
-    # 3. Calls that hold Cloud even as earpiece calls. A Lifespring's completion group releases Cloud only once every
-    #    action in it has finished, and the first Lifespring's group ends with Chadley's call (live 2026-11-12: as an
-    #    earpiece call it still held Cloud for its 16 s). It becomes a type-12 action that only sets the call's own
-    #    end flag, as if it had played.
-    for action in SILENCE:
+    # 3. Calls that hold Cloud even as earpiece calls. A hub group runs its "after notification" actions as part of the
+    #    completion sequence and gives control back only when they end (live 2026-11-12: the first Lifespring's call,
+    #    as an earpiece call, still held Cloud for its 16 s). Every converted call a hub group runs that way becomes a
+    #    type-12 action that keeps its own end flags and triggers, as if it had played. Calls whose chains do anything
+    #    but talk and branch (a trigger, 25) keep playing, as earpiece calls.
+    hub_groups = load(base / "HubGroup.csv")
+    action_groups = load(base / "ActionGroup.csv")
+    world_reports = load(base / "WorldReport.csv")
+
+    def members(name):
+        return [name] if name in actions else array(action_groups.get(name, {}), "ActionGroupLIst_Array")
+
+    # Everything a completion sequence runs: all four hub-group action lists, the world reports' notify actions
+    # (live: act1200_Chadley_Talk runs before Excavation Intel 1 completes), and every action group that releases
+    # Cloud's Lifespring pose (live: acg1200_LifeSpot_..._Craft_1 runs Chadley's call PV0502 after the release, and
+    # it still held Cloud for 12 s as an earpiece call).
+    after = set()
+    for row in hub_groups.values():
+        for field in ("ActiveStateActionOrActionGroupID_Array", "AfterNotificationInActivateActionOrActionGroupID_Array",
+                      "CompleteStateActionOrActionGroupID_Array", "AfterNotificationInCompleteActionOrActionGroupID_Array"):
+            for name in array(row, field):
+                after.update(members(name))
+    for row in world_reports.values():
+        for field in ("PreOpenNotifyActionOrActionGroupID", "PostOpenNotifyActionOrActionGroupID",
+                      "PreCompleteNotifyActionOrActionGroupID", "PostCompleteNotifyActionOrActionGroupID"):
+            if row.get(field):
+                after.update(members(row[field]))
+    for name, row in action_groups.items():
+        listed = array(row, "ActionGroupLIst_Array")
+        if "actCmn_LifeSpot_Analysis_MotionOff" in listed:
+            after.update(listed)
+    converted = {a for c in report["converted"] for a in c["actions"]}
+    silence = set(SILENCE)
+    for action in sorted(after & converted):
+        head = actions[action].get("StringArgumentList_Array[1]")
+        if not {t for n in chain(head) for t in commands(n)} & {"25"}:
+            silence.add(action)
+    for action in sorted(silence):
         row = actions[action]
         flags = array(row, "EndStoryFlag_Array")
-        if not flags:
+        if not flags and action in SILENCE:
             raise SystemExit(f"{action}: silencing it would lose no flag; check it is still the call it was")
         area_rows[action] = {"Type": "12", "StringArgumentList_Array": [], "ExclusionID": "eclNone", "EndStoryFlag_Array": flags}
-    report["silenced"] = sorted(SILENCE)
-    for action in SILENCE:
+    report["silenced"] = sorted(silence)
+    for action in silence:
         action_rows.pop(action, None)
+
+    # 4. The map that opens by itself to show new intel (live: after the second Grasslands Lifespring, actHub_ShowNaviMap
+    #    opened the area map and paused the game). These type-43 actions become type 12, keeping any trigger they fire.
+    for action, row in sorted(actions.items()):
+        if row.get("Type") == "43" and (action == "actHub_ShowNaviMap" or action.startswith("actCmn_ShowNaviMap_")):
+            area_rows[action] = {"Type": "12", "StringArgumentList_Array": [], "IntegerArgumentList_Array": [],
+                                 "ExclusionID": "eclNone"}
+    report["map_popups"] = sorted(a for a in area_rows if "ShowNaviMap" in a)
+
+    # Not done: Hub.NotifyOnActivated = 0 (the "new intel" banner). Live 2026-11-12 it froze Cloud in the Lifespring pose
+    # for good: the hub group runs its after-notification actions, which release him, only once that notice has shown.
+
 
     overlap = set(action_rows) & set(area_rows)
     if overlap:
@@ -225,7 +270,8 @@ def main():
     Path(args.out).write_text(json.dumps(spec, indent=1) + "\n", encoding="utf-8")
     print(f"{len(report['converted'])} video calls converted ({sum(len(c['actions']) for c in report['converted'])} actions, "
           f"{len(event_rows)} PlannerEvent rows); {len(report['skipped'])} left alone; "
-          f"{len(area_rows)} Region Intel actions -> {args.out}")
+          f"{len(area_rows)} flag-only actions ({len(silence)} silenced calls, {len(report['map_popups'])} map pop-ups), "
+          f"-> {args.out}")
     if args.report:
         Path(args.report).write_text(json.dumps(report, indent=1) + "\n", encoding="utf-8")
 

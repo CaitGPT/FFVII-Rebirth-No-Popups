@@ -9,6 +9,8 @@ param(
     # it. Both mods replace those whole tables, so with Junon Colosseum installed only this variant keeps both.
     [ValidateSet('Standard', 'JunonCompat')]
     [string]$Variant = 'Standard',
+    # Also silence first-time tutorial tips (data\generated-tips.json). Off by default until it passes in game.
+    [switch]$WithTips,
     # Machine paths, JSON (default tools\build-config.local.json; see build-config.example.json).
     [string]$ConfigPath = $null
 )
@@ -34,10 +36,15 @@ if (-not $Config.GameRoot) { throw "Set GameRoot in $ConfigPath (see build-confi
 $PackageName = if ($Variant -eq 'JunonCompat') { 'NoPopups_JunonCompat_9999_P' } else { 'NoPopups_P' }
 $OtherPackage = if ($Variant -eq 'JunonCompat') { 'NoPopups_P' } else { 'NoPopups_JunonCompat_9999_P' }
 # data\no-popups.json is written by hand; data\generated.json comes from tools\make_spec.py.
+# data\generated-tips.json comes from tools\tips_spec.py.
 $SpecFiles = @((Join-Path $ModRoot 'data\no-popups.json'), (Join-Path $ModRoot 'data\generated.json'))
+$Tables = @('HubConfig', 'Action', 'PlannerEvent')
+if ($WithTips) {
+    $SpecFiles += (Join-Path $ModRoot 'data\generated-tips.json')
+    $Tables += 'WorldCondition'
+}
 $VariantRoot = Join-Path $Config.BuildRoot $Variant
 $Spec = Join-Path $VariantRoot 'spec.json'
-$Tables = @('HubConfig', 'Action', 'PlannerEvent')
 $JunonTables = @('Action', 'PlannerEvent')
 $BuilderBin = Join-Path $Config.BuildRoot 'DataBuilderBin'
 $Builder = Join-Path $BuilderBin 'DataBuilder.dll'
@@ -103,14 +110,22 @@ function Invoke-Build {
         Copy-Item -LiteralPath $source -Destination $baseTables
     }
 
-    # One spec from all spec files (whole-line // comments allowed).
-    $merged = @()
+    # One spec from all spec files (whole-line // comments allowed). DataBuilder rebuilds a table from the base for each
+    # entry, so spec files that change the same table are merged into one entry; a row changed twice is refused.
+    $byAsset = [ordered]@{}
     foreach ($file in $SpecFiles) {
         $json = ((Get-Content -LiteralPath $file) | Where-Object { $_ -notmatch '^\s*//' }) -join "`n"
-        $merged += @(($json | ConvertFrom-Json).tables)
+        foreach ($table in @(($json | ConvertFrom-Json).tables)) {
+            if (-not $byAsset.Contains($table.asset)) { $byAsset[$table.asset] = [System.Collections.ArrayList]@() }
+            foreach ($row in @($table.rows)) { [void]$byAsset[$table.asset].Add($row) }
+        }
     }
-    $assets = @($merged | ForEach-Object { $_.asset })
-    if (($assets | Select-Object -Unique).Count -ne $assets.Count) { throw 'Two spec files change the same table' }
+    $merged = @()
+    foreach ($asset in $byAsset.Keys) {
+        $names = @($byAsset[$asset] | ForEach-Object { $_.name })
+        if (($names | Select-Object -Unique).Count -ne $names.Count) { throw "Two spec files change the same row of $asset" }
+        $merged += [ordered]@{ asset = $asset; rows = @($byAsset[$asset]) }
+    }
     [ordered]@{ tables = $merged } | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $Spec -Encoding utf8
 
     & dotnet build (Join-Path $PSScriptRoot 'DataBuilder') -c Release -o $BuilderBin --nologo -v quiet

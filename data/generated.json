@@ -66,7 +66,10 @@
     {
      "name": "act1300_Chadley02_No01_Talk",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
@@ -102,13 +105,23 @@
     {
      "name": "act2400_Chadley04_No01_Talk",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": [
+       "stfArea2400_StoryHub_Open"
+      ]
      }
     },
     {
      "name": "act2500_Chadley05_No01_Chadley",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": [
+       "stfArea2500_StoryHub_Open"
+      ]
      }
     },
     {
@@ -120,7 +133,12 @@
     {
      "name": "actCmn_Chadley_PV0500",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": [
+       "stfHubGroup_GRASA_ExBattle_Open"
+      ]
      }
     },
     {
@@ -132,13 +150,19 @@
     {
      "name": "actCmn_Chadley_PV0502",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
      "name": "actCmn_Chadley_PV0504",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
@@ -162,7 +186,10 @@
     {
      "name": "actCmn_Chadley_PV0513",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
@@ -174,19 +201,30 @@
     {
      "name": "actCmn_Chadley_PV3000",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": [
+       "stfHubGroup_JUNOA_ExBattle_Open"
+      ]
      }
     },
     {
      "name": "actCmn_Chadley_PV3001",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
      "name": "actCmn_Chadley_PV3002",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
@@ -210,25 +248,39 @@
     {
      "name": "actCmn_Chadley_PV4100",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": [
+       "stfHubGroup_CORLA_ExBattle_Open"
+      ]
      }
     },
     {
      "name": "actCmn_Chadley_PV4101",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
      "name": "actCmn_Chadley_PV4102",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
      "name": "actCmn_Chadley_PV4103",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
@@ -258,19 +310,28 @@
     {
      "name": "actCmn_Chadley_PV5000",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
      "name": "actCmn_Chadley_PV5001",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
      "name": "actCmn_Chadley_PV5003",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
@@ -300,25 +361,39 @@
     {
      "name": "actCmn_Chadley_PV6000",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
      "name": "actCmn_Chadley_PV6001",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
      "name": "actCmn_Chadley_PV6002",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": [
+       "stfHubGroup_CSMOA_ExBattle_Open"
+      ]
      }
     },
     {
      "name": "actCmn_Chadley_PV6003",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
@@ -348,19 +423,30 @@
     {
      "name": "actCmn_Chadley_PV7000",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
      "name": "actCmn_Chadley_PV7001",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": [
+       "stfHubGroup_NIBLA_ExBattle_Open"
+      ]
      }
     },
     {
      "name": "actCmn_Chadley_PV7002",
      "set": {
-      "ExclusionID": "eclTypePlanLiveWin"
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "ExclusionID": "eclNone",
+      "EndStoryFlag_Array": []
      }
     },
     {
@@ -541,6 +627,60 @@
      "name": "actCmn_Chadley_PV8140",
      "set": {
       "ExclusionID": "eclTypePlanLiveWin"
+     }
+    },
+    {
+     "name": "actCmn_ShowNaviMap_1200",
+     "set": {
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "ExclusionID": "eclNone"
+     }
+    },
+    {
+     "name": "actCmn_ShowNaviMap_1300",
+     "set": {
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "ExclusionID": "eclNone"
+     }
+    },
+    {
+     "name": "actCmn_ShowNaviMap_2200",
+     "set": {
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "ExclusionID": "eclNone"
+     }
+    },
+    {
+     "name": "actCmn_ShowNaviMap_2400",
+     "set": {
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "ExclusionID": "eclNone"
+     }
+    },
+    {
+     "name": "actCmn_ShowNaviMap_2500",
+     "set": {
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "ExclusionID": "eclNone"
+     }
+    },
+    {
+     "name": "actCmn_ShowNaviMap_2600",
+     "set": {
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "ExclusionID": "eclNone"
      }
     },
     {
@@ -752,6 +892,15 @@
       "EndStoryFlag_Array": [
        "stfWorldMap_FirstClear_LifeSpot_Chadlie"
       ]
+     }
+    },
+    {
+     "name": "actHub_ShowNaviMap",
+     "set": {
+      "Type": "12",
+      "StringArgumentList_Array": [],
+      "IntegerArgumentList_Array": [],
+      "ExclusionID": "eclNone"
      }
     }
    ]
