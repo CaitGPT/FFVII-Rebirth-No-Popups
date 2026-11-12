@@ -2,5 +2,6 @@
   "GameRoot": "D:\\Games\\FINAL FANTASY VII REBIRTH",
   "VanillaRoot": "D:\\FF7RebirthModding\\GameExports\\vanilla-2026-07-10\\Exports",
   "UnrealReZen": "D:\\FF7RebirthModding\\Tools\\UnrealReZen\\UnrealReZen.exe",
-  "BuildRoot": "D:\\FF7RebirthModding\\Mods\\NoPopups\\Build"
+  "BuildRoot": "D:\\FF7RebirthModding\\Mods\\NoPopups\\Build",
+  "JunonColosseumStaging": "Only for -Variant JunonCompat: Junon Colosseum's staged End\\Content\\DataObject\\Resident folder"
 }

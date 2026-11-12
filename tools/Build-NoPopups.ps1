@@ -4,6 +4,11 @@ param(
     # Install/Uninstall: copy the pak into, or out of, the game's ~mods folder. Status: show what is installed.
     [ValidateSet('Build', 'Install', 'Uninstall', 'Status')]
     [string]$Mode = 'Build',
+    # Standard: built on the game's own tables. JunonCompat: built on Junon Colosseum's Action and PlannerEvent
+    # (config JunonColosseumStaging: that mod's staged End\Content\DataObject\Resident folder), and named to load after
+    # it. Both mods replace those whole tables, so with Junon Colosseum installed only this variant keeps both.
+    [ValidateSet('Standard', 'JunonCompat')]
+    [string]$Variant = 'Standard',
     # Machine paths, JSON (default tools\build-config.local.json; see build-config.example.json).
     [string]$ConfigPath = $null
 )
@@ -25,14 +30,20 @@ if (Test-Path -LiteralPath $ConfigPath) {
 }
 if (-not $Config.GameRoot) { throw "Set GameRoot in $ConfigPath (see build-config.example.json)." }
 
-$PackageName = 'NoPopups_P'
-$Spec = Join-Path $ModRoot 'data\no-popups.json'
-$Tables = @('HubConfig')
+# A pak named <name>_<n>_P loads after paks with a lower <n>; Junon Colosseum is JunonColosseum_999_P.
+$PackageName = if ($Variant -eq 'JunonCompat') { 'NoPopups_JunonCompat_9999_P' } else { 'NoPopups_P' }
+$OtherPackage = if ($Variant -eq 'JunonCompat') { 'NoPopups_P' } else { 'NoPopups_JunonCompat_9999_P' }
+# data\no-popups.json is written by hand; data\generated.json comes from tools\make_spec.py.
+$SpecFiles = @((Join-Path $ModRoot 'data\no-popups.json'), (Join-Path $ModRoot 'data\generated.json'))
+$VariantRoot = Join-Path $Config.BuildRoot $Variant
+$Spec = Join-Path $VariantRoot 'spec.json'
+$Tables = @('HubConfig', 'Action', 'PlannerEvent')
+$JunonTables = @('Action', 'PlannerEvent')
 $BuilderBin = Join-Path $Config.BuildRoot 'DataBuilderBin'
 $Builder = Join-Path $BuilderBin 'DataBuilder.dll'
 $Paks = Join-Path $Config.GameRoot 'End\Content\Paks'
 $ModsDir = Join-Path $Paks '~mods'
-$Package = Join-Path $Config.BuildRoot 'Package'
+$Package = Join-Path $VariantRoot 'Package'
 # Rebirth's own containers start with these 10 bytes.
 $HeaderSource = Join-Path $Paks 'pakchunk4optional-WindowsNoEditor.ucas'
 $ExpectedHeader = '8C-06-00-97-A6-88-97-A4-D3-00'
@@ -74,21 +85,43 @@ function Invoke-Build {
     foreach ($key in 'VanillaRoot', 'UnrealReZen') {
         if (-not $Config[$key]) { throw "Set $key in $ConfigPath (see build-config.example.json)." }
     }
-    $staging = Join-Path $Config.BuildRoot 'Staging'
-    foreach ($dir in $staging, $Package) {
+    $staging = Join-Path $VariantRoot 'Staging'
+    $base = Join-Path $VariantRoot 'Base'
+    foreach ($dir in $staging, $Package, $base) {
         if (Test-Path -LiteralPath $dir) { Remove-Item -LiteralPath $dir -Recurse -Force }
         New-Item -ItemType Directory -Path $dir -Force | Out-Null
     }
+    # The tables the spec starts from: the game's own, or for JunonCompat, Junon Colosseum's where it has them.
+    $baseTables = Join-Path $base 'End\Content\DataObject\Resident'
+    New-Item -ItemType Directory -Path $baseTables -Force | Out-Null
+    foreach ($table in $Tables) {
+        $source = Join-Path $Config.VanillaRoot "End\Content\DataObject\Resident\$table.uasset"
+        if ($Variant -eq 'JunonCompat' -and $JunonTables -contains $table) {
+            if (-not $Config['JunonColosseumStaging']) { throw "Set JunonColosseumStaging in $ConfigPath" }
+            $source = Join-Path $Config.JunonColosseumStaging "$table.uasset"
+        }
+        Copy-Item -LiteralPath $source -Destination $baseTables
+    }
+
+    # One spec from all spec files (whole-line // comments allowed).
+    $merged = @()
+    foreach ($file in $SpecFiles) {
+        $json = ((Get-Content -LiteralPath $file) | Where-Object { $_ -notmatch '^\s*//' }) -join "`n"
+        $merged += @(($json | ConvertFrom-Json).tables)
+    }
+    $assets = @($merged | ForEach-Object { $_.asset })
+    if (($assets | Select-Object -Unique).Count -ne $assets.Count) { throw 'Two spec files change the same table' }
+    [ordered]@{ tables = $merged } | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $Spec -Encoding utf8
 
     & dotnet build (Join-Path $PSScriptRoot 'DataBuilder') -c Release -o $BuilderBin --nologo -v quiet
     if ($LASTEXITCODE -ne 0) { throw "DataBuilder build failed ($LASTEXITCODE)" }
-    & dotnet $Builder build $Spec $Config.VanillaRoot $staging
+    & dotnet $Builder build $Spec $base $staging
     if ($LASTEXITCODE -ne 0) { throw "DataBuilder failed ($LASTEXITCODE); nothing was packed" }
 
-    # Only the rows the spec names may differ from vanilla.
+    # Only the rows the spec names may differ from the tables it started from.
     foreach ($table in $Tables) {
         $relative = "End\Content\DataObject\Resident\$table.uasset"
-        $lines = @(& dotnet $Builder compare (Join-Path $Config.VanillaRoot $relative) (Join-Path $staging $relative))
+        $lines = @(& dotnet $Builder compare (Join-Path $base $relative) (Join-Path $staging $relative))
         $lines | Write-Host
     }
 
@@ -110,8 +143,10 @@ function Invoke-Build {
 
     $manifest = [ordered]@{
         PackageName = $PackageName
+        Variant = $Variant
+        Base = @($Tables | ForEach-Object { [ordered]@{ Table = $_; SHA256 = (Get-Sha (Join-Path $baseTables "$_.uasset")) } })
         BuiltAt = (Get-Date).ToString('o')
-        Spec = [ordered]@{ Path = 'data/no-popups.json'; SHA256 = (Get-Sha $Spec) }
+        Specs = @($SpecFiles | ForEach-Object { [ordered]@{ Path = (Split-Path $_ -Leaf); SHA256 = (Get-Sha $_) } })
         Assets = @(Get-ChildItem -LiteralPath $staging -Recurse -File | ForEach-Object {
             [ordered]@{ Path = $_.FullName.Substring($staging.Length + 1); SHA256 = (Get-Sha $_.FullName) } })
         Files = @(Get-Triplet $Package | ForEach-Object {
@@ -127,6 +162,9 @@ function Assert-GameClosed {
 
 function Invoke-Install {
     Assert-GameClosed
+    foreach ($path in '.pak', '.ucas', '.utoc' | ForEach-Object { Join-Path $ModsDir ($OtherPackage + $_) }) {
+        if (Test-Path -LiteralPath $path) { throw "The other variant ($OtherPackage) is installed: uninstall it first" }
+    }
     $manifest = Get-Content -LiteralPath (Join-Path $Package 'manifest.json') -Raw | ConvertFrom-Json
     New-Item -ItemType Directory -Path $ModsDir -Force | Out-Null
     foreach ($file in $manifest.Files) {
