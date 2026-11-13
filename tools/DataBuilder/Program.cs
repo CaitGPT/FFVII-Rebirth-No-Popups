@@ -10,6 +10,8 @@
 //   DataBuilder inspect   <input.uasset> <row> <field regex>   print one row's matching fields as JSON
 //   DataBuilder roundtrip <folder>        re-save every DataObject table and compare bytes
 //   DataBuilder compare   <a.uasset> <b.uasset>   compare two tables row by row
+//   DataBuilder diff      <a.uasset> <b.uasset> [max detail lines]   compare the same table from two game builds,
+//                                                 matching rows and properties by name, schema first
 //   DataBuilder clone-battle-plan <battle-plan.umap> <pose.json> <output>   experimental (Junon Colosseum), not yet accepted in game
 //   DataBuilder layout-arrival    <layout package> <pose.json> <output>      experimental (Junon Colosseum), not yet accepted in game
 //   DataBuilder stage-raw-container <stage-root> <store.json> <output>   stage raw packages and register new ones in the container header
@@ -42,8 +44,10 @@ internal static class Builder
             if (args.Length == 3 && args[0] == "export") { Export(args[1], args[2]); return 0; }
             if (args.Length == 2 && args[0] == "roundtrip") return RoundTrip(args[1]);
             if (args.Length == 3 && args[0] == "compare") return Compare(args[1], args[2]);
+            if (args.Length is 3 or 4 && args[0] == "diff") return Diff(args[1], args[2], args.Length == 4 ? int.Parse(args[3], CultureInfo.InvariantCulture) : 40);
             Console.Error.WriteLine("usage: build <spec.json> <vanilla-root> <output-root> | export <input.uasset> <output.csv>"
                 + " | inspect <input.uasset> <row> <field regex> | roundtrip <folder> | compare <a.uasset> <b.uasset>"
+                + " | diff <a.uasset> <b.uasset> [max detail lines]"
                 + " | clone-battle-plan <battle-plan> <pose.json> <output> | layout-arrival <layout> <pose.json> <output>"
                 + " | stage-raw-container <stage-root> <store.json> <output> | prefix-container <input.utoc> <output.utoc>");
             return 2;
@@ -298,6 +302,74 @@ internal static class Builder
         Console.WriteLine(differences == 0 ? "same rows and values" : $"{differences} rows differ");
         return differences == 0 ? 0 : 1;
     }
+
+    // Compares the same table from two game builds. `compare` walks both row lists in step, so one
+    // inserted row makes every later row look changed; this matches rows and properties by name, and
+    // reports the schema first, which is what says whether a build changed the format or the content.
+    static int Diff(string a, string b, int maxDetail)
+    {
+        var left = DataTable.Load(a);
+        var right = DataTable.Load(b);
+        string Schema(DataTable t) => string.Join(";", t.Properties.Select(p => $"{t.NameText(p.Name)}:{p.Type}{(p.IsArray ? "[]" : "")}@{p.Offset}"));
+        string leftSchema = Schema(left), rightSchema = Schema(right);
+
+        Console.WriteLine($"unversioned properties: {left.Package.Unversioned} vs {right.Package.Unversioned}");
+        Console.WriteLine($"properties: {left.Properties.Count} vs {right.Properties.Count}; row size {left.Stride} vs {right.Stride}; "
+            + $"schema {(leftSchema == rightSchema ? "SAME" : "DIFFERENT")}");
+        if (leftSchema != rightSchema)
+        {
+            List<string> Fields(DataTable t) => t.Properties.Select(p => $"{t.NameText(p.Name)}:{p.Type}{(p.IsArray ? "[]" : "")}").ToList();
+            List<string> ours = Fields(left), theirs = Fields(right);
+            foreach (var x in ours.Except(theirs)) Console.WriteLine($"  property removed: {x}");
+            foreach (var x in theirs.Except(ours)) Console.WriteLine($"  property added: {x}");
+            if (!ours.Except(theirs).Any() && !theirs.Except(ours).Any()) Console.WriteLine("  same properties, different order or offsets");
+        }
+
+        Dictionary<string, int> Rows(DataTable t) => Enumerable.Range(0, t.Keys.Count).ToDictionary(i => t.NameText(t.Keys[i].Name), i => i);
+        Dictionary<string, int> leftRows = Rows(left), rightRows = Rows(right);
+        var removed = leftRows.Keys.Where(k => !rightRows.ContainsKey(k)).Order().ToList();
+        var added = rightRows.Keys.Where(k => !leftRows.ContainsKey(k)).Order().ToList();
+        Console.WriteLine($"rows: {left.Entries.Count} vs {right.Entries.Count}");
+        Console.WriteLine($"rows removed: {removed.Count}");
+        foreach (var k in removed.Take(maxDetail)) Console.WriteLine($"  - {k}");
+        Console.WriteLine($"rows added: {added.Count}");
+        foreach (var k in added.Take(maxDetail)) Console.WriteLine($"  + {k}");
+
+        var rightProperties = Enumerable.Range(0, right.Properties.Count).ToDictionary(p => right.NameText(right.Properties[p].Name), p => p);
+        var changed = new List<string>();
+        var detail = new List<string>();
+        var fieldCounts = new Dictionary<string, int>();
+        var moved = 0;
+        foreach (var (name, i) in leftRows.OrderBy(r => r.Value))
+        {
+            if (!rightRows.TryGetValue(name, out var j)) continue;
+            if (i != j) moved++;
+            var diffs = new List<string>();
+            for (var p = 0; p < left.Properties.Count; p++)
+            {
+                var field = left.NameText(left.Properties[p].Name);
+                if (!rightProperties.TryGetValue(field, out var q)) continue;
+                string x = Format(left, left.Properties[p].Type, left.Entries[i][p]), y = Format(right, right.Properties[q].Type, right.Entries[j][q]);
+                if (x == y) continue;
+                diffs.Add($"{field}: '{Shorten(x)}' -> '{Shorten(y)}'");
+                fieldCounts[field] = fieldCounts.GetValueOrDefault(field) + 1;
+            }
+            if (diffs.Count == 0) continue;
+            changed.Add(name);
+            if (detail.Count < maxDetail)
+                detail.Add($"  ~ {name}: " + string.Join("; ", diffs.Take(6)) + (diffs.Count > 6 ? $" (+{diffs.Count - 6} more)" : ""));
+        }
+        Console.WriteLine($"rows at a different index: {moved}");
+        Console.WriteLine($"rows changed: {changed.Count}");
+        foreach (var (field, n) in fieldCounts.OrderByDescending(x => x.Value)) Console.WriteLine($"  field {field}: {n} rows");
+        foreach (var line in detail) Console.WriteLine(line);
+
+        var same = leftSchema == rightSchema && removed.Count == 0 && added.Count == 0 && changed.Count == 0;
+        Console.WriteLine(same ? "RESULT: same schema and rows" : "RESULT: different");
+        return same ? 0 : 1;
+    }
+
+    static string Shorten(string value) => value.Length > 80 ? value[..77] + "..." : value;
 }
 
 internal sealed class Spec

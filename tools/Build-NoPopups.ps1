@@ -51,9 +51,13 @@ $Builder = Join-Path $BuilderBin 'DataBuilder.dll'
 $Paks = Join-Path $Config.GameRoot 'End\Content\Paks'
 $ModsDir = Join-Path $Paks '~mods'
 $Package = Join-Path $VariantRoot 'Package'
-# Rebirth's own containers start with these 10 bytes.
+# Rebirth's own containers start with these 10 bytes. They differ per game build, so each one we have built
+# against is listed; an unknown header still stops the build rather than writing bytes we have not seen.
 $HeaderSource = Join-Path $Paks 'pakchunk4optional-WindowsNoEditor.ucas'
-$ExpectedHeader = '8C-06-00-97-A6-88-97-A4-D3-00'
+$KnownHeaders = [ordered]@{
+    'steam-2026-07'      = '8C-06-00-97-A6-88-97-A4-D3-00'
+    'epic-1.005'         = '8C-06-00-97-7A-88-97-78-D3-00'
+}
 
 function Get-Triplet([string]$Directory) {
     '.pak', '.ucas', '.utoc' | ForEach-Object { Join-Path $Directory ($PackageName + $_) }
@@ -150,11 +154,14 @@ function Invoke-Build {
 
     Assert-TableBlockClear (Join-Path $Package "$PackageName.utoc")
     $header = Read-Bytes $HeaderSource 10
-    if ([BitConverter]::ToString($header) -ne $ExpectedHeader) { throw "$HeaderSource no longer has the known Rebirth header" }
+    $headerText = [BitConverter]::ToString($header)
+    $headerBuild = ($KnownHeaders.GetEnumerator() | Where-Object { $_.Value -eq $headerText } | Select-Object -First 1).Key
+    if (-not $headerBuild) { throw "$HeaderSource starts with $headerText, which is not a Rebirth header we have built against" }
+    Write-Host "Container header: $headerBuild"
     $ucas = Join-Path $Package "$PackageName.ucas"
     $stream = [IO.File]::Open($ucas, 'Open', 'Write', 'None')
     try { $stream.Write($header, 0, 10) } finally { $stream.Dispose() }
-    if ([BitConverter]::ToString((Read-Bytes $ucas 10)) -ne $ExpectedHeader) { throw "Header step did not apply to $ucas" }
+    if ([BitConverter]::ToString((Read-Bytes $ucas 10)) -ne $headerText) { throw "Header step did not apply to $ucas" }
 
     $manifest = [ordered]@{
         PackageName = $PackageName
