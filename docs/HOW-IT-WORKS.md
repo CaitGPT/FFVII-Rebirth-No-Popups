@@ -115,6 +115,57 @@ Cloud's pose.
 - **A UE4SS hook on `EndUserWidget:AddToViewportEx`** to name the Region Intel banner's widget: it loads (with an empty
   pre-callback, Junon Colosseum's pattern), but none of these widgets go through it.
 
+## Side effects (audit, 0.3)
+
+What each change reaches beyond what it was meant for, from the game's tables (2026-11-13). "Seen" means observed in
+play; the rest is from the data and still needs a test.
+
+**The notify switch (`DisableWorldReportNotify`).** The 13 configs cover every kind of world intel: towers (type 0),
+Chocobo Intel (1), Fiend Intel (3), Lifesprings (4), Phenomenon Intel (5), Divine Intel shrines (6), Excavations (7),
+Classified Intel (10) and Moogle Intel (11). Besides the completion banner it also removes:
+
+- the combat assignment checklist at the top left (`EventProgress_Mission_Cell`). Seen by the owner: with no
+  checklist, they missed one of three objectives without knowing until afterwards;
+- the "Intel has been relayed to Chadley." message log line. Seen;
+- possibly the same progress display in the other activities that have one (Moogle Intel, Excavations, Chocobo Intel,
+  Phenomenon and Classified Intel). Not tested.
+
+The owner wants the tick-box results popup at the end of a combat assignment (`MissionResult`) to stay gone, and the
+checklist back.
+
+**The 25 silenced calls (type 12).** These lines never play now, not even over the earpiece. What the player no longer
+hears:
+
+- after a region's Lifesprings (`..._Craft_1/2` groups): Chadley announcing new Transmuter chips. The recipes still
+  unlock;
+- after a region's combat assignments (`HubGroup_Area_*_ExSubjugation`): Chadley's call about the region's last
+  challenge;
+- the region-completion reports (`WorldReport_GRASA_31`, `JUNOA_26`, `CORLA_31`, `GONGA_26`, `CSMOA_31`,
+  `NIBLA_25`);
+- Chadley's tower calls in Junon, Gongaga and Cosmo Canyon (`HubGroup_Area_*_Tower`);
+- the first Lifespring's call.
+
+Flags and triggers are kept, so the unlocks still happen, but the player isn't told about them.
+
+**The 82 earpiece calls.** Their lines can no longer be skipped. They now play during free movement, so a fight,
+another conversation or a cutscene can start mid-call. Some of these calls unlock a VR course with a trigger at the
+end (command 25). Whether that trigger still fires when a call is cut short hasn't been tested.
+
+**The map pop-ups (type 43 to 12).** `actHub_ShowNaviMap` runs from 99 places: tower start-ups, Region Intel tiers and
+others. Six `actCmn_ShowNaviMap_<area>` run when a place is discovered. The map no longer shows where the new intel
+is; the icons are still on the map.
+
+**Region Intel (type 205 to 12).** The entry opens and Classified Intel unlocks (seen in Junon and the Grasslands).
+Anything else the 205 action does on top of the two flags would be missing. Nothing has been noticed so far.
+
+**Not changed:** first-time tutorial panels still pause the game, and the "new intel" banner when a hub activates
+still shows (it can't be removed by table without freezing Cloud).
+
+**Compatibility.** The pak replaces whole tables: `Action`, `PlannerEvent` and `HubConfig`. Another mod that changes
+any of them conflicts, and whichever pak loads last wins outright. The JunonCompat build carries Junon Colosseum's
+version of those tables as it was at build time. After a Junon Colosseum update, the compat build must be rebuilt, or
+it will undo that update's changes to those tables.
+
 ## Junon Colosseum
 
 Junon Colosseum also replaces `Action` and `PlannerEvent`, and pak `JunonColosseum_999_P` loads after `NoPopups_P`
