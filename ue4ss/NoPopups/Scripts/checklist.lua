@@ -20,7 +20,10 @@ local TEXT_API = "/Script/EndTextResource.Default__EndTextResourceAPI"
 local FLAG_API = "/Script/EndDataBase.Default__EndDataBaseDataBaseAPI"
 local STATICS = "/Script/Engine.Default__GameplayStatics"
 local MAX_ENEMIES = 32
-local FLAG_EVERY = 1                  -- seconds between story-flag reads
+-- Read on every tick: an objective is met mid-fight and the box should follow
+-- at once, and three reflected flag reads cost far less than the panel's own
+-- setters.
+local FLAG_EVERY = 0
 local TAB_KEY = "$menu_field_worldreport_header_worldreport"   -- "World Intel"
 
 local state = {assignment = nil, view = nil, checked = 0, logged = {}, misses = {}}
@@ -147,8 +150,18 @@ local function build_view(hub)
 end
 
 local function refresh_flags(view)
-    for _, row in ipairs(view.rows) do row.done = flag_set(row.flag) end
-    view.title_done = flag_set(view.clear_flag)
+    for _, row in ipairs(view.rows) do
+        local done = flag_set(row.flag)
+        if done ~= row.done then
+            log(string.format("objective %s: %s", done and "met" or "cleared", row.text))
+        end
+        row.done = done
+    end
+    local title_done = flag_set(view.clear_flag)
+    if title_done ~= view.title_done then
+        log("assignment " .. (title_done and "complete" or "not complete"))
+    end
+    view.title_done = title_done
 end
 
 -- Returns true while a checklist is on screen, so the caller can tick slowly
