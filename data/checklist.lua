@@ -2,6 +2,7 @@
 -- Combat assignments (Hub.Type 3) and the objectives each one shows.
 return {
   ["Area_1200_Hub_1_1"] = {
+    enemy = "EN2001_03_WereRat_PoisonRareEnd2",
     report = "WorldReport_GRASA_02", title = "$menu_WorldReport_GRASA_02_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GRASA_002",
     objectives = {
@@ -11,6 +12,7 @@ return {
     },
   },
   ["Area_1200_Hub_1_1_Media"] = {
+    enemy = "EN2001_03_WereRat_PoisonRareEnd2",
     report = "WorldReport_GRASA_02_Media", title = "$menu_WorldReport_GRASA_02_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GRASA_002",
     objectives = {
@@ -20,6 +22,7 @@ return {
     },
   },
   ["Area_1200_Hub_2_3"] = {
+    enemy = "EN2206_01_Elfadunk_RareEnd2",
     report = "WorldReport_GRASA_09", title = "$menu_WorldReport_GRASA_09_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GRASA_009",
     objectives = {
@@ -29,6 +32,7 @@ return {
     },
   },
   ["Area_1200_Hub_2_3_Media"] = {
+    enemy = "EN2206_01_Elfadunk_RareEnd2",
     report = "WorldReport_GRASA_09_Media", title = "$menu_WorldReport_GRASA_09_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GRASA_009",
     objectives = {
@@ -38,6 +42,7 @@ return {
     },
   },
   ["Area_1200_Hub_3_3"] = {
+    enemy = "EN2204_01_Mu_RareEnd2",
     report = "WorldReport_GRASA_14", title = "$menu_WorldReport_GRASA_14_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GRASA_014",
     objectives = {
@@ -47,6 +52,7 @@ return {
     },
   },
   ["Area_1200_Hub_3_3_Media"] = {
+    enemy = "EN2204_01_Mu_RareEnd2",
     report = "WorldReport_GRASA_14_Media", title = "$menu_WorldReport_GRASA_14_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GRASA_014",
     objectives = {
@@ -56,6 +62,7 @@ return {
     },
   },
   ["Area_1200_Hub_4_1"] = {
+    enemy = "EN2205_01_Mandragora_RareEnd2",
     report = "WorldReport_GRASA_17", title = "$menu_WorldReport_GRASA_17_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GRASA_017",
     objectives = {
@@ -65,6 +72,7 @@ return {
     },
   },
   ["Area_1200_Hub_4_1_Media"] = {
+    enemy = "EN2205_01_Mandragora_RareEnd2",
     report = "WorldReport_GRASA_17_Media", title = "$menu_WorldReport_GRASA_17_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GRASA_017",
     objectives = {
@@ -74,6 +82,7 @@ return {
     },
   },
   ["Area_1200_Hub_5_3"] = {
+    enemy = "EN2100_01_Levrikon_RareEnd2",
     report = "WorldReport_GRASA_24", title = "$menu_WorldReport_GRASA_24_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GRASA_024",
     objectives = {
@@ -83,6 +92,7 @@ return {
     },
   },
   ["Area_1200_Hub_5_3_Media"] = {
+    enemy = "EN2100_01_Levrikon_RareEnd2",
     report = "WorldReport_GRASA_24_Media", title = "$menu_WorldReport_GRASA_24_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GRASA_024",
     objectives = {
@@ -92,6 +102,7 @@ return {
     },
   },
   ["Area_1200_Hub_6_3"] = {
+    enemy = "EN2000_06_GuardHound_KalmFangRareEnd2",
     report = "WorldReport_GRASA_29", title = "$menu_WorldReport_GRASA_29_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GRASA_029",
     objectives = {
@@ -101,6 +112,7 @@ return {
     },
   },
   ["Area_1200_Hub_6_3_Media"] = {
+    enemy = "EN2000_06_GuardHound_KalmFangRareEnd2",
     report = "WorldReport_GRASA_29_Media", title = "$menu_WorldReport_GRASA_29_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GRASA_029",
     objectives = {
@@ -110,6 +122,7 @@ return {
     },
   },
   ["Area_1300_Hub_1_3"] = {
+    enemy = "EN2200_03_Zuu_TonaduRareEnd2",
     report = "WorldReport_JUNOA_04", title = "$menu_WorldReport_JUNOA_04_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_JUNOA_004",
     objectives = {
@@ -119,6 +132,7 @@ return {
     },
   },
   ["Area_1300_Hub_1_3_Demo"] = {
+    enemy = "EN2200_03_Zuu_TonaduRareEnd2",
     report = "WorldReport_JUNOA_04_Demo", title = "$menu_WorldReport_JUNOA_04_Title_Demo",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_JUNOA_004",
     objectives = {
@@ -128,6 +142,7 @@ return {
     },
   },
   ["Area_1300_Hub_3_2"] = {
+    enemy = "EN2212_01_Zemzelett_RareEnd2",
     report = "WorldReport_JUNOA_13", title = "$menu_WorldReport_JUNOA_13_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_JUNOA_013",
     objectives = {
@@ -137,6 +152,7 @@ return {
     },
   },
   ["Area_1300_Hub_3_2_Demo"] = {
+    enemy = "EN2212_01_Zemzelett_RareEnd2",
     report = "WorldReport_JUNOA_13_Demo", title = "$menu_WorldReport_JUNOA_13_Title_Demo",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_JUNOA_013",
     objectives = {
@@ -146,6 +162,7 @@ return {
     },
   },
   ["Area_1300_Hub_4_4"] = {
+    enemy = "EN2213_01_Nerosuferoth_RareEnd2",
     report = "WorldReport_JUNOA_20", title = "$menu_WorldReport_JUNOA_20_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_JUNOA_020",
     objectives = {
@@ -155,6 +172,7 @@ return {
     },
   },
   ["Area_1300_Hub_4_4_Demo"] = {
+    enemy = "EN2213_01_Nerosuferoth_RareEnd2",
     report = "WorldReport_JUNOA_20_Demo", title = "$menu_WorldReport_JUNOA_20_Title_Demo",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_JUNOA_020",
     objectives = {
@@ -164,6 +182,7 @@ return {
     },
   },
   ["Area_1300_Hub_5_4"] = {
+    enemy = "EN2201_01_Formula_RareEnd2",
     report = "WorldReport_JUNOA_25", title = "$menu_WorldReport_JUNOA_25_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_JUNOA_025",
     objectives = {
@@ -173,6 +192,7 @@ return {
     },
   },
   ["Area_1300_Hub_5_4_Demo"] = {
+    enemy = "EN2201_01_Formula_RareEnd2",
     report = "WorldReport_JUNOA_25_Demo", title = "$menu_WorldReport_JUNOA_25_Title_Demo",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_JUNOA_025",
     objectives = {
@@ -182,6 +202,7 @@ return {
     },
   },
   ["Area_2200_Hub_1_1"] = {
+    enemy = "EN2218_01_Beachplug_RareEnd2",
     report = "WorldReport_CORLA_02", title = "$menu_WorldReport_CORLA_02_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_CORLA_002",
     objectives = {
@@ -191,6 +212,7 @@ return {
     },
   },
   ["Area_2200_Hub_2_1"] = {
+    enemy = "EN2004_02_ChuseTank_SeaRareEnd2",
     report = "WorldReport_CORLA_07", title = "$menu_WorldReport_CORLA_07_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_CORLA_007",
     objectives = {
@@ -200,6 +222,7 @@ return {
     },
   },
   ["Area_2200_Hub_3_1"] = {
+    enemy = "EN2220_01_NeedleKiss_RareEnd2",
     report = "WorldReport_CORLA_12", title = "$menu_WorldReport_CORLA_12_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_CORLA_012",
     objectives = {
@@ -209,6 +232,7 @@ return {
     },
   },
   ["Area_2200_Hub_4_1"] = {
+    enemy = "EN2227_01_LandWorm_RareEnd2",
     report = "WorldReport_CORLA_17", title = "$menu_WorldReport_CORLA_17_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_CORLA_017",
     objectives = {
@@ -218,6 +242,7 @@ return {
     },
   },
   ["Area_2200_Hub_5_1"] = {
+    enemy = "EN2228_01_Spencer_RareEnd2",
     report = "WorldReport_CORLA_22", title = "$menu_WorldReport_CORLA_22_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_CORLA_022",
     objectives = {
@@ -227,6 +252,7 @@ return {
     },
   },
   ["Area_2200_Hub_6_1"] = {
+    enemy = "EN2229_01_Chimaera_RareEnd2",
     report = "WorldReport_CORLA_27", title = "$menu_WorldReport_CORLA_27_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_CORLA_027",
     objectives = {
@@ -236,6 +262,7 @@ return {
     },
   },
   ["Area_2400_Hub_1_2"] = {
+    enemy = "EN2233_01_TouchMe_RareEnd2",
     report = "WorldReport_GONGA_03", title = "$menu_WorldReport_GONGA_03_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GONGA_003",
     objectives = {
@@ -245,6 +272,7 @@ return {
     },
   },
   ["Area_2400_Hub_2_2"] = {
+    enemy = "EN2234_03_FlowerProng_RareEnd2",
     report = "WorldReport_GONGA_08", title = "$menu_WorldReport_GONGA_08_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GONGA_008",
     objectives = {
@@ -254,6 +282,7 @@ return {
     },
   },
   ["Area_2400_Hub_3_3"] = {
+    enemy = "EN2231_01_GrandHorn_RareEnd2",
     report = "WorldReport_GONGA_14", title = "$menu_WorldReport_GONGA_14_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GONGA_014",
     objectives = {
@@ -263,6 +292,7 @@ return {
     },
   },
   ["Area_2400_Hub_4_2"] = {
+    enemy = "EN2231_02_GrandHorn_SavageEnd2",
     report = "WorldReport_GONGA_18", title = "$menu_WorldReport_GONGA_18_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GONGA_018",
     objectives = {
@@ -272,6 +302,7 @@ return {
     },
   },
   ["Area_2400_Hub_5_3"] = {
+    enemy = "EN2237_00_HeavyTank_StandardEnd2",
     report = "WorldReport_GONGA_24", title = "$menu_WorldReport_GONGA_24_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GONGA_024",
     objectives = {
@@ -281,6 +312,7 @@ return {
     },
   },
   ["Area_2400_Hub_5_6"] = {
+    enemy = "EN2232_01_Gagighandi_RareEnd2",
     report = "WorldReport_GONGA_28", title = "$menu_WorldReport_GONGA_28_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_GONGA_028",
     objectives = {
@@ -290,6 +322,7 @@ return {
     },
   },
   ["Area_2500_Hub_2_3"] = {
+    enemy = "EN2238_01_Skeeskee_RareEnd2",
     report = "WorldReport_CSMOA_07", title = "$menu_WorldReport_CSMOA_07_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_CSMOA_007",
     objectives = {
@@ -299,6 +332,7 @@ return {
     },
   },
   ["Area_2500_Hub_2_4"] = {
+    enemy = "EN2009_03_Sahagin_DesertRareEnd2",
     report = "WorldReport_CSMOA_08", title = "$menu_WorldReport_CSMOA_08_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_CSMOA_008",
     objectives = {
@@ -308,6 +342,7 @@ return {
     },
   },
   ["Area_2500_Hub_3_2"] = {
+    enemy = "EN2239_01_Griffin_RareEnd2",
     report = "WorldReport_CSMOA_13", title = "$menu_WorldReport_CSMOA_13_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_CSMOA_013",
     objectives = {
@@ -317,6 +352,7 @@ return {
     },
   },
   ["Area_2500_Hub_4_2"] = {
+    enemy = "EN2214_01_Capparwire_RareEnd2",
     report = "WorldReport_CSMOA_17", title = "$menu_WorldReport_CSMOA_17_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_CSMOA_017",
     objectives = {
@@ -326,6 +362,7 @@ return {
     },
   },
   ["Area_2500_Hub_5_2"] = {
+    enemy = "EN2241_01_Bagrisk_RareEnd2",
     report = "WorldReport_CSMOA_22", title = "$menu_WorldReport_CSMOA_22_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_CSMOA_022",
     objectives = {
@@ -335,6 +372,7 @@ return {
     },
   },
   ["Area_2500_Hub_6_2"] = {
+    enemy = "EN2240_01_Golem_RareEnd2",
     report = "WorldReport_CSMOA_27", title = "$menu_WorldReport_CSMOA_27_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_CSMOA_027",
     objectives = {
@@ -344,6 +382,7 @@ return {
     },
   },
   ["Area_2600_Hub_1_3"] = {
+    enemy = "EN2000_09_GuardHound_NibelWolfRareEnd2",
     report = "WorldReport_NIBLA_04", title = "$menu_WorldReport_NIBLA_04_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_NIBLA_004",
     objectives = {
@@ -353,6 +392,7 @@ return {
     },
   },
   ["Area_2600_Hub_2_3"] = {
+    enemy = "EN2203_01_Kyuvilduns_RareEnd2",
     report = "WorldReport_NIBLA_10", title = "$menu_WorldReport_NIBLA_10_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_NIBLA_010",
     objectives = {
@@ -362,6 +402,7 @@ return {
     },
   },
   ["Area_2600_Hub_3_3"] = {
+    enemy = "EN2246_01_Valron_RareEnd2",
     report = "WorldReport_NIBLA_16", title = "$menu_WorldReport_NIBLA_16_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_NIBLA_016",
     objectives = {
@@ -371,6 +412,7 @@ return {
     },
   },
   ["Area_2600_Hub_4_2"] = {
+    enemy = "EN2247_01_VelcherTask_RareEnd2",
     report = "WorldReport_NIBLA_20", title = "$menu_WorldReport_NIBLA_20_Title",
     header = "$menu_WorldReport_Condition_020", clear_flag = "stfWorldReport_Finish_NIBLA_020",
     objectives = {
