@@ -11,7 +11,7 @@ local MOD_DIR = package.path:match("([^;]*[\\/]NoPopups[\\/])[Ss]cripts[\\/]%?%.
     or (debug.getinfo(1, "S").source:match("^@(.*[\\/])[Ss]cripts[\\/]")) or ""
 
 local function read_settings()
-    local settings = { log_widgets = false, probe = false, probe_scan_actors = false }
+    local settings = { log_widgets = false, probe = false, probe_scan_actors = false, checklist = true }
     local file = io.open(MOD_DIR .. "settings.txt", "r")
     if not file then return settings end
     for line in file:lines() do
@@ -20,6 +20,7 @@ local function read_settings()
         if key == "log_widgets" then settings.log_widgets = on end
         if key == "probe" then settings.probe = on end
         if key == "probe_scan_actors" then settings.probe_scan_actors = on end
+        if key == "checklist" then settings.checklist = on end
     end
     file:close()
     return settings
@@ -32,6 +33,35 @@ if settings.probe then
     local ok, probe = pcall(require, "probe")
     if ok then probe.start(MOD_DIR, settings.probe_scan_actors)
     else print("[NoPopups] probe failed to load: " .. tostring(probe)) end
+end
+
+if settings.checklist then
+    package.path = MOD_DIR .. "Scripts/?.lua;" .. package.path
+    local ok, checklist = pcall(require, "checklist")
+    if ok then
+        -- Registered while mods load: UE4SS adds the game-thread callback on a mod's
+        -- first ExecuteInGameThread, and doing that in play can crash (Battle Meters).
+        pcall(ExecuteInGameThread, function() end)
+        local idle, drawing = 0, false
+        LoopAsync(200, function()
+            idle = idle + 1
+            -- Full rate only while the panel is up; otherwise once a second.
+            if drawing or idle >= 5 then
+                idle = 0
+                ExecuteInGameThread(function()
+                    local fine, shown = pcall(function()
+                        return checklist.tick(os.time(), checklist.world_object())
+                    end)
+                    if fine then drawing = shown == true
+                    else print("[NoPopups] checklist tick: " .. tostring(shown)) end
+                end)
+            end
+            return false
+        end)
+        print("[NoPopups] combat assignment checklist on")
+    else
+        print("[NoPopups] checklist failed to load: " .. tostring(checklist))
+    end
 end
 
 if not settings.log_widgets then return end

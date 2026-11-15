@@ -1,4 +1,5 @@
 # No Popups, UE4SS side. 1 turns a switch on.
-log_widgets = 1
-probe = 1
+checklist = 1
+log_widgets = 0
+probe = 0
 probe_scan_actors = 0
