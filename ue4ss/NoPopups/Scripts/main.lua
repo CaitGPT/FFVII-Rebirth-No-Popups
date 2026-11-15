@@ -11,12 +11,15 @@ local MOD_DIR = package.path:match("([^;]*[\\/]NoPopups[\\/])[Ss]cripts[\\/]%?%.
     or (debug.getinfo(1, "S").source:match("^@(.*[\\/])[Ss]cripts[\\/]")) or ""
 
 local function read_settings()
-    local settings = { log_widgets = false }
+    local settings = { log_widgets = false, probe = false, probe_scan_actors = false }
     local file = io.open(MOD_DIR .. "settings.txt", "r")
     if not file then return settings end
     for line in file:lines() do
         local key, value = line:match("^%s*([%w_]+)%s*=%s*(%S+)")
-        if key == "log_widgets" then settings.log_widgets = (value == "1" or value == "true") end
+        local on = (value == "1" or value == "true")
+        if key == "log_widgets" then settings.log_widgets = on end
+        if key == "probe" then settings.probe = on end
+        if key == "probe_scan_actors" then settings.probe_scan_actors = on end
     end
     file:close()
     return settings
@@ -24,6 +27,13 @@ end
 
 local settings = read_settings()
 print(string.format("[NoPopups] loaded from %s; widget logging %s\n", MOD_DIR, settings.log_widgets and "on" or "off"))
+if settings.probe then
+    package.path = MOD_DIR .. "Scripts/?.lua;" .. package.path
+    local ok, probe = pcall(require, "probe")
+    if ok then probe.start(MOD_DIR, settings.probe_scan_actors)
+    else print("[NoPopups] probe failed to load: " .. tostring(probe)) end
+end
+
 if not settings.log_widgets then return end
 
 local log_file = io.open(MOD_DIR .. "widgets-log.txt", "a")
