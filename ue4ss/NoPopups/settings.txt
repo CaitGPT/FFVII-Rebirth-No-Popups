@@ -1,5 +1,10 @@
 # No Popups, UE4SS side. 1 turns a switch on.
-checklist = 1
+# The world intel notice is kept, but made small and quick.
+shrink = 1
+shrink_scale = 0.6
+shrink_speed = 3.0
+# The mod's own checklist, only needed while the notice is suppressed by the pak.
+checklist = 0
 log_widgets = 0
 probe = 0
 probe_scan_actors = 0

@@ -11,7 +11,8 @@ local MOD_DIR = package.path:match("([^;]*[\\/]NoPopups[\\/])[Ss]cripts[\\/]%?%.
     or (debug.getinfo(1, "S").source:match("^@(.*[\\/])[Ss]cripts[\\/]")) or ""
 
 local function read_settings()
-    local settings = { log_widgets = false, probe = false, probe_scan_actors = false, checklist = true }
+    local settings = { log_widgets = false, probe = false, probe_scan_actors = false, checklist = true,
+                   shrink = true, shrink_scale = 0.6, shrink_speed = 3.0 }
     local file = io.open(MOD_DIR .. "settings.txt", "r")
     if not file then return settings end
     for line in file:lines() do
@@ -21,6 +22,9 @@ local function read_settings()
         if key == "probe" then settings.probe = on end
         if key == "probe_scan_actors" then settings.probe_scan_actors = on end
         if key == "checklist" then settings.checklist = on end
+        if key == "shrink" then settings.shrink = on end
+        if key == "shrink_scale" then settings.shrink_scale = tonumber(value) or settings.shrink_scale end
+        if key == "shrink_speed" then settings.shrink_speed = tonumber(value) or settings.shrink_speed end
     end
     file:close()
     return settings
@@ -61,6 +65,28 @@ if settings.checklist then
         print("[NoPopups] combat assignment checklist on")
     else
         print("[NoPopups] checklist failed to load: " .. tostring(checklist))
+    end
+end
+
+if settings.shrink then
+    package.path = MOD_DIR .. "Scripts/?.lua;" .. package.path
+    local ok, shrink = pcall(require, "shrink")
+    if ok then
+        pcall(ExecuteInGameThread, function() end)
+        LoopAsync(1000, function()
+            local now = os.time()
+            if shrink.due(now) then
+                ExecuteInGameThread(function()
+                    local fine, err = pcall(function() shrink.tick(settings) end)
+                    if not fine then print("[NoPopups] shrink: " .. tostring(err)) end
+                end)
+            end
+            return false
+        end)
+        print(string.format("[NoPopups] notices shrunk to %.2f and run at %.1fx",
+            settings.shrink_scale, settings.shrink_speed))
+    else
+        print("[NoPopups] shrink failed to load: " .. tostring(shrink))
     end
 end
 
