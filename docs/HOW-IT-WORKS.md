@@ -204,6 +204,19 @@ player could move without the mod, about 2.4 seconds with it.
 The ordinary end-of-battle Results screen is untouched, and still appears. It is a different display from the world
 intel banner, which is the one that carries the activity's name and its objective checklist.
 
+### Both builds checked in game
+
+The release ships two builds of the same change set (see the README). Both have now suppressed a banner in
+play on the Epic build:
+
+| Build | What it was checked on | Result |
+| --- | --- | --- |
+| `NoPopups_JunonCompat_9999_P` | the four activities above, 2026-11-15 | no banner; movement back 2.4-3.3 s |
+| `NoPopups_P` (the default) | Cragshade Lifespring, 2026-11-15, a second time on a clean save | no banner; movement back 3.3 s, `stfWorldReport_Finish_GRASA_003` False to True |
+
+The two builds share an identical `HubConfig` base table and apply the same 13-row change, so the table that
+removes the banner is the same in both; the separate run confirms it rather than inferring it.
+
 ## The objective checklist: tried, and given up
 
 Combat assignments show a checklist of their objectives in the top left while you fight. `DisableWorldReportNotify`
