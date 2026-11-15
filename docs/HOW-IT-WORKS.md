@@ -115,6 +115,26 @@ Cloud's pose.
 - **A UE4SS hook on `EndUserWidget:AddToViewportEx`** to name the Region Intel banner's widget: it loads (with an empty
   pre-callback, Junon Colosseum's pattern), but none of these widgets go through it.
 
+## The combat assignment checklist (0.4)
+
+The notify switch is one switch for the whole world-report display, so turning it off also took away the objective
+list a combat assignment shows at the top left while it runs (`EventProgress_Mission_Cell`). The owner missed one
+of three objectives without it, and asked for it back while the tick-box results pop-up at the end stays gone.
+
+`HubConfig` has no separate switch for the two: its fields are the notify switch, `DisplayCompleteMessageForce`,
+icon and route options, and a few flags about battle and fast travel. The hubs are what can be told apart. Combat
+assignments are `Hub.Type` 3 (42 rows), and they share `HubConfig_WorldNormal` with the Lifesprings (type 4) and
+the Divine Intel shrines (type 6), so the switch cannot simply be turned back on in that row.
+
+So the mod adds three copies of those config rows with the switch left off -- `HubConfig_NoPopups_Mission`, and
+its `_Demo` and `_Media` twins -- and points the 42 combat assignment hubs at them. Everything else keeps the
+silent config. This is the first change that adds rows rather than only setting fields, and the first that
+replaces the `Hub` table as well, which widens the conflict surface with other mods by one table.
+
+What this does not do by itself: the completion banner for a combat assignment comes from the same display, so it
+is expected back for those 42 hubs. Whether that is acceptable, or whether the banner needs removing another way,
+is the open question for this feature.
+
 ## Side effects (audit, 0.3)
 
 What each change reaches beyond what it was meant for, from the game's tables (2026-11-13). "Seen" means observed in

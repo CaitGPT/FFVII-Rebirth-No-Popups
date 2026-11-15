@@ -38,7 +38,7 @@ $OtherPackage = if ($Variant -eq 'JunonCompat') { 'NoPopups_P' } else { 'NoPopup
 # data\no-popups.json is written by hand; data\generated.json comes from tools\make_spec.py.
 # data\generated-tips.json comes from tools\tips_spec.py.
 $SpecFiles = @((Join-Path $ModRoot 'data\no-popups.json'), (Join-Path $ModRoot 'data\generated.json'))
-$Tables = @('HubConfig', 'Action', 'PlannerEvent')
+$Tables = @('HubConfig', 'Hub', 'Action', 'PlannerEvent')
 if ($WithTips) {
     $SpecFiles += (Join-Path $ModRoot 'data\generated-tips.json')
     $Tables += 'WorldCondition'
