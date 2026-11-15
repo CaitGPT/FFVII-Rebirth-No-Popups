@@ -39,6 +39,11 @@ ship, are written up in [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
 - Chadley scenes that do more than talk (the Gilgamesh scenes, some Chadley's Request quest steps, the card game
   calls): 29 in all.
 
+## Download
+
+[**No Popups 1.0.0**](https://github.com/CaitGPT/FFVII-Rebirth-No-Popups/releases/tag/v1.0.0) — the zip has
+both builds, a README and the licence.
+
 ## Install
 
 Copy the three `NoPopups_P` files (`.pak`, `.ucas`, `.utoc`) into
