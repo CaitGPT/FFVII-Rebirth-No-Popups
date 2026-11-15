@@ -184,6 +184,48 @@ block, so this spoils only the header chunk. The build script checks that before
 UnrealReZen gives each build a new container ID, so two builds of the same tables aren't byte-identical. The table
 inside is.
 
+## Verified on four kinds of world intel
+
+The banner is drawn by one shared display, so removing it once removes it everywhere. We checked that in the game
+rather than assuming it, on 2026-11-15, with the mod installed and nothing else driving the result. Each completion
+is read back from the game's own story flag, not from the screen:
+
+| Activity | Where | Flag read back |
+| --- | --- | --- |
+| Fiend Intel (combat assignment) | Junon Fiend Intel 2: Zemze Breaks | `stfWorldReport_Finish_JUNOA_013` |
+| Expedition Intel (lifespring) | Cragshade Lifespring, Grasslands | `stfWorldReport_Finish_GRASA_003` |
+| Activation Intel (tower) | Eastern Seaboard Tower, Grasslands | `stfWorldReport_Finish_GRASA_006` |
+| Divine Intel (Titan sanctuary) | Sanctuary 1, Grasslands | `stfWorldReport_Finish_GRASA_007` |
+
+In all four the banner and the Results panel never appear, the side notices and rewards arrive as usual, and the
+field prompts stay live. On the combat assignment, measured from the end of the fight: about 12.7 seconds before the
+player could move without the mod, about 2.4 seconds with it.
+
+The ordinary end-of-battle Results screen is untouched, and still appears. It is a different display from the world
+intel banner, which is the one that carries the activity's name and its objective checklist.
+
+## The objective checklist: tried, and given up
+
+Combat assignments show a checklist of their objectives in the top left while you fight. `DisableWorldReportNotify`
+hides that too, because it is part of the same display. We spent a day trying to keep it:
+
+1. **A separate config for combat assignments.** `HubConfig` has no switch that separates the checklist from the
+   completion banner, and combat assignments (`Hub.Type` 3, 42 rows) share `HubConfig_WorldNormal` with lifesprings
+   (type 4) and sanctuaries (type 6). So we added `HubConfig_NoPopups_Mission` and its `_Demo`/`_Media` twins with
+   the switch off, and pointed the 42 combat assignment hubs at them, which made `Hub` a fourth table the pak
+   replaces. It worked: the checklist came back. So did the banner, the Results panel and the Chadley line. They are
+   one display, and there is no switch between them.
+2. **Drawing our own checklist.** Every objective has its own `CompleteStoryFlag` and a `ViewString` text key, so a
+   UE4SS Lua panel can read the flags and draw the list itself. We built that, including identifying which assignment
+   you are in from the enemy on screen (the `ResearchTarget` table joins an enemy's book ID to its world report, 42
+   of 42, with no clashes), and watching the flags so the boxes tick during the fight as they do in the base game.
+
+   It works, and it is in this repository under `ue4ss/`, switched off in `settings.txt`. We did not ship it on,
+   because it means asking players to install UE4SS for a panel the game already knows how to draw, and because a
+   redrawn checklist is a copy of the game's, not the game's.
+
+The release removes the popups and loses the in-fight checklist. The objectives are still listed in the intel menu.
+
 ## How we found it
 
 1. The game's source headers list `EEndMenuReportNotifyKind` (WorldReport, BattleMission, Colosseum, ChadleyReport,

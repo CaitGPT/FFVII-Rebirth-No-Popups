@@ -7,7 +7,7 @@ harness) built and tested it.
 
 | Element | Change | Tested |
 | --- | --- | --- |
-| The "World Intel — *name* — Completed" banner after each world intel activity | Removed | Grasslands Lifesprings 1 and 4 |
+| The "World Intel — *name* — Completed" banner after each world intel activity, and the Results panel with it | Removed | A combat assignment, a lifespring, a tower and a Titan sanctuary |
 | Chadley's video calls (he appears on Cloud's communicator and the camera cuts to it) | 82 calls play as earpiece calls: the same voiced lines and subtitles over normal play | Lifespring and Titan Sanctuary calls |
 | Chadley's calls inside completion sequences (after Lifesprings, the "Excavation" unlock, fiend intel, towers) | Removed: the game holds Cloud until they end, even as earpiece calls. Their flags and triggers still fire | Lifesprings 1 and 4 |
 | The map that opens by itself to show newly unlocked intel | Removed | Lifespring 4 |
@@ -15,8 +15,19 @@ harness) built and tested it.
 Rewards and progress are unchanged: completion flags, data points, party EXP, VR course and intel unlocks all still
 happen. One line of the reward list, "Intel has been relayed to Chadley.", no longer appears.
 
-After the second Grasslands Lifespring, Cloud could move about 10 seconds after the minigame, against about 30 seconds
-without the mod. After the first one (which also unlocks Region Intel) it is about 16 seconds, against about 31.
+Measured on a combat assignment, from the end of the fight: about **2.4 seconds** before the player can move, against
+about **12.7 seconds** without the mod. After the second Grasslands Lifespring, about 10 seconds against about 30.
+After the first one, which also unlocks Region Intel, about 16 against about 31.
+
+Each of the four activity types was verified from the game's own completion flag rather than from the screen; the
+table is in [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
+
+### What you give up
+
+Combat assignments show a checklist of their objectives in the top left while you fight, and the same switch hides
+it: it is part of the same display. We tried twice to keep it and could not do it without bringing the banner back
+with it. The objectives are still listed in the intel menu. The attempt, and the UE4SS panel we built and did not
+ship, are written up in [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
 
 ### Not changed yet
 
