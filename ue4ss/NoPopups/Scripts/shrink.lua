@@ -31,21 +31,23 @@ local function touch(widget, label, scale, speed)
     local key = safe(function() return widget:GetAddress() end)
     if key == nil or seen[key] then return false end
     seen[key] = true
+    -- pcall's own true/false, because these calls return nothing: testing the
+    -- returned value cannot tell success from failure (live 2026-11-15, the log
+    -- claimed "0 animations" whatever happened).
     local applied = {}
     if scale and scale > 0 and scale ~= 1.0 then
-        if safe(function() widget:SetRenderScale({X = scale, Y = scale}) end) ~= nil
-                or safe(function() return widget:IsValid() end) then
-            applied[#applied + 1] = string.format("scale %.2f", scale)
-        end
+        local ok, err = pcall(function() widget:SetRenderScale({X = scale, Y = scale}) end)
+        applied[#applied + 1] = ok and string.format("scale %.2f", scale)
+            or ("scale failed: " .. tostring(err):sub(1, 60))
     end
     if speed and speed > 1.0 then
-        local sped = 0
+        local sped, failed = 0, nil
         for _, name in ipairs(ANIMATIONS) do
-            if safe(function() widget:SetPlaybackSpeedByName(FName(name), speed) end) ~= nil then
-                sped = sped + 1
-            end
+            local ok, err = pcall(function() widget:SetPlaybackSpeedByName(FName(name), speed) end)
+            if ok then sped = sped + 1 else failed = failed or tostring(err):sub(1, 60) end
         end
-        applied[#applied + 1] = string.format("%d animations at %.1fx", sped, speed)
+        applied[#applied + 1] = string.format("%d of %d animations at %.1fx%s", sped, #ANIMATIONS, speed,
+            failed and (" (" .. failed .. ")") or "")
     end
     print(string.format("[NoPopups] %s: %s", label, table.concat(applied, ", ")))
     return true
