@@ -24,63 +24,7 @@
         { "name": "HubConfig_WorldReport_getoffChocobo_Demo", "set": { "DisableWorldReportNotify": "1" } },
         { "name": "HubConfig_WorldReport_getoffChocobo_Media", "set": { "DisableWorldReportNotify": "1" } },
         { "name": "HubConfig_WorldReport_moogleShop", "set": { "DisableWorldReportNotify": "1" } },
-        { "name": "HubConfig_WorldReport_moogleShop_Demo", "set": { "DisableWorldReportNotify": "1" } },
-        // 0.4: combat assignments keep their checklist. The notify switch above also
-        // hides the top-left objective list while an assignment runs, and the owner
-        // missed an objective without it. Combat assignments (Hub.Type 3) share
-        // HubConfig_WorldNormal with Lifesprings and the Divine Intel shrines, so they
-        // get their own copy of it with the switch left off.
-        { "name": "HubConfig_NoPopups_Mission", "cloneFrom": "HubConfig_WorldNormal", "set": { "DisableWorldReportNotify": "0" } },
-        { "name": "HubConfig_NoPopups_Mission_Demo", "cloneFrom": "HubConfig_WorldNormal_Demo", "set": { "DisableWorldReportNotify": "0" } },
-        { "name": "HubConfig_NoPopups_Mission_Media", "cloneFrom": "HubConfig_WorldNormal_Media", "set": { "DisableWorldReportNotify": "0" } }
-      ]
-    },
-    {
-      "asset": "DataObject/Resident/Hub.uasset",
-      // The 42 combat assignment hubs, pointed at the copies above.
-      "rows": [
-        { "name": "Area_1200_Hub_1_1", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_1200_Hub_1_1_Media", "set": { "ConfigID": "HubConfig_NoPopups_Mission_Media" } },
-        { "name": "Area_1200_Hub_2_3", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_1200_Hub_2_3_Media", "set": { "ConfigID": "HubConfig_NoPopups_Mission_Media" } },
-        { "name": "Area_1200_Hub_3_3", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_1200_Hub_3_3_Media", "set": { "ConfigID": "HubConfig_NoPopups_Mission_Media" } },
-        { "name": "Area_1200_Hub_4_1", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_1200_Hub_4_1_Media", "set": { "ConfigID": "HubConfig_NoPopups_Mission_Media" } },
-        { "name": "Area_1200_Hub_5_3", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_1200_Hub_5_3_Media", "set": { "ConfigID": "HubConfig_NoPopups_Mission_Media" } },
-        { "name": "Area_1200_Hub_6_3", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_1200_Hub_6_3_Media", "set": { "ConfigID": "HubConfig_NoPopups_Mission_Media" } },
-        { "name": "Area_1300_Hub_1_3", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_1300_Hub_1_3_Demo", "set": { "ConfigID": "HubConfig_NoPopups_Mission_Demo" } },
-        { "name": "Area_1300_Hub_3_2", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_1300_Hub_3_2_Demo", "set": { "ConfigID": "HubConfig_NoPopups_Mission_Demo" } },
-        { "name": "Area_1300_Hub_4_4", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_1300_Hub_4_4_Demo", "set": { "ConfigID": "HubConfig_NoPopups_Mission_Demo" } },
-        { "name": "Area_1300_Hub_5_4", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_1300_Hub_5_4_Demo", "set": { "ConfigID": "HubConfig_NoPopups_Mission_Demo" } },
-        { "name": "Area_2200_Hub_1_1", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2200_Hub_2_1", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2200_Hub_3_1", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2200_Hub_4_1", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2200_Hub_5_1", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2200_Hub_6_1", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2400_Hub_1_2", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2400_Hub_2_2", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2400_Hub_3_3", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2400_Hub_4_2", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2400_Hub_5_3", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2400_Hub_5_6", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2500_Hub_2_3", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2500_Hub_2_4", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2500_Hub_3_2", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2500_Hub_4_2", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2500_Hub_5_2", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2500_Hub_6_2", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2600_Hub_1_3", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2600_Hub_2_3", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2600_Hub_3_3", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } },
-        { "name": "Area_2600_Hub_4_2", "set": { "ConfigID": "HubConfig_NoPopups_Mission" } }
+        { "name": "HubConfig_WorldReport_moogleShop_Demo", "set": { "DisableWorldReportNotify": "1" } }
       ]
     }
   ]
