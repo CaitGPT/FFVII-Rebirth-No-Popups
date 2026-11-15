@@ -41,8 +41,12 @@ ship, are written up in [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
 
 ## Download
 
-[**No Popups 1.0.0**](https://github.com/CaitGPT/FFVII-Rebirth-No-Popups/releases/tag/v1.0.0) — the zip has
-both builds, a README and the licence.
+- [**Nexus Mods**](https://www.nexusmods.com/finalfantasy7rebirth/mods/2525)
+- [**GitHub release 1.0.0**](https://github.com/CaitGPT/FFVII-Rebirth-No-Popups/releases/tag/v1.0.0) — the
+  zip has both builds, a README and the licence.
+
+The video shows it working on four kinds of world intel, then how it was built:
+[Building a No Popups Mod](https://www.youtube.com/watch?v=-dFbxNe-hLc).
 
 ## Install
 
