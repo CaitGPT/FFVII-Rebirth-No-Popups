@@ -82,6 +82,10 @@ python tools/make_spec.py                         # writes data/generated.json f
 `tools/DataBuilder` is our MIT table reader and writer, copied from the shared copy in our FFVII-Modding repository
 (`Tools/ff7r-databuilder`, commit `ea38b023`).
 
+## Requests
+
+We take requests: changes to this mod, or ideas for new Rebirth mods. Open an issue here, or post on the [Nexus page](https://www.nexusmods.com/finalfantasy7rebirth/mods/2525?tab=posts).
+
 ## Licence
 
 MIT. No game files are included in this repository.
