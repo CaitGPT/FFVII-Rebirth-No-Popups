@@ -216,6 +216,45 @@ other five Classified Intel use the same hub type and config, so they had the sa
 The fights were not played out (the party is level 17), so the completion banner and rewards after one were not
 seen.
 
+### Starting the fights without the panel (tried 2026-11-23, not in a build)
+
+The owner asked whether these fights could be started some other way, from our own prompt, the map icon or the World
+Intel page, instead of giving the panel back. What "Engage Enemy" and "Retry" call is native: the panel
+(`UEndEventProgressDisplay`) and its handler have no reflected functions, and the game has no other way to start them.
+The Hub table names a state trigger for each hub, and UE4SS Lua can send one with `UEndFieldAPI.SendStateTrigger`.
+All runs used Epic 1.005 and harness master eadf5ba5, with the trigger sent from the development Lua console.
+
+**Classified Intel: this works.** The trigger is `trg1200_Hub_Open_7_0`, the hub's `ActivatedStringArguments[1]`. In the
+level's `StateChange` table it switches the arena on, whether it was off or finished.
+
+| Save, build | Where it was sent | Result |
+| --- | --- | --- |
+| `01168da42a25` (not yet fought), 1.0.0, no panel | at the arena | Quetzalcoatl comes out, fight starts ([shot](issue-1/trigger-starts-quetzalcoatl.jpg)) |
+| same, after the boss is set to 1 % HP and hit | | normal results (1,200 EXP, 6 AP, 221 gil, [shot](issue-1/trigger-quetzalcoatl-results.jpg)); `stfArea1200_HubEx_00_Clear` and `stfWorldReport_Finish_GRASA_031` go from false to true |
+| `01168da42a25` again, 1.0.0 | where the save loads, about 350 m from the arena | the party is moved to the arena and the fight starts ([shot](issue-1/trigger-from-afar-quetzalcoatl.jpg)) |
+| `0567706bd4ac` (Quetzalcoatl beaten), no mod | at Bearer of Grudges, about 1.6 km away | rematch: the party is moved and the fight starts ([shot](issue-1/trigger-rematch-quetzalcoatl.jpg)); after it, "Quetzalcoatl defeated", flags still set. The camera ended up inside a rock after this long move |
+| `0567706bd4ac`, 1.0.0 | in Cosmo Canyon (another region) | nothing |
+
+So a small Lua part could give Classified Intel its own start while the panel stays hidden. It could be a prompt in
+the arena, or a button on the World Intel page or the map for the region the player is in. Keyboard and pad make no
+difference to the trigger itself, since no key is involved. Our own prompt was not built or tried. The plan for it is
+the game's Triangle/Hold field icon through `UEndMenuAPI.ShowFieldTargetIcon`, with Lua reading the key.
+
+**Fiend Intel retries: this does not work.** A completed combat assignment (Hub.Type 3, e.g. `Area_1200_Hub_2_3`,
+"Fiend Intel 2: Bearer of Grudges") is retried from the same panel, and 1.0.0 hides it too: at the spot there is no
+panel and no Retry ([shot](issue-1/fiend-retry-1.0.0-no-panel.jpg)). Without the mod, the panel shows the checklist
+and "Retry" ([shot](issue-1/fiend-retry-vanilla-panel.jpg)). Holding Retry brings the fiends back into the field, and
+the fight starts when you reach them ([shot](issue-1/fiend-retry-vanilla-after-hold.jpg)).
+
+The hub's `trg1200_Hub_Restart_2_3` did nothing at the retry point, sent with each of the three send functions. In the
+level's `StateChange` table it only resets MAI's radio line for `Grassland_mob_12`. Bringing the fiends back is the
+job of the enemy territory `Grassland_mob_12`, and no reflected function brings back a cleared territory:
+
+- `InvalidateTerritoryEncount` only switches encounters on or off. It was not tried.
+- `StartReinforcementsWave` would spawn enemies outside the assignment, without its checklist or completion.
+
+A retry without the panel would need native code: find the panel's retry in the game's code and call it from a DLL.
+
 ## Junon Colosseum
 
 Junon Colosseum also replaces `Action`, `PlannerEvent` and `Hub`, and pak `JunonColosseum_999_P` loads after `NoPopups_P`
