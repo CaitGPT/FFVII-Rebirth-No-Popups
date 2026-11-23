@@ -196,12 +196,25 @@ no save with a Classified Intel open and not yet fought, so the test used a save
 differs from the game's. The cost: Classified Intel keeps its panel, and with it its completion banner, as in the
 unmodded game. That is six fights in the whole game.
 
-**Not seen yet.** The fight itself starting from the prompt. On the reset save, pressing the prompt's button (Y) in
-the fixed build did not bring the boss out, and walking to the Destination marker did not either; it was not tried
-without the mod. Most likely the arena's own objects were saved as finished along with the beaten save and do not
-follow the reset flags, so a save made before the fight is needed to see it start. Only the Junon compat build
-was run; the Standard build's tables were checked offline (same 8 `Hub` rows, same 3 new configs). The other five
-regions' Classified Intel use the same rows and config, so they had the same fault; they were not visited.
+**The fight starting, seen on 2026-11-23.** The game's own tutorial ("Classified Foes") says it: "Upon arrival, hold
+Y to lure out your foe" ([shot](issue-1/tutorial-hold-y.jpg)). No library save had a Classified Intel open and not
+fought, so one was made by editing a copy of a Chapter 2 save (`908407128fdf`, before Midgardsormr, party level 17):
+three story flag bits set offline, `stfHubGroup_GRASA_ExSubjugation_Open`, `stfHubGroup_GRASA_ExBattle_Open` (what
+the region's opening leaves behind) and `stfWorldReport_Visit_GRASA_031`. It is in the save library as
+`01168da42a25`, marked as edited. Each run: a fresh game, that save, a walk to Quetzalcoatl's arena in the
+Grasslands ("Classified Intel: Winged Lacertilian of Yore"), MAI's warning, then Y held for 5 s.
+
+| Build | World Intel panel | Y held 5 s |
+| --- | --- | --- |
+| No mod | "Defeat the Quetzalcoatl / Engage Enemy" ([shot](issue-1/q-without-mod-panel.jpg)) | Quetzalcoatl comes out, fight starts ([shot](issue-1/q-without-mod-fight.jpg)) |
+| 1.0.0 (`NoPopups_JunonCompat_9999_P`) | none; Destination marker only ([shot](issue-1/q-1.0.0-no-panel.jpg)) | nothing, twice |
+| 1.0.1 `NoPopups_JunonCompat_9999_P`, Junon Colosseum 1.2.1 installed | shown ([shot](issue-1/q-fix-compat-panel.jpg)) | fight starts ([shot](issue-1/q-fix-compat-fight.jpg)) |
+| 1.0.1 `NoPopups_P`, Junon Colosseum's pak out | shown ([shot](issue-1/q-fix-standard-panel.jpg)) | fight starts ([shot](issue-1/q-fix-standard-fight.jpg)) |
+
+So the hidden panel is what blocked the fight: the "hold Y" input belongs to it. Only Quetzalcoatl was run; the
+other five Classified Intel use the same hub type and config, so they had the same fault and get the same fix.
+The fights were not played out (the party is level 17), so the completion banner and rewards after one were not
+seen.
 
 ## Junon Colosseum
 
