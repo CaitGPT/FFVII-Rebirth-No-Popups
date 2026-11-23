@@ -161,14 +161,51 @@ Anything else the 205 action does on top of the two flags would be missing. Noth
 **Not changed:** first-time tutorial panels still pause the game, and the "new intel" banner when a hub activates
 still shows (it can't be removed by table without freezing Cloud).
 
-**Compatibility.** The pak replaces whole tables: `Action`, `PlannerEvent` and `HubConfig`. Another mod that changes
+**Compatibility.** The pak replaces whole tables: `Action`, `PlannerEvent`, `HubConfig` and (since 1.0.1) `Hub`. Another mod that changes
 any of them conflicts, and whichever pak loads last wins outright. The JunonCompat build carries Junon Colosseum's
 version of those tables as it was at build time. After a Junon Colosseum update, the compat build must be rebuilt, or
 it will undo that update's changes to those tables.
 
+## Classified Intel could not be started (issue #1, 1.0.1)
+
+A player reported that the start prompt for a region's boss fight was missing (Jabberwock, "Classified Intel: The
+Wyvern Awoken"). Classified Intel is a different kind of hub from the Fiend Intel combat assignments: `Hub.Type` 10,
+one per region (`Area_1200_Hub_7_0`, `Area_1300_Hub_7_0`, `Area_2200_Hub_7_1`, `Area_2400_Hub_7_0`,
+`Area_2500_Hub_7_0`, `Area_2600_Hub_5_0`, plus a `_Demo` and a `_Media` row). They use `HubConfig_WorldReport_SysOpen`,
+which 1.0.0 sets `DisableWorldReportNotify` on.
+
+When the hub is active, the game shows its objective in the world intel panel at the top left: "World Intel /
+Defeat the Jabberwock / Engage Enemy", with the button to press. That panel is the display the switch hides (the
+same one that carries a combat assignment's checklist), so with 1.0.0 the "Engage Enemy" prompt never appears.
+
+Seen in the game on 2026-11-23 (Epic 1.005, Junon Colosseum 1.2.1 installed, harness on master eadf5ba5). There was
+no save with a Classified Intel open and not yet fought, so the test used a save where Jabberwock had been beaten
+(library save `0567706bd4ac`) and set its flags back in memory through a development Lua console
+(`stfWorldReport_Visit/Start/Finish/Chadlie_CSMOA_031` and `stfArea2500_HubEx_00_Clear` cleared, then Visit set):
+
+| Build | At the Wyvern's arena |
+| --- | --- |
+| No mod | panel shown: "Defeat the Jabberwock", "Engage Enemy" ([shot](issue-1/without-mod.jpg)) |
+| 1.0.0 (`NoPopups_JunonCompat_9999_P`) | the hub is active (Destination marker on the compass) but no panel and no prompt ([shot](issue-1/with-1.0.0.jpg)) |
+| 1.0.1 (same pak, fixed) | panel and "Engage Enemy" shown ([shot](issue-1/with-fix.jpg)) |
+
+**The fix.** The Classified Intel hubs get their own copies of their config (`HubConfig_NoPopups_Classified`,
+`_Demo`, `_Media`, cloned from `HubConfig_WorldReport_SysOpen` and its twins with the switch left off), and the 8
+`Hub` rows point at them. Towers, Phenomenon and Excavation Intel, which share `SysOpen`, keep the switch.
+`Hub` becomes a fourth table the pak replaces; the JunonCompat build starts from Junon Colosseum 1.2.1's `Hub`, which
+differs from the game's. The cost: Classified Intel keeps its panel, and with it its completion banner, as in the
+unmodded game. That is six fights in the whole game.
+
+**Not seen yet.** The fight itself starting from the prompt. On the reset save, pressing the prompt's button (Y) in
+the fixed build did not bring the boss out, and walking to the Destination marker did not either; it was not tried
+without the mod. Most likely the arena's own objects were saved as finished along with the beaten save and do not
+follow the reset flags, so a save made before the fight is needed to see it start. Only the Junon compat build
+was run; the Standard build's tables were checked offline (same 8 `Hub` rows, same 3 new configs). The other five
+regions' Classified Intel use the same rows and config, so they had the same fault; they were not visited.
+
 ## Junon Colosseum
 
-Junon Colosseum also replaces `Action` and `PlannerEvent`, and pak `JunonColosseum_999_P` loads after `NoPopups_P`
+Junon Colosseum also replaces `Action`, `PlannerEvent` and `Hub`, and pak `JunonColosseum_999_P` loads after `NoPopups_P`
 (a pak's number before `_P` sets its order). `-Variant JunonCompat` applies the same changes to Junon Colosseum's
 tables and names the pak `NoPopups_JunonCompat_9999_P` so it loads last. The two mods change no rows in common. Tested
 with Junon Colosseum enabled: the Lifespring behaved as with the standard pak. Junon Colosseum's own content was not

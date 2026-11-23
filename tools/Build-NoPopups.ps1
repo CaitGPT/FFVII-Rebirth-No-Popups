@@ -4,7 +4,7 @@ param(
     # Install/Uninstall: copy the pak into, or out of, the game's ~mods folder. Status: show what is installed.
     [ValidateSet('Build', 'Install', 'Uninstall', 'Status')]
     [string]$Mode = 'Build',
-    # Standard: built on the game's own tables. JunonCompat: built on Junon Colosseum's Action and PlannerEvent
+    # Standard: built on the game's own tables. JunonCompat: built on Junon Colosseum's Action, PlannerEvent and Hub
     # (config JunonColosseumStaging: that mod's staged End\Content\DataObject\Resident folder), and named to load after
     # it. Both mods replace those whole tables, so with Junon Colosseum installed only this variant keeps both.
     [ValidateSet('Standard', 'JunonCompat')]
@@ -38,14 +38,15 @@ $OtherPackage = if ($Variant -eq 'JunonCompat') { 'NoPopups_P' } else { 'NoPopup
 # data\no-popups.json is written by hand; data\generated.json comes from tools\make_spec.py.
 # data\generated-tips.json comes from tools\tips_spec.py.
 $SpecFiles = @((Join-Path $ModRoot 'data\no-popups.json'), (Join-Path $ModRoot 'data\generated.json'))
-$Tables = @('HubConfig', 'Action', 'PlannerEvent')
+$Tables = @('HubConfig', 'Hub', 'Action', 'PlannerEvent')
 if ($WithTips) {
     $SpecFiles += (Join-Path $ModRoot 'data\generated-tips.json')
     $Tables += 'WorldCondition'
 }
 $VariantRoot = Join-Path $Config.BuildRoot $Variant
 $Spec = Join-Path $VariantRoot 'spec.json'
-$JunonTables = @('Action', 'PlannerEvent')
+# Junon Colosseum 1.2.1 replaces Hub too (its table differs from the game's), so the compat build starts from its copy.
+$JunonTables = @('Action', 'PlannerEvent', 'Hub')
 $BuilderBin = Join-Path $Config.BuildRoot 'DataBuilderBin'
 $Builder = Join-Path $BuilderBin 'DataBuilder.dll'
 $Paks = Join-Path $Config.GameRoot 'End\Content\Paks'

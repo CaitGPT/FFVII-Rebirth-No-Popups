@@ -24,7 +24,29 @@
         { "name": "HubConfig_WorldReport_getoffChocobo_Demo", "set": { "DisableWorldReportNotify": "1" } },
         { "name": "HubConfig_WorldReport_getoffChocobo_Media", "set": { "DisableWorldReportNotify": "1" } },
         { "name": "HubConfig_WorldReport_moogleShop", "set": { "DisableWorldReportNotify": "1" } },
-        { "name": "HubConfig_WorldReport_moogleShop_Demo", "set": { "DisableWorldReportNotify": "1" } }
+        { "name": "HubConfig_WorldReport_moogleShop_Demo", "set": { "DisableWorldReportNotify": "1" } },
+        // 1.0.1 (issue #1): Classified Intel, the region bosses (Hub.Type 10, e.g. Jabberwock), is started
+        // from the world intel panel: "Engage Enemy" under the objective is the only way to make the boss
+        // appear. The switch above hides that panel, so the fight could not be started. These hubs share
+        // HubConfig_WorldReport_SysOpen with the towers and the Phenomenon and Excavation Intel, so they get
+        // their own copies of it with the switch left off. Classified Intel keeps its panel and banner.
+        { "name": "HubConfig_NoPopups_Classified", "cloneFrom": "HubConfig_WorldReport_SysOpen", "set": { "DisableWorldReportNotify": "0" } },
+        { "name": "HubConfig_NoPopups_Classified_Demo", "cloneFrom": "HubConfig_WorldReport_SysOpen_Demo", "set": { "DisableWorldReportNotify": "0" } },
+        { "name": "HubConfig_NoPopups_Classified_Media", "cloneFrom": "HubConfig_WorldReport_SysOpen_Media", "set": { "DisableWorldReportNotify": "0" } }
+      ]
+    },
+    {
+      "asset": "DataObject/Resident/Hub.uasset",
+      // The Classified Intel hubs (every Hub.Type 10 row), pointed at the copies above.
+      "rows": [
+        { "name": "Area_1200_Hub_7_0", "set": { "ConfigID": "HubConfig_NoPopups_Classified" } },
+        { "name": "Area_1200_Hub_7_0_Media", "set": { "ConfigID": "HubConfig_NoPopups_Classified_Media" } },
+        { "name": "Area_1300_Hub_7_0", "set": { "ConfigID": "HubConfig_NoPopups_Classified" } },
+        { "name": "Area_1300_Hub_7_0_Demo", "set": { "ConfigID": "HubConfig_NoPopups_Classified_Demo" } },
+        { "name": "Area_2200_Hub_7_1", "set": { "ConfigID": "HubConfig_NoPopups_Classified" } },
+        { "name": "Area_2400_Hub_7_0", "set": { "ConfigID": "HubConfig_NoPopups_Classified" } },
+        { "name": "Area_2500_Hub_7_0", "set": { "ConfigID": "HubConfig_NoPopups_Classified" } },
+        { "name": "Area_2600_Hub_5_0", "set": { "ConfigID": "HubConfig_NoPopups_Classified" } }
       ]
     }
   ]

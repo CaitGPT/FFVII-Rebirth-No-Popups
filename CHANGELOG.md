@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1 - unreleased
+
+- Fixed: Classified Intel (each region's boss fight, e.g. Jabberwock in Cosmo Canyon) could not be started, because the
+  world intel panel that shows its "Engage Enemy" prompt was hidden along with the other pop-ups (issue #1).
+  Classified Intel now keeps that panel, and with it its completion banner. Every other world intel stays as it was.
+- The pak now also replaces the `Hub` table. Players with Junon Colosseum still use the JunonCompat build, which is
+  built on Junon Colosseum 1.2.1's tables.
+
 ## 1.0.0 - 2026-11-15
 
 First public release. The mod removes the world intel completion banner and the Results panel with it, turns 82 of
