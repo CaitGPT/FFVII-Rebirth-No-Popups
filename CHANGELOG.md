@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.1 - unreleased
+## 1.0.1 - 2026-11-24
 
 - Fixed: Classified Intel (each region's boss fight, e.g. Jabberwock in Cosmo Canyon) could not be started (issue #1).
   The game starts it from the world intel panel ("Engage Enemy"), which the mod hid along with the banner. A new UE4SS
