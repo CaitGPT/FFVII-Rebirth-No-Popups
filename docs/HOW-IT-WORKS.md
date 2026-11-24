@@ -342,11 +342,21 @@ Results:
   ([icon](issue-1/bare-kb-icon.jpg), [end](issue-1/bare-kb-results.jpg)).
 - Bearer of Grudges' Retry brought the fiends back.
 
-**Not run in game:**
+**The "Without UE4SS" paks (owner's choice (b), 2026-11-24).** These are for players without UE4SS: the bosses keep
+the game's panel. Both were run on `01168da42a25`, with Quetzalcoatl not yet fought:
 
-- the "Without UE4SS" paks as a whole. Their two parts were each seen: the Classified whitelist in 61081b8 and the
-  Fiend Intel one here.
-- the Steam build.
+- **Compat pak** (ucas 5D10A415, with Junon Colosseum and no boss script installed): the panel shows "Defeat the
+  Quetzalcoatl / Engage Enemy" ([shot](issue-1/dataonly-panel.jpg)). Holding Y started the fight. The results came
+  as usual, with "Intel has been relayed to Chadley" and 10 data points
+  ([shot](issue-1/dataonly-results.jpg)). `stfArea1200_HubEx_00_Clear` and `stfWorldReport_Finish_GRASA_031` went from
+  false to true, and afterwards the panel offers the rematch. The completion banner itself was not caught on screen:
+  a press during the fight's intro opened photo mode over that moment.
+- **Standard pak** (ucas CCD497E8, Junon Colosseum's pak out): the panel was shown
+  ([shot](issue-1/dataonly-standard-panel.jpg)). The first hold went to the "Classified Foes" tutorial, which opens
+  there, as it does without the mod. The second hold started the fight ([shot](issue-1/dataonly-standard-fight.jpg)),
+  and both flags were set after it.
+
+**Not run in game:** the Steam build.
 
 ## Junon Colosseum
 

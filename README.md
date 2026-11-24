@@ -68,8 +68,9 @@ folder in `End\Binaries\Win64\ue4ss\Mods\`. The UE4SS part needs
 pak). Both mods replace the `Action`, `PlannerEvent` and `Hub` tables, and this version carries Junon Colosseum's rows
 as well as ours.
 
-**Without UE4SS**, use `Without UE4SS` (or its Junon Colosseum twin): the pak alone, with the region bosses keeping the
-game's panel.
+**Which folder:** with UE4SS, `Install` (the Lua start; the bosses' panel and banner stay hidden). Without UE4SS,
+`Without UE4SS` (the pak alone; the bosses keep the game's panel, "Engage Enemy", and their banner comes back). With
+Junon Colosseum, take the "with Junon Colosseum" version of either.
 
 To uninstall, delete the three pak files and the `NoPopups` folder.
 
