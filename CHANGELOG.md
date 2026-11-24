@@ -2,9 +2,15 @@
 
 ## 1.0.1 - unreleased
 
-- Fixed: Classified Intel (each region's boss fight, e.g. Jabberwock in Cosmo Canyon) could not be started, because the
-  world intel panel that shows its "Engage Enemy" prompt was hidden along with the other pop-ups (issue #1).
-  Classified Intel now keeps that panel, and with it its completion banner. Every other world intel stays as it was.
+- Fixed: Classified Intel (each region's boss fight, e.g. Jabberwock in Cosmo Canyon) could not be started (issue #1).
+  The game starts it from the world intel panel ("Engage Enemy"), which the mod hid along with the banner. A new UE4SS
+  part shows the game's own "Hold" icon over Cloud in the boss's area: hold Y or the right mouse button and the boss
+  comes out, for the first fight and for rematches. The panel and the banner stay hidden. Checked on all six bosses,
+  with a controller and with keyboard and mouse.
+- Fixed: a finished combat assignment (Fiend Intel) could not be retried, for the same reason. Fiend Intel keeps the
+  game's panel now: its checklist and Retry are back, and so is its completion banner.
+- New: the UE4SS part needs RE-UE4SS FF7R. Without UE4SS, the "Without UE4SS" builds give the region bosses the game's
+  panel back instead (and their banner with it).
 - The pak now also replaces the `Hub` table. Players with Junon Colosseum still use the JunonCompat build, which is
   built on Junon Colosseum 1.2.1's tables.
 

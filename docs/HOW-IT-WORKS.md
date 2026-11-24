@@ -189,7 +189,7 @@ no save with a Classified Intel open and not yet fought, so the test used a save
 | 1.0.0 (`NoPopups_JunonCompat_9999_P`) | the hub is active (Destination marker on the compass) but no panel and no prompt ([shot](issue-1/with-1.0.0.jpg)) |
 | 1.0.1 (same pak, fixed) | panel and "Engage Enemy" shown ([shot](issue-1/with-fix.jpg)) |
 
-**The fix.** The Classified Intel hubs get their own copies of their config (`HubConfig_NoPopups_Classified`,
+**The first fix (d725ed0, now only in the "Without UE4SS" builds).** The Classified Intel hubs get their own copies of their config (`HubConfig_NoPopups_Classified`,
 `_Demo`, `_Media`, cloned from `HubConfig_WorldReport_SysOpen` and its twins with the switch left off), and the 8
 `Hub` rows point at them. Towers, Phenomenon and Excavation Intel, which share `SysOpen`, keep the switch.
 `Hub` becomes a fourth table the pak replaces; the JunonCompat build starts from Junon Colosseum 1.2.1's `Hub`, which
@@ -254,6 +254,99 @@ job of the enemy territory `Grassland_mob_12`, and no reflected function brings 
 - `StartReinforcementsWave` would spawn enemies outside the assignment, without its checklist or completion.
 
 A retry without the panel would need native code: find the panel's retry in the game's code and call it from a DLL.
+
+### What 1.0.1 ships (owner's choice, 2026-11-24)
+
+The owner chose: bosses started by our Lua, Fiend Intel given its panel back.
+
+**Classified Intel: `ue4ss/NoPopups/Scripts/boss_start.lua`.** For each of the six bosses it knows the hub's trigger,
+its arena (the location volumes named in `DetectorStringArg[1]`) and the flag that opens it (`ActivateStoryFlagID`).
+Twice a second it checks four things:
+
+- the boss is open, and `stfWorldMap_Hub_Prohibition` (the hubs' story switch-off) is not set;
+- Cloud stands in the arena;
+- no fight is on, the game is not paused, and the field controls are free;
+- the start has not just been used: after a start, nothing more until the fight has come and gone.
+
+While those hold, it shows the game's own field icon (`UEndMenuAPI.ShowFieldTargetIcon`, state Hold, Triangle) over
+Cloud. The icon draws the right glyph by itself: Y on a pad, the mouse on keyboard. Its ring fills while Y or the
+right mouse button is held, for the game's own hold time (`UEndPlayerCharacterConfig.SecretEnemy_IconInputTimeMax`,
+2.5 s). Then the script sends the trigger with `UEndFieldAPI.SendStateTrigger`. Only a press that starts in the arena
+counts. After the fight the icon comes back, as the game's panel offers a rematch.
+
+Two things learnt on the way:
+
+- The arena volumes are split into several actors (e.g. `LocationVolume_Hub_A_7_1a` and `_1b`), all with the hub's
+  name as their `LocationId`.
+- `IsOverlappingActor` reads false for them even with Cloud inside, so the test is by position: within a volume's
+  radius (their bounds are round) and height.
+
+**Fiend Intel: back to the game's panel.** The 42 `Hub.Type` 3 rows point at copies of their config
+(`HubConfig_NoPopups_FiendIntel`, `_Demo`, `_Media`, cloned from `HubConfig_WorldNormal` and its twins) with the
+switch left off. Lifesprings and the other intel that share `WorldNormal` keep the switch. The Classified Intel
+whitelist moved to `data/classified-panel.json`, built only with `-ClassifiedPanel` for the "Without UE4SS" paks.
+`tools/check_build.py` checks a built pak's rows offline:
+
+- the 13 switched configs;
+- the copies, equal to their sources except the switch;
+- every Type 3 row on its matching copy, and the Type 10 rows untouched (or on the Classified copies);
+- no other `Hub` row changed.
+
+It passes on all four builds and fails when a build is checked against the wrong layout.
+
+**Seen in game, 2026-11-24** (Epic 1.005, harness master eadf5ba5; every start logged by the script's `boss_log`):
+
+| Boss (hub) | Save | Controller | Keyboard and mouse |
+| --- | --- | --- | --- |
+| Quetzalcoatl (`Area_1200_Hub_7_0`) | `01168da42a25`, not yet fought | first fight: started, normal results ([shot](issue-1/boss-start-results-quetzalcoatl.jpg)), `stfArea1200_HubEx_00_Clear` and `stfWorldReport_Finish_GRASA_031` false to true | rematch: started ([shot](issue-1/boss-start-fight-keyboard.jpg)), Clear set |
+| Jabberwock (`Area_2500_Hub_7_0`) | `0567706bd4ac`, all beaten | started, Clear set | started, Clear set |
+| Great Malboro (`Area_2400_Hub_7_0`) | same | started, Clear set | started, Clear set |
+| Tonberry King (`Area_2200_Hub_7_1`) | same | started, Clear set | started, Clear set |
+| Zuu King (`Area_2600_Hub_5_0`) | same | started, Clear set | started, Clear set |
+| Mindflayer (`Area_1300_Hub_7_0`) | same | started, Clear set | started, Clear set |
+
+How the rows were checked:
+
+- On the beaten save, each run cleared `stfArea<area>_HubEx_00_Clear` in memory first. The fight set it again.
+- `stfWorldReport_Finish_*` was left set. It is written once, when the hub first completes. A first run that cleared
+  it too (Jabberwock) left it false after the fight, because the saved hub state is already complete. Only
+  Quetzalcoatl's first fight shows it being written.
+- Each fight was ended by setting the boss to 1 % HP through the development console and hitting it once.
+- The icon looks like this: [pad](issue-1/boss-start-icon-pad.jpg), [keyboard](issue-1/boss-start-icon-keyboard.jpg).
+  It hides while the main menu is open ([shot](issue-1/boss-start-menu-hides-icon.jpg)); Y is Save there.
+
+The completion banner did not show after any of these fights.
+
+Fiend Intel, on the beaten save at "Bearer of Grudges":
+
+- The 1.0.1 compat build shows the panel and Retry ([shot](issue-1/fiend-retry-1.0.1-panel.jpg)).
+- Holding Retry brings the two Elfadunks back ([shot](issue-1/fiend-retry-1.0.1-after-hold.jpg)).
+- The fight runs with its checklist and time limit ([shot](issue-1/fiend-retry-1.0.1-fight.jpg)). It was left to
+  the party's AI and was over 72 s later; whether by a win or by the time limit was not seen.
+- After it the panel offers Retry again ([shot](issue-1/fiend-retry-1.0.1-after-fight.jpg)), and holding it brought
+  the fiends back a second time (0 fiends before, 2 after).
+
+A run seen to fail, or one abandoned part-way, was not tried.
+
+**Bare setup.** The standard build alone, with everything else set aside:
+
+- the other paks, the `End/Mods` plugin loader (FF7RML, FF7RModMenu) and every other UE4SS mod, including our UE4SS
+  1.005 fix;
+- only the harness's telemetry reader stayed, because the harness cannot see the game without it.
+
+Results:
+
+- Quetzalcoatl on `01168da42a25` started from the pad ([icon](issue-1/bare-standard-icon.jpg),
+  [fight](issue-1/bare-standard-fight.jpg)).
+- On `0567706bd4ac` the keyboard rematch was played out by hand to "Quetzalcoatl defeated"
+  ([icon](issue-1/bare-kb-icon.jpg), [end](issue-1/bare-kb-results.jpg)).
+- Bearer of Grudges' Retry brought the fiends back.
+
+**Not run in game:**
+
+- the "Without UE4SS" paks as a whole. Their two parts were each seen: the Classified whitelist in 61081b8 and the
+  Fiend Intel one here.
+- the Steam build.
 
 ## Junon Colosseum
 

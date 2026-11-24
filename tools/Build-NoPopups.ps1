@@ -11,6 +11,9 @@ param(
     [string]$Variant = 'Standard',
     # Also silence first-time tutorial tips (data\generated-tips.json). Off by default until it passes in game.
     [switch]$WithTips,
+    # Give Classified Intel (the region bosses) the game's own panel back (data\classified-panel.json), for a build
+    # without the UE4SS part, which otherwise starts those fights. Built into its own folder (build\<Variant>-Panel).
+    [switch]$ClassifiedPanel,
     # Machine paths, JSON (default tools\build-config.local.json; see build-config.example.json).
     [string]$ConfigPath = $null
 )
@@ -39,11 +42,12 @@ $OtherPackage = if ($Variant -eq 'JunonCompat') { 'NoPopups_P' } else { 'NoPopup
 # data\generated-tips.json comes from tools\tips_spec.py.
 $SpecFiles = @((Join-Path $ModRoot 'data\no-popups.json'), (Join-Path $ModRoot 'data\generated.json'))
 $Tables = @('HubConfig', 'Hub', 'Action', 'PlannerEvent')
+if ($ClassifiedPanel) { $SpecFiles += (Join-Path $ModRoot 'data\classified-panel.json') }
 if ($WithTips) {
     $SpecFiles += (Join-Path $ModRoot 'data\generated-tips.json')
     $Tables += 'WorldCondition'
 }
-$VariantRoot = Join-Path $Config.BuildRoot $Variant
+$VariantRoot = Join-Path $Config.BuildRoot ($(if ($ClassifiedPanel) { "$Variant-Panel" } else { $Variant }))
 $Spec = Join-Path $VariantRoot 'spec.json'
 # Junon Colosseum 1.2.1 replaces Hub too (its table differs from the game's), so the compat build starts from its copy.
 $JunonTables = @('Action', 'PlannerEvent', 'Hub')

@@ -1,5 +1,9 @@
 -- No Popups: UE4SS side.
 --
+-- What ships (1.0.1): boss_start.lua, a start for the region boss fights (Classified Intel), whose own start is in the
+-- world intel panel the pak hides. Everything else here is development work kept off in settings.txt, and its
+-- modules are not in the release.
+--
 -- With log_widgets = 1 in settings.txt (beside this Scripts folder), every widget the game shows through
 -- EndUserWidget.AddToViewportEx is written to widgets-log.txt with a time stamp, to name popups to remove.
 -- The hook follows Junon Colosseum's, which runs at load every day: an empty pre-callback, the work after the call.
@@ -11,13 +15,15 @@ local MOD_DIR = package.path:match("([^;]*[\\/]NoPopups[\\/])[Ss]cripts[\\/]%?%.
     or (debug.getinfo(1, "S").source:match("^@(.*[\\/])[Ss]cripts[\\/]")) or ""
 
 local function read_settings()
-    local settings = { log_widgets = false, probe = false, probe_scan_actors = false, checklist = true,
-                   shrink = true, shrink_scale = 0.6, shrink_speed = 3.0 }
+    local settings = { boss_start = true, boss_log = false, log_widgets = false, probe = false,
+                   probe_scan_actors = false, checklist = false, shrink = false, shrink_scale = 0.6, shrink_speed = 3.0 }
     local file = io.open(MOD_DIR .. "settings.txt", "r")
     if not file then return settings end
     for line in file:lines() do
         local key, value = line:match("^%s*([%w_]+)%s*=%s*(%S+)")
         local on = (value == "1" or value == "true")
+        if key == "boss_start" then settings.boss_start = on end
+        if key == "boss_log" then settings.boss_log = on end
         if key == "log_widgets" then settings.log_widgets = on end
         if key == "probe" then settings.probe = on end
         if key == "probe_scan_actors" then settings.probe_scan_actors = on end
@@ -32,6 +38,42 @@ end
 
 local settings = read_settings()
 print(string.format("[NoPopups] loaded from %s; widget logging %s\n", MOD_DIR, settings.log_widgets and "on" or "off"))
+
+if settings.boss_start then
+    package.path = MOD_DIR .. "Scripts/?.lua;" .. package.path
+    local ok, boss = pcall(require, "boss_start")
+    if ok then
+        if settings.boss_log then
+            local log = io.open(MOD_DIR .. "boss-log.txt", "a")
+            boss.trace = function(key, message)
+                if not log then return end
+                log:write(string.format("%s %s %s\n", os.date("!%Y-%m-%dT%H:%M:%SZ"), key, tostring(message)))
+                log:flush()
+            end
+            boss.trace("session", "start")
+        end
+        -- Registered while mods load: UE4SS adds the game-thread callback on a mod's first ExecuteInGameThread, and
+        -- doing that in play can crash (Battle Meters).
+        pcall(ExecuteInGameThread, function() end)
+        -- Ten times a second while the icon is up (the hold gauge), otherwise twice a second.
+        local busy, idle = false, 0
+        LoopAsync(100, function()
+            idle = idle + 1
+            if busy or idle >= 5 then
+                idle = 0
+                ExecuteInGameThread(function()
+                    local fine, shown = pcall(boss.tick)
+                    if fine then busy = shown == true
+                    else busy = false; boss.trace("error", tostring(shown)) end
+                end)
+            end
+            return false
+        end)
+        print("[NoPopups] boss fight start on\n")
+    else
+        print("[NoPopups] boss_start failed to load: " .. tostring(boss) .. "\n")
+    end
+end
 if settings.probe then
     package.path = MOD_DIR .. "Scripts/?.lua;" .. package.path
     local ok, probe = pcall(require, "probe")

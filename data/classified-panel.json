@@ -1,0 +1,33 @@
+{
+  // No Popups: Classified Intel keeps the game's own panel (built only with -ClassifiedPanel).
+  //
+  // Classified Intel, the region bosses (Hub.Type 10, e.g. Jabberwock), is started from the world intel panel:
+  // "Engage Enemy" under the objective. No Popups hides that panel (HubConfig_WorldReport_SysOpen's switch). The
+  // UE4SS part (ue4ss/NoPopups, boss_start.lua) gives these fights their own prompt instead. This file is for a
+  // build without UE4SS: the hubs get copies of their config with the switch left off, so the panel, the prompt
+  // and the completion banner come back, as in 61081b8.
+  "tables": [
+    {
+      "asset": "DataObject/Resident/HubConfig.uasset",
+      "rows": [
+        { "name": "HubConfig_NoPopups_Classified", "cloneFrom": "HubConfig_WorldReport_SysOpen", "set": { "DisableWorldReportNotify": "0" } },
+        { "name": "HubConfig_NoPopups_Classified_Demo", "cloneFrom": "HubConfig_WorldReport_SysOpen_Demo", "set": { "DisableWorldReportNotify": "0" } },
+        { "name": "HubConfig_NoPopups_Classified_Media", "cloneFrom": "HubConfig_WorldReport_SysOpen_Media", "set": { "DisableWorldReportNotify": "0" } }
+      ]
+    },
+    {
+      "asset": "DataObject/Resident/Hub.uasset",
+      // The Classified Intel hubs (every Hub.Type 10 row), pointed at the copies above.
+      "rows": [
+        { "name": "Area_1200_Hub_7_0", "set": { "ConfigID": "HubConfig_NoPopups_Classified" } },
+        { "name": "Area_1200_Hub_7_0_Media", "set": { "ConfigID": "HubConfig_NoPopups_Classified_Media" } },
+        { "name": "Area_1300_Hub_7_0", "set": { "ConfigID": "HubConfig_NoPopups_Classified" } },
+        { "name": "Area_1300_Hub_7_0_Demo", "set": { "ConfigID": "HubConfig_NoPopups_Classified_Demo" } },
+        { "name": "Area_2200_Hub_7_1", "set": { "ConfigID": "HubConfig_NoPopups_Classified" } },
+        { "name": "Area_2400_Hub_7_0", "set": { "ConfigID": "HubConfig_NoPopups_Classified" } },
+        { "name": "Area_2500_Hub_7_0", "set": { "ConfigID": "HubConfig_NoPopups_Classified" } },
+        { "name": "Area_2600_Hub_5_0", "set": { "ConfigID": "HubConfig_NoPopups_Classified" } }
+      ]
+    }
+  ]
+}

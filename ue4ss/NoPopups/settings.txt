@@ -1,21 +1,17 @@
-# No Popups, UE4SS side. 1 turns a switch on.
-#
-# The pop-ups themselves are removed by the pak (HubConfig's world intel
-# notice), which is the whole feature. Everything below is off: it was built
-# while trying to keep the game's notice and take only its twelve seconds of
-# downtime away, which shrinking alone could not do. Kept for reference.
+# No Popups, UE4SS side. 1 turns a switch on, 0 off.
 
-# Scale the notice down and run its animations fast (12.7 s -> 8.4 s; the pak
-# gets to 2.4 s, so this is not the way).
+# The region boss fights (Classified Intel) are started from the world intel panel, which the pak hides. This shows
+# the game's hold-to-engage icon over Cloud in a boss's arena: hold Y (pad) or right mouse to bring the boss out.
+boss_start = 1
+# Write what it does to boss-log.txt beside this file (for bug reports).
+boss_log = 0
+
+# Development only: not in the release, kept for reference. The pop-ups themselves are removed by the pak; these
+# were built while trying to keep the game's notice and take only its twelve seconds of downtime away.
 shrink = 0
 shrink_scale = 0.6
 shrink_speed = 3.0
-
-# The mod's own objective checklist, for when the pak hides the game's one.
-# Not shipped: the objectives stay readable in the world intel menu.
 checklist = 0
-
-# Development only.
 log_widgets = 0
 probe = 0
 probe_scan_actors = 0

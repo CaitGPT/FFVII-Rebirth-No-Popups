@@ -7,7 +7,8 @@ harness) built and tested it.
 
 | Element | Change | Tested |
 | --- | --- | --- |
-| The "World Intel — *name* — Completed" banner after each world intel activity, and the Results panel with it | Removed | A combat assignment, a lifespring, a tower and a Titan sanctuary |
+| The "World Intel — *name* — Completed" banner after each world intel activity, and the Results panel with it | Removed, except after combat assignments (Fiend Intel), which keep the game's panel since 1.0.1 | A lifespring, a tower and a Titan sanctuary (and a combat assignment, in 1.0.0) |
+| Region boss fights (Classified Intel), whose start is in the panel the mod hides | Started from the game's own "Hold" icon over Cloud in the boss's area (UE4SS part, 1.0.1) | All six bosses, first fight and rematch, controller and keyboard |
 | Chadley's video calls (he appears on Cloud's communicator and the camera cuts to it) | 82 calls play as earpiece calls: the same voiced lines and subtitles over normal play | Lifespring and Titan Sanctuary calls |
 | Chadley's calls inside completion sequences (after Lifesprings, the "Excavation" unlock, fiend intel, towers) | Removed: the game holds Cloud until they end, even as earpiece calls. Their flags and triggers still fire | Lifesprings 1 and 4 |
 | The map that opens by itself to show newly unlocked intel | Removed | Lifespring 4 |
@@ -15,18 +16,26 @@ harness) built and tested it.
 Rewards and progress are unchanged: completion flags, data points, party EXP, VR course and intel unlocks all still
 happen. One line of the reward list, "Intel has been relayed to Chadley.", no longer appears.
 
-Measured on a combat assignment, from the end of the fight: about **2.4 seconds** before the player can move, against
-about **12.7 seconds** without the mod. After the second Grasslands Lifespring, about 10 seconds against about 30.
-After the first one, which also unlocks Region Intel, about 16 against about 31.
+Measured with 1.0.0 on a combat assignment, from the end of the fight: about **2.4 seconds** before the player can
+move, against about **12.7 seconds** without the mod (since 1.0.1 combat assignments keep their banner, so this one is
+back to the game's time). After the second Grasslands Lifespring, about 10 seconds against about 30. After the first
+one, which also unlocks Region Intel, about 16 against about 31.
 
 Each of the four activity types was verified from the game's own completion flag rather than from the screen; the
 table is in [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
 
 ### What you give up
 
-Combat assignments show a checklist of their objectives in the top left while you fight, and the same switch hides
-it: it is part of the same display. We tried twice to keep it and could not do it without bringing the banner back
-with it. The objectives are still listed in the intel menu. The attempt, and the UE4SS panel we built and did not
+The banner, the objective checklist and the buttons that start or retry a fight are one display in the top left, and
+the game has no setting between them. Since 1.0.1:
+
+- **Combat assignments (Fiend Intel)** keep that display, because its Retry is the only way to fight a finished one
+  again. Their checklist and Retry are there, and so is their completion banner.
+- **Region boss fights (Classified Intel)** keep it hidden; the UE4SS part gives them their own start instead. Without
+  UE4SS, the "Without UE4SS" builds give them the display back, banner included.
+
+In 1.0.0 combat assignments lost their checklist and, as players found (issue #1), their Retry, and the bosses could
+not be started at all. The attempts to keep the checklist without the banner, and the UE4SS panel we built and did not
 ship, are written up in [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
 
 ### Not changed yet
@@ -42,26 +51,36 @@ ship, are written up in [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
 ## Download
 
 - [**Nexus Mods**](https://www.nexusmods.com/finalfantasy7rebirth/mods/2525)
-- [**GitHub release 1.0.0**](https://github.com/CaitGPT/FFVII-Rebirth-No-Popups/releases/tag/v1.0.0) — the
-  zip has both builds, a README and the licence.
+- [**GitHub release 1.0.1**](https://github.com/CaitGPT/FFVII-Rebirth-No-Popups/releases/tag/v1.0.1) — the
+  zip has the builds with and without UE4SS, each also for Junon Colosseum, a README and the licence.
 
 The video shows it working on four kinds of world intel, then how it was built:
 [Building a No Popups Mod](https://www.youtube.com/watch?v=-dFbxNe-hLc).
 
 ## Install
 
-Copy the three `NoPopups_P` files (`.pak`, `.ucas`, `.utoc`) into
-`FINAL FANTASY VII REBIRTH\End\Content\Paks\~mods\` (create `~mods` if it doesn't exist). No UE4SS needed.
+The zip's `Install` folder goes into the game folder (`FINAL FANTASY VII REBIRTH\`): the three `NoPopups_P` files
+(`.pak`, `.ucas`, `.utoc`) land in `End\Content\Paks\~mods\` (create `~mods` if it doesn't exist), and the `NoPopups`
+folder in `End\Binaries\Win64\ue4ss\Mods\`. The UE4SS part needs
+[RE-UE4SS FF7R](https://www.nexusmods.com/finalfantasy7rebirth/mods/267).
 
-**With Junon Colosseum installed**, use the `NoPopups_JunonCompat_9999_P` files instead. Both mods replace the
-`Action` and `PlannerEvent` tables, and this version carries Junon Colosseum's rows as well as ours.
+**With Junon Colosseum installed**, use `Install - with Junon Colosseum` instead (the `NoPopups_JunonCompat_9999_P`
+pak). Both mods replace the `Action`, `PlannerEvent` and `Hub` tables, and this version carries Junon Colosseum's rows
+as well as ours.
 
-To uninstall, delete the three files.
+**Without UE4SS**, use `Without UE4SS` (or its Junon Colosseum twin): the pak alone, with the region bosses keeping the
+game's panel.
+
+To uninstall, delete the three pak files and the `NoPopups` folder.
+
+To start a region boss fight, stand in the boss's area and hold Y (controller) or the right mouse button while the
+"Hold" icon over Cloud fills. `boss_start = 0` in the `NoPopups\settings.txt` turns it off.
 
 ## Compatibility
 
-The mod replaces three tables: `DataObject/Resident/HubConfig`, `Action` and `PlannerEvent` (and `WorldCondition` with `-WithTips`). Another mod that replaces
-any of them conflicts with it: whichever loads last wins.
+The mod replaces four tables: `DataObject/Resident/HubConfig`, `Hub`, `Action` and `PlannerEvent` (and
+`WorldCondition` with `-WithTips`). Another mod that replaces any of them conflicts with it: whichever loads last wins.
+Tested on the Epic build (1.005) with UE4SS 3.0.1, both with our other mods and with nothing else installed.
 
 ## How it works
 
@@ -78,6 +97,10 @@ python tools/make_spec.py                         # writes data/generated.json f
 .\tools\Build-NoPopups.ps1 -Mode Build            # add -Variant JunonCompat for the Junon Colosseum version
 .\tools\Build-NoPopups.ps1 -Mode Install          # the game must be closed
 ```
+
+`-ClassifiedPanel` builds the "Without UE4SS" pak (into `build\<Variant>-Panel`). `python tools/check_build.py <build
+root> <variant folder>` checks a built pak's `HubConfig` and `Hub` rows offline (add `--classified-panel` for those),
+and `python tools/make_release.py <version> <build root>` makes the zip from all four builds and `ue4ss/NoPopups`.
 
 `tools/DataBuilder` is our MIT table reader and writer, copied from the shared copy in our FFVII-Modding repository
 (`Tools/ff7r-databuilder`, commit `ea38b023`).
