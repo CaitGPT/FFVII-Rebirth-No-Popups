@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.2 - unreleased
+## 1.0.2 - 2026-11-25
 
 - Fixed: finishing the second combat assignment of a pair, which opens a new VR course in Chadley's combat simulator,
   could leave the game in a cutscene-like state after the fight: the field prompts gone, the menu and map not
