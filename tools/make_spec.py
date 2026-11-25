@@ -83,6 +83,19 @@ def without_commands(row, drop):
             "CommandArgumentInteger_Array": keep_ints}
 
 
+def silent_notice_configs(spec_path):
+    """The HubConfig rows data\\no-popups.json gives DisableWorldReportNotify = 1 (whole-line // comments allowed)."""
+    text = "\n".join(line for line in Path(spec_path).read_text(encoding="utf-8").splitlines()
+                     if not line.lstrip().startswith("//"))
+    out = set()
+    for table in json.loads(text)["tables"]:
+        if table["asset"].endswith("/HubConfig.uasset"):
+            out.update(r["name"] for r in table["rows"] if r.get("set", {}).get("DisableWorldReportNotify") == "1")
+    if not out:
+        raise SystemExit(f"{spec_path}: no HubConfig row turns the notice off")
+    return out
+
+
 def array_padded(row, field):
     """An array field with its CSV positions kept: missing positions become "" (or "0" for integers)."""
     items = {int(k.split("[")[1][:-1]): v for k, v in row.items() if k.startswith(field + "[")}
@@ -313,6 +326,28 @@ def main():
     # Not done: Hub.NotifyOnActivated = 0 (the "new intel" banner). Live 2026-11-12 it froze Cloud in the Lifespring pose
     # for good: the hub group runs its after-notification actions, which release him, only once that notice has shown.
 
+    # 5. What a report runs after its completion notice (issue #4, 1.0.3). PostCompleteNotify runs once the "World Intel
+    #    Complete" notice has shown, and the banner switch (HubConfig.DisableWorldReportNotify, data\no-popups.json) turns
+    #    that notice off, so it never ran: live 2026-11-25, a Titan sanctuary finished with the mod gave no crystal and the
+    #    summon stayed at 1 star (2 stars without the mod). It holds every Divine Intel crystal grant, the Protorelic
+    #    rewards and some chocobo intel follow-ups. PreCompleteNotify still runs with the switch (tower startups, Chadley's
+    #    talks), and none of these reports uses it, so the action moves there.
+    hubs = load(base / "Hub.csv")
+    silent_configs = silent_notice_configs(Path(__file__).resolve().parent.parent / "data" / "no-popups.json")
+    report_hubs = collections.defaultdict(set)
+    for row in hubs.values():
+        if row.get("WorldReportID"):
+            report_hubs[row["WorldReportID"]].add(row.get("ConfigID"))
+    report_rows = {}
+    for name, row in sorted(world_reports.items()):
+        post = row.get("PostCompleteNotifyActionOrActionGroupID")
+        if not post or post == "None" or not report_hubs.get(name, set()) & silent_configs:
+            continue
+        if row.get("PreCompleteNotifyActionOrActionGroupID") not in (None, "", "None"):
+            raise SystemExit(f"{name}: both Pre and PostCompleteNotify are set")
+        report_rows[name] = {"PreCompleteNotifyActionOrActionGroupID": post, "PostCompleteNotifyActionOrActionGroupID": ""}
+    report["post_notify_moved"] = {n: r["PreCompleteNotifyActionOrActionGroupID"] for n, r in report_rows.items()}
+
 
     overlap = set(action_rows) & set(area_rows)
     if overlap:
@@ -323,12 +358,14 @@ def main():
          "rows": [{"name": n, "set": s} for n, s in sorted(action_rows.items())]},
         {"asset": "DataObject/Resident/PlannerEvent.uasset",
          "rows": [{"name": n, "set": s} for n, s in sorted(event_rows.items())]},
+        {"asset": "DataObject/Resident/WorldReport.uasset",
+         "rows": [{"name": n, "set": s} for n, s in sorted(report_rows.items())]},
     ]}
     Path(args.out).write_text(json.dumps(spec, indent=1) + "\n", encoding="utf-8")
     print(f"{len(report['converted'])} video calls converted ({sum(len(c['actions']) for c in report['converted'])} actions, "
           f"{len(event_rows)} PlannerEvent rows); {len(report['skipped'])} left alone; "
           f"{len(area_rows)} flag-only actions ({len(silence)} silenced calls, {len(report['map_popups'])} map pop-ups), "
-          f"-> {args.out}")
+          f"{len(report_rows)} report notify actions moved before the notice, -> {args.out}")
     if args.report:
         Path(args.report).write_text(json.dumps(report, indent=1) + "\n", encoding="utf-8")
 

@@ -4834,6 +4834,270 @@
      }
     }
    ]
+  },
+  {
+   "asset": "DataObject/Resident/WorldReport.uasset",
+   "rows": [
+    {
+     "name": "WorldReport_CORLA_09",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2200_Summon_Alexander_GetItemTrigger_001",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_CORLA_20",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2200_Summon_Alexander_GetItemTrigger_002",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_CORLA_24",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2200_Summon_Alexander_GetItemTrigger_003",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_CORLA_29",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "act0110_AncientMatterGet_CORLA",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_CSMOA_02",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2500_COSMA_Chocobo_END_Action",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_CSMOA_09",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2500_Summon_NeoBahamut_GetItemTrigger_001",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_CSMOA_10",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "act0110_AncientMatterGet_CSMOA",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_CSMOA_24",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2500_Summon_NeoBahamut_GetItemTrigger_002",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_CSMOA_29",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2500_Summon_NeoBahamut_GetItemTrigger_003",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GILGA_04",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg0110_GilgameshStory_clear",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GONGA_04",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2400_Summon_Kjata_GetItemTrigger_001",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GONGA_13",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "act0110_AncientMatterGet_GONGA",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GONGA_15",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2400_Summon_Kjata_GetItemTrigger_002",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GONGA_19",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2400_Summon_Kjata_GetItemTrigger_003",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GRASA_07",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg1200_Summon_Titan_GetItemTrigger_001",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GRASA_07_Media",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg1200_Summon_Titan_GetItemTrigger_001",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GRASA_13",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg1200_Summon_Titan_GetItemTrigger_002",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GRASA_13_Media",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg1200_Summon_Titan_GetItemTrigger_002",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GRASA_22",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "act0110_AncientMatterGet_GRASA",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GRASA_22_Media",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "act0110_AncientMatterGet_GRASA",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GRASA_27",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg1200_Summon_Titan_GetItemTrigger_003",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_GRASA_27_Media",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg1200_Summon_Titan_GetItemTrigger_003",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_JUNOA_02",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "actCmn_Tutorial_World_Chocobo_Mountain",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_JUNOA_02_Demo",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "actCmn_Tutorial_World_Chocobo_Mountain",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_JUNOA_05",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg1300_Summon_Phoenix_GetItemTrigger_001",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_JUNOA_05_Demo",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg1300_Summon_Phoenix_GetItemTrigger_001",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_JUNOA_17",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg1300_Summon_Phoenix_GetItemTrigger_002",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_JUNOA_17_Demo",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg1300_Summon_Phoenix_GetItemTrigger_002",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_JUNOA_18",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "act0110_AncientMatterGet_JUNOA",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_JUNOA_18_Demo",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "act0110_AncientMatterGet_JUNOA",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_JUNOA_23",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg1300_Summon_Phoenix_GetItemTrigger_003",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_JUNOA_23_Demo",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg1300_Summon_Phoenix_GetItemTrigger_003",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_NIBLA_02",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "actCmn_Tutorial_World_Chocobo_Ocean",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_NIBLA_06",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2600_Summon_Odin_GetItemTrigger_001",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_NIBLA_17",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2600_Summon_Odin_GetItemTrigger_002",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_NIBLA_22",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "acg2600_Summon_Odin_GetItemTrigger_003",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    },
+    {
+     "name": "WorldReport_NIBLA_24",
+     "set": {
+      "PreCompleteNotifyActionOrActionGroupID": "act0110_AncientMatterGet_NIBLA",
+      "PostCompleteNotifyActionOrActionGroupID": ""
+     }
+    }
+   ]
   }
  ]
 }
