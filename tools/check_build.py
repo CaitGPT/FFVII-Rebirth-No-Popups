@@ -32,6 +32,9 @@ COPIES = {"HubConfig_NoPopups_FiendIntel": "HubConfig_WorldNormal",
 CLASSIFIED_COPIES = {"HubConfig_NoPopups_Classified": "HubConfig_WorldReport_SysOpen",
                      "HubConfig_NoPopups_Classified_Demo": "HubConfig_WorldReport_SysOpen_Demo",
                      "HubConfig_NoPopups_Classified_Media": "HubConfig_WorldReport_SysOpen_Media"}
+# The VR course notices' calls (Colosseum Pre/PostNotify) and the calls they branch to, left as video calls in 1.0.2.
+VR_NOTICE_CALLS = ["0550", "3500", "4500", "5500", "6500", "7500", "0505", "0506", "0507", "3100", "3101",
+                   "4200", "4201", "4202", "5100", "5101", "5102", "6100", "6101", "6102", "7100", "7101"]
 SWITCH = "DisableWorldReportNotify"
 # Fields a cloned row is allowed to differ in besides the switch (its own key).
 OWN = {"UniqueIndex"}
@@ -55,6 +58,7 @@ def suffix(name):
 def main():
     root, variant = sys.argv[1], sys.argv[2]
     panel = "--classified-panel" in sys.argv
+    video = "--vr-video" in sys.argv
     builder = os.path.join(root, "DataBuilderBin", "DataBuilder.dll")
     rel = os.path.join("End", "Content", "DataObject", "Resident")
     base_dir = os.path.join(root, variant, "Base", rel)
@@ -113,7 +117,50 @@ def main():
     if types["3"] != 42 or types["10"] != 8:
         fails.append(f"found {types['3']} Fiend Intel and {types['10']} Classified Intel hubs, want 42 and 8")
 
-    print(f"{variant}: {len(oc)} configs, {len(oh)} hubs, {types['3']} Fiend Intel, {types['10']} Classified Intel")
+    # 1.0.2 (issue #2): the VR course notices' calls stay as the game has them, every action and every step of their
+    # chains, because a combat assignment's completion waits for them.
+    ba, oa = export(builder, os.path.join(base_dir, "Action.uasset")), export(builder, os.path.join(out_dir, "Action.uasset"))
+    bp, op = export(builder, os.path.join(base_dir, "PlannerEvent.uasset")), export(builder, os.path.join(out_dir, "PlannerEvent.uasset"))
+    notice = [f"actCmn_Chadley_PV{n}" for n in VR_NOTICE_CALLS]
+    steps = set()
+    for action in notice:
+        if action not in ba or oa.get(action) != ba[action]:
+            fails.append(f"VR course call {action} changed or missing")
+        todo = ba.get(action, {}).get("StringArgumentList_Array", "").split("|")[:1]
+        while todo:
+            name = todo.pop()
+            if not name or name in steps or name not in bp:
+                continue
+            steps.add(name)
+            todo.append(bp[name].get("NextPE", ""))
+            todo += bp[name].get("CommandArgumentList_Array", "").split("|")
+    # Unless the build keeps the video call (--vr-video), each course call's opening step (the one with command 55)
+    # fires the course trigger its chain fires (25) and ends the chain; every other step stays as it was.
+    rewritten = 0
+    for name in sorted(steps):
+        before, after = bp[name], op.get(name)
+        if not video and "55" in before.get("CommandTypeList_Array", "").split("|"):
+            head = name.rsplit("_", 1)[0]
+            fired = []
+            for n in sorted(steps):
+                kinds = bp[n].get("CommandTypeList_Array", "").split("|")
+                if n.startswith(head + "_") and "25" in kinds:
+                    # Each command has a block of 32 arguments; the trigger's name is the first of its block.
+                    fired.append(bp[n]["CommandArgumentList_Array"].split("|")[32 * kinds.index("25")])
+            want = dict(before, CommandTypeList_Array="25", CommandArgumentList_Array="|".join(fired),
+                        CommandArgumentInteger_Array="", NextPE="")
+            if len(fired) != 1 or after != want:
+                fails.append(f"VR course call step {name} is not the trigger-only step for {fired}")
+            rewritten += 1
+        elif after != before:
+            fails.append(f"VR course call step {name} changed")
+    if not video and rewritten != 16:
+        fails.append(f"{rewritten} VR course call openings rewritten, want 16")
+    if len(steps) < 60:
+        fails.append(f"only {len(steps)} VR course call steps found; the chain walk is not reading the export")
+
+    print(f"{variant}: {len(oc)} configs, {len(oh)} hubs, {types['3']} Fiend Intel, {types['10']} Classified Intel, "
+          f"{len(notice)} VR course calls with {len(steps)} steps")
     if fails:
         print("\n".join("FAIL " + f for f in fails))
         return 1

@@ -358,6 +358,76 @@ the game's panel. Both were run on `01168da42a25`, with Quetzalcoatl not yet fou
 
 **Not run in game:** the Steam build.
 
+## Combat assignments held Cloud after the VR course call (issue #2, 1.0.2)
+
+A player reported after 1.0.1 that combat assignments "never end": after the last enemy the game stayed in a cutscene
+state, the menu button offered only "continue or go back to the title screen", and the map button did nothing.
+
+**What the game does.** Each region's combat assignments come in pairs (`HubGroup_Area_<area>_VRCource_<n>`, two hubs
+each). The second assignment of a pair opens one of Chadley's VR courses. The course's `Colosseum` row runs
+`PreNotifyActionOrActionGroupID` (`acg<area>_VRCourse_<n>`: a UI flag and `actCmn_Chadley_PV<n>500`) inside the
+assignment's completion sequence. That call (`PV_COMON_0550`, `3500`, ...) branches (command 29) on how many of the
+region's assignments are done, to one call per course (`PV_COMON_0505`, `3100`, ...). Partway through its lines, that
+call fires the course's trigger (`trg<area>_COL30_<region>_0<n>_Free_vr`, command 25), which moves a world state to
+`..._ShowUI` and shows "Combat Simulator Updated / <course> / The combat simulator has been updated".
+
+**What 1.0.1 changed.** 1.0.0 hid the completion display of combat assignments, and with it this notice chain. 1.0.1
+gave them the display back (for Retry), so the chain ran again. Its calls were among the 82 the mod plays as earpiece
+calls. An earpiece call can't be skipped, and inside a completion sequence the game holds Cloud until the call ends.
+
+**Seen in game, 2026-11-25** (Epic 1.005, 1.0.1 "Install - with Junon Colosseum", slot 13 with no Grasslands
+assignment done, all six Grasslands assignments in turn, the party fighting without input):
+
+| Assignment | What its win completes | 1.0.1 |
+| --- | --- | --- |
+| Fiend Intel 1 (Venorat) | nothing | control back |
+| Fiend Intel 2 (Enmidunk) | VR course 1 | control back, menu opens ([shot](issue-2/1.0.1-vr-course-1-menu-opens.jpg)); course open, the call's end flag set |
+| Fiend Intel 2, Retry | (already done) | control back, Retry offered again |
+| Fiend Intel 3 (Mi) | nothing | control back |
+| Fiend Intel 5 (Aggrevrikon) | VR course 3 | control back |
+| Fiend Intel 6 (Thunderclaw) | nothing | control back |
+| Fiend Intel 4 (Mandrake), the region's last | VR course 2 and all six | **held**: after the Results ([shot](issue-2/1.0.1-last-assignment-results.jpg)), MAI and Chadley spoke over the earpiece ([MAI](issue-2/1.0.1-held-mai-line.jpg), [Chadley](issue-2/1.0.1-held-chadley-line.jpg)) with the field prompts gone; 48 s after the fight Cloud could not move (0.00 m) and the menu did not open. Released after about 80 s ([shot](issue-2/1.0.1-released-after-call.jpg)) |
+
+The hold we saw ended. We could not make it last for good, but it is the state the report describes, and nothing else
+in the completion of a combat assignment changed between 1.0.0 and 1.0.1. The other paths match the game's own data
+apart from the cloned `HubConfig` row: we walked every field of the 42 hubs, their hub groups, world intel rows and
+action groups, and none of the 40 actions they reach is changed by the pak.
+
+**What 1.0.2 does** (`tools/make_spec.py`):
+
+- The 22 calls the VR course notices reach (the 6 notice calls and the 16 course calls they branch to) are no longer
+  turned into earpiece calls. Their actions keep the game's exclusion (`eclTypePlanEvent`).
+- Each course call's first step, the one that opens the call (call camera and communicator, no line), now fires that
+  call's course trigger and ends the call. The branch, the trigger, the actions and their end flags
+  (`stfChadleyCall_<region>_AnyVRCource_Open`) stay the game's. Nothing is said, and nothing waits on a line.
+- `--vr-calls video` leaves the game's own video call instead, as a fallback.
+- The rule that keeps a shared call step as it is now also covers a call's first step. This keeps the 16 course calls
+  out of the earpiece conversion and changes nothing else: 60 calls (73 actions) are converted now, against 82 (95).
+
+`tools/check_build.py` checks the 22 actions (unchanged) and all 197 steps of their calls (unchanged, except the 16
+first steps, which must carry exactly their call's trigger and end). It passes on all four builds and fails when a
+silent build is checked as a video one.
+
+**Seen in game with the 1.0.2 build** (JunonCompat, ucas `94CCEE61`), from a library save with five Grasslands
+assignments done:
+
+- **Fiend Intel 4, first clear:** the course notice showed ([shot](issue-2/1.0.2-course-notice-no-call.jpg)). No MAI
+  or Chadley line played, and the field prompts stayed. 48 s after the fight Cloud moved 2.7 m, and the menu opened
+  and closed ([shot](issue-2/1.0.2-control-back.jpg)). `Hub4_01_Clear`, `Finish_GRASA_017`, `Subjugation_6_Clear`,
+  `VRCource_2_Open` and the call's end flag were all set.
+- **Fiend Intel 4, Retry played to a win:** control back, Retry offered again.
+- **Quetzalcoatl** (library `01168da42a25`, not fought): the Hold icon appeared ([shot](issue-2/1.0.2-boss-hold-icon.jpg)),
+  and holding the right mouse button 2.5 s started the fight ([shot](issue-2/1.0.2-boss-fight-started.jpg)).
+
+Not run in game: the "Without UE4SS" paks and the plain "Install" pak. Their only change from 1.0.1 is the same
+Action/PlannerEvent rows, checked offline. Chadley's VR course list was not opened; the course's open flag and its
+notice were checked instead.
+
+**Performance.** 1.0.1's boss start runs on the game thread twice a second: about a dozen reads, and nothing more
+while no region boss is open. When a boss is open and its arena isn't loaded, it looks for the arena's volumes
+(`FindAllOf("EndLocationVolume")`) every 5 s; that cost has not been measured. The heavy lag during these tests came
+from elsewhere: the UE4SS log showed another mod's runtime stalling the game thread for about 11 s at a time.
+
 ## Junon Colosseum
 
 Junon Colosseum also replaces `Action`, `PlannerEvent` and `Hub`, and pak `JunonColosseum_999_P` loads after `NoPopups_P`

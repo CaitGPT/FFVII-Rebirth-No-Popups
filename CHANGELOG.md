@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.2 - unreleased
+
+- Fixed: finishing the second combat assignment of a pair, which opens a new VR course in Chadley's combat simulator,
+  could leave the game in a cutscene-like state after the fight: the field prompts gone, the menu and map not
+  working (issue #2). The course's notice plays MAI and Chadley's call inside the assignment's completion, and since
+  1.0.1 (which gave combat assignments their panel back) that call ran as an unskippable earpiece call that held
+  Cloud. In our test it held him for about 80 seconds after the region's last assignment.
+  Now that call is removed: the course still opens and the game's "Combat Simulator Updated" notice still shows, but
+  nobody speaks and control comes straight back. We played all six Grasslands assignments on 1.0.1 to find the hold,
+  then checked the fix in game on the one that held (a first clear and a Retry) and on a region boss's Hold start.
+- Chadley's calls that become earpiece calls: 60 now (the 22 calls these notices use are left out of that and handled
+  as above).
+
 ## 1.0.1 - 2026-11-24
 
 - Fixed: Classified Intel (each region's boss fight, e.g. Jabberwock in Cosmo Canyon) could not be started (issue #1).

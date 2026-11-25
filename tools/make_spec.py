@@ -97,6 +97,9 @@ def main():
     parser.add_argument("--csv", default=r"D:/FF7RebirthModding/DataTableIndex/Input/Resident")
     parser.add_argument("--out", default=str(Path(__file__).resolve().parent.parent / "data" / "generated.json"))
     parser.add_argument("--report", default=None)
+    # How the VR course notices' calls play (see 2. below): "silent" (default) fires the course trigger with no call;
+    # "video" leaves the game's video call as it is (the fallback).
+    parser.add_argument("--vr-calls", choices=("silent", "video"), default="silent")
     args = parser.parse_args()
     base = Path(args.csv)
     actions = load(base / "Action.csv")
@@ -134,6 +137,19 @@ def main():
         if head in events:
             heads_of[head].append(action)
 
+    # Calls a VR course notice runs stay video calls (issue #2, 1.0.2). The second combat assignment of a pair opens one
+    # of Chadley's VR courses, and the course's notice (Colosseum Pre/PostNotify: acg<area>_VRCourse_<n>, a UI flag and
+    # actCmn_Chadley_PV<n>500) runs inside the assignment's completion sequence. The call's branch fires the trigger
+    # that shows the new course (trg<area>_COL30_<region>_0<n>_Free_vr), so it cannot be silenced, and as an earpiece
+    # call the completion never ended once Fiend Intel had its panel back (1.0.1).
+    action_groups = load(base / "ActionGroup.csv")
+    notice_calls = set()
+    for row in load(base / "Colosseum.csv").values():
+        for field in ("PreNotifyActionOrActionGroupID", "PostNotifyActionOrActionGroupID"):
+            name = row.get(field)
+            if name:
+                notice_calls.update([name] if name in actions else array(action_groups.get(name, {}), "ActionGroupLIst_Array"))
+
     report = {"converted": [], "skipped": []}
     convert_heads = {}
     for head, users in heads_of.items():
@@ -148,6 +164,8 @@ def main():
             reason = "commands " + ",".join(sorted(set(types) - PLAIN_COMMANDS))
         elif not talkers <= {"ComChadley", "SysChadley", "SysVoiceGuide", "Cloud"}:
             reason = "talkers " + ",".join(sorted(talkers))
+        elif set(users) & notice_calls:
+            reason = "VR course notice"
         if reason:
             report["skipped"].append({"head": head, "actions": users, "reason": reason})
             continue
@@ -158,7 +176,7 @@ def main():
         covered = {n for _, nodes in convert_heads.values() for n in nodes}
         dropped = []
         for head, (users, nodes) in convert_heads.items():
-            shared = [n for n in nodes if n != head and parents[n] - covered]
+            shared = [n for n in nodes if parents[n] - covered]
             if shared:
                 dropped.append(head)
                 report["skipped"].append({"head": head, "actions": users, "reason": "shares " + ",".join(shared[:3])})
@@ -183,6 +201,45 @@ def main():
             if actions[action].get("ExclusionID") != EARPIECE_EXCLUSION:
                 action_rows[action] = {"ExclusionID": EARPIECE_EXCLUSION}
         report["converted"].append({"head": head, "actions": users})
+
+    # 1b. The VR course notices' calls without the call (issue #2, 1.0.2, unless --vr-calls video). Each notice call
+    #     (e.g. PV_COMON_3500) only branches (29) on how many of the region's assignments are done, to one call per
+    #     course (PV_COMON_3100, 3101), and that call fires the course's trigger (25) between its lines. Here each
+    #     course call's opening step (55 + 15: the call camera and the communicator, no line) carries the trigger
+    #     instead and ends the chain, so the branch, the trigger, the actions and their end flags stay as the game has
+    #     them and nothing is said. The actions keep their own exclusion (eclTypePlanEvent).
+    vr_targets = set()
+    for action in sorted(notice_calls):
+        head = actions.get(action, {}).get("StringArgumentList_Array[1]")
+        if head not in events:
+            continue
+        for name in chain(head):
+            if commands(name) == ["29"]:
+                vr_targets.add(array_padded(events[name], "CommandArgumentList_Array")[1])
+    report["vr_calls"] = {"mode": args.vr_calls, "courses": {}}
+    for target in sorted(vr_targets):
+        nodes = chain(target)
+        opens = [n for n in nodes if "55" in commands(n)]
+        fires = [n for n in nodes if "25" in commands(n)]
+        if len(opens) != 1 or not fires or any("29" in commands(n) for n in nodes):
+            raise SystemExit(f"{target}: expected one call opening, a trigger and no branch; found {opens}, {fires}")
+        blocks = {"CommandTypeList_Array": [], "CommandArgumentList_Array": [], "CommandArgumentInteger_Array": []}
+        for name in fires:
+            kept = without_commands(events[name], set(commands(name)) - {"25"})
+            for i, _ in enumerate(kept["CommandTypeList_Array"]):
+                blocks["CommandTypeList_Array"].append("25")
+                blocks["CommandArgumentList_Array"] += (kept["CommandArgumentList_Array"][i * ARG_BLOCK:(i + 1) * ARG_BLOCK] + [""] * ARG_BLOCK)[:ARG_BLOCK]
+                blocks["CommandArgumentInteger_Array"] += (kept["CommandArgumentInteger_Array"][i * INT_BLOCK:(i + 1) * INT_BLOCK] + ["0"] * INT_BLOCK)[:INT_BLOCK]
+        for field in ("CommandArgumentList_Array", "CommandArgumentInteger_Array"):
+            blank = "0" if "Integer" in field else ""
+            while blocks[field] and blocks[field][-1] == blank:
+                blocks[field].pop()
+        triggers = [v for v in blocks["CommandArgumentList_Array"] if v]
+        report["vr_calls"]["courses"][target] = {"step": opens[0], "triggers": triggers}
+        if args.vr_calls == "silent":
+            if opens[0] in event_rows:
+                raise SystemExit(f"{opens[0]}: changed twice")
+            event_rows[opens[0]] = dict(blocks, NextPE="")
 
     area_rows = {}
     for action, row in sorted(actions.items()):

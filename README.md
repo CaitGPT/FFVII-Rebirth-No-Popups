@@ -9,8 +9,9 @@ harness) built and tested it.
 | --- | --- | --- |
 | The "World Intel — *name* — Completed" banner after each world intel activity, and the Results panel with it | Removed, except after combat assignments (Fiend Intel), which keep the game's panel since 1.0.1 | A lifespring, a tower and a Titan sanctuary (and a combat assignment, in 1.0.0) |
 | Region boss fights (Classified Intel), whose start is in the panel the mod hides | Started from the game's own "Hold" icon over Cloud in the boss's area (UE4SS part, 1.0.1) | All six bosses, first fight and rematch, controller and keyboard |
-| Chadley's video calls (he appears on Cloud's communicator and the camera cuts to it) | 82 calls play as earpiece calls: the same voiced lines and subtitles over normal play | Lifespring and Titan Sanctuary calls |
+| Chadley's video calls (he appears on Cloud's communicator and the camera cuts to it) | 60 calls play as earpiece calls: the same voiced lines and subtitles over normal play | Lifespring and Titan Sanctuary calls |
 | Chadley's calls inside completion sequences (after Lifesprings, the "Excavation" unlock, fiend intel, towers) | Removed: the game holds Cloud until they end, even as earpiece calls. Their flags and triggers still fire | Lifesprings 1 and 4 |
+| MAI and Chadley's call when a combat assignment opens a new VR course (the second assignment of each pair) | Removed (1.0.2): the course still opens and the game's "Combat Simulator Updated" notice still shows | All six Grasslands assignments, first clears and Retry |
 | The map that opens by itself to show newly unlocked intel | Removed | Lifespring 4 |
 
 Rewards and progress are unchanged: completion flags, data points, party EXP, VR course and intel unlocks all still
@@ -51,7 +52,7 @@ ship, are written up in [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
 ## Download
 
 - [**Nexus Mods**](https://www.nexusmods.com/finalfantasy7rebirth/mods/2525)
-- [**GitHub release 1.0.1**](https://github.com/CaitGPT/FFVII-Rebirth-No-Popups/releases/tag/v1.0.1) — the
+- [**GitHub release 1.0.2**](https://github.com/CaitGPT/FFVII-Rebirth-No-Popups/releases/tag/v1.0.2) — the
   zip has the builds with and without UE4SS, each also for Junon Colosseum, a README and the licence.
 
 The video shows it working on four kinds of world intel, then how it was built:
@@ -100,8 +101,9 @@ python tools/make_spec.py                         # writes data/generated.json f
 ```
 
 `-ClassifiedPanel` builds the "Without UE4SS" pak (into `build\<Variant>-Panel`). `python tools/check_build.py <build
-root> <variant folder>` checks a built pak's `HubConfig` and `Hub` rows offline (add `--classified-panel` for those),
-and `python tools/make_release.py <version> <build root>` makes the zip from all four builds and `ue4ss/NoPopups`.
+root> <variant folder>` checks a built pak's `HubConfig` and `Hub` rows and the VR course calls offline (add
+`--classified-panel` for those). `make_spec.py --vr-calls video` keeps the game's own VR course call instead of
+removing it (check that build with `--vr-video`). And `python tools/make_release.py <version> <build root>` makes the zip from all four builds and `ue4ss/NoPopups`.
 
 `tools/DataBuilder` is our MIT table reader and writer, copied from the shared copy in our FFVII-Modding repository
 (`Tools/ff7r-databuilder`, commit `ea38b023`).
