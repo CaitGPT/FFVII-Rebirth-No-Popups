@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.3 - unreleased
+
+- Fixed: Divine Intel sanctuaries gave no crystal, so summon materia never levelled up (issue #4). The game hands out
+  the crystal in an action it runs only after the "World Intel Complete" notice, and the mod turns that notice off, so
+  the action never ran. The same was true of the actions after each Protorelic (Gilgamesh's scene) and after three
+  Chocobo Intel reports (their tutorials, and in Cosmo Canyon a step of the side quest with the chocobo). They now run
+  before the notice, which stays hidden. In our test a Titan sanctuary took Titan Materia from ★1 to ★2 again, with
+  the crystal and the same flags as the game without the mod.
+- New: saves played with 1.0.0-1.0.2 get back what they missed (the UE4SS part, `repair = 1` in settings.txt): the
+  summon crystals for every sanctuary already cleared, Cosmo Canyon's side-quest step, and the tutorials' Manual
+  entries. It reads the save first and does nothing on a save that is not missing anything. Chadley's call after each
+  sanctuary and Gilgamesh's Protorelic scenes are not replayed. The "Without UE4SS" builds have no repair. Checked in
+  game on a save that cleared a sanctuary with 1.0.2 (crystal back, Titan ★2) and on a save that was not affected
+  (nothing done). The side-quest step and tutorial entries were checked against saves, not in game.
+
 ## 1.0.2 - 2026-11-25
 
 - Fixed: finishing the second combat assignment of a pair, which opens a new VR course in Chadley's combat simulator,

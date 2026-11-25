@@ -14,8 +14,16 @@ harness) built and tested it.
 | MAI and Chadley's call when a combat assignment opens a new VR course (the second assignment of each pair) | Removed (1.0.2): the course still opens and the game's "Combat Simulator Updated" notice still shows | All six Grasslands assignments, first clears and Retry |
 | The map that opens by itself to show newly unlocked intel | Removed | Lifespring 4 |
 
-Rewards and progress are unchanged: completion flags, data points, party EXP, VR course and intel unlocks all still
-happen. One line of the reward list, "Intel has been relayed to Chadley.", no longer appears.
+Completion flags, data points, party EXP, VR course and intel unlocks all still happen. One line of the reward list,
+"Intel has been relayed to Chadley.", no longer appears.
+
+**1.0.0-1.0.2 withheld some rewards (issue #4, fixed in 1.0.3).** The game runs what a world report does *after* its
+completion notice only once that notice has shown, and the mod hides the notice. That lost every Divine Intel crystal
+(so summon materia never levelled up), Gilgamesh's scene after each Protorelic, and the follow-ups of three Chocobo
+Intel reports (tutorials, and a step of Cosmo Canyon's side quest with the chocobo). 1.0.3 runs those actions before
+the notice. With UE4SS it also repairs saves played with the earlier versions on load: the missing crystals, the side
+quest step and the tutorials' Manual entries (`repair = 1` in settings.txt; it does nothing on a save that is not
+missing anything).
 
 Measured with 1.0.0 on a combat assignment, from the end of the fight: about **2.4 seconds** before the player can
 move, against about **12.7 seconds** without the mod (since 1.0.1 combat assignments keep their banner, so this one is
@@ -80,7 +88,7 @@ To start a region boss fight, stand in the boss's area and hold Y (controller) o
 
 ## Compatibility
 
-The mod replaces four tables: `DataObject/Resident/HubConfig`, `Hub`, `Action` and `PlannerEvent` (and
+The mod replaces five tables: `DataObject/Resident/HubConfig`, `Hub`, `Action`, `PlannerEvent` and `WorldReport` (and
 `WorldCondition` with `-WithTips`). Another mod that replaces any of them conflicts with it: whichever loads last wins.
 Tested on the Epic build (1.005) with UE4SS 3.0.1, both with our other mods and with nothing else installed.
 
