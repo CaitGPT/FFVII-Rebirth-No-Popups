@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.3 - unreleased
+## 1.0.3 - 2026-11-25
 
 - Fixed: Divine Intel sanctuaries gave no crystal, so summon materia never levelled up (issue #4). The game hands out
   the crystal in an action it runs only after the "World Intel Complete" notice, and the mod turns that notice off, so
