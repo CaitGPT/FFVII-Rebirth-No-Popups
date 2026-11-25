@@ -15,7 +15,7 @@ local MOD_DIR = package.path:match("([^;]*[\\/]NoPopups[\\/])[Ss]cripts[\\/]%?%.
     or (debug.getinfo(1, "S").source:match("^@(.*[\\/])[Ss]cripts[\\/]")) or ""
 
 local function read_settings()
-    local settings = { boss_start = true, boss_log = false, log_widgets = false, probe = false,
+    local settings = { boss_start = true, boss_log = false, repair = true, log_widgets = false, probe = false,
                    probe_scan_actors = false, checklist = false, shrink = false, shrink_scale = 0.6, shrink_speed = 3.0 }
     local file = io.open(MOD_DIR .. "settings.txt", "r")
     if not file then return settings end
@@ -24,6 +24,7 @@ local function read_settings()
         local on = (value == "1" or value == "true")
         if key == "boss_start" then settings.boss_start = on end
         if key == "boss_log" then settings.boss_log = on end
+        if key == "repair" then settings.repair = on end
         if key == "log_widgets" then settings.log_widgets = on end
         if key == "probe" then settings.probe = on end
         if key == "probe_scan_actors" then settings.probe_scan_actors = on end
@@ -74,6 +75,33 @@ if settings.boss_start then
         print("[NoPopups] boss_start failed to load: " .. tostring(boss) .. "\n")
     end
 end
+-- 1.0.3: give back crystals and quest/tutorial state that 1.0.0-1.0.2 withheld (repair.lua). Keyed on the save's own
+-- state, so it does nothing on a save that was not affected. Writes repair-log.txt only when it acts.
+if settings.repair then
+    package.path = MOD_DIR .. "Scripts/?.lua;" .. package.path
+    local ok, repair = pcall(require, "repair")
+    if ok then
+        local log
+        repair.trace = function(key, message)
+            log = log or io.open(MOD_DIR .. "repair-log.txt", "a")
+            if not log then return end
+            log:write(string.format("%s %s %s\n", os.date("!%Y-%m-%dT%H:%M:%SZ"), key, tostring(message)))
+            log:flush()
+        end
+        pcall(ExecuteInGameThread, function() end)
+        LoopAsync(2000, function()
+            ExecuteInGameThread(function()
+                local fine, err = pcall(repair.tick)
+                if not fine then repair.trace("error", tostring(err)) end
+            end)
+            return false
+        end)
+        print("[NoPopups] repair of earlier versions' missing intel rewards on\n")
+    else
+        print("[NoPopups] repair failed to load: " .. tostring(repair) .. "\n")
+    end
+end
+
 if settings.probe then
     package.path = MOD_DIR .. "Scripts/?.lua;" .. package.path
     local ok, probe = pcall(require, "probe")

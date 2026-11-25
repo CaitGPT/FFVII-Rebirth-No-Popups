@@ -15,7 +15,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PAKS = "End/Content/Paks/~mods"
 UE4SS = "End/Binaries/Win64/ue4ss/Mods/NoPopups"
 # The UE4SS files that ship. The other scripts in ue4ss/NoPopups/Scripts are development work, off by default.
-SCRIPTS = ["main.lua", "boss_start.lua"]
+SCRIPTS = ["main.lua", "boss_start.lua", "repair.lua"]
 SETTINGS = """# No Popups, UE4SS side. 1 turns a switch on, 0 off.
 
 # The region boss fights (Classified Intel) are started from the world intel panel, which the pak hides. This shows
@@ -24,6 +24,10 @@ SETTINGS = """# No Popups, UE4SS side. 1 turns a switch on, 0 off.
 boss_start = 1
 # Write what it does to boss-log.txt beside this file (for bug reports).
 boss_log = 0
+# Up to 1.0.2 sanctuaries (Divine Intel) gave no crystal with this mod, so summons did not level up. This gives saves
+# played with those versions their missing crystals back, and Cosmo Canyon's chocobo its side-quest step. It checks the
+# save itself and does nothing on a save that is not missing anything. What it did goes to repair-log.txt.
+repair = 1
 """
 
 
