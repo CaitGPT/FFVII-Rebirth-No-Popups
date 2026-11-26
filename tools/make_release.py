@@ -24,9 +24,11 @@ SETTINGS = """# No Popups, UE4SS side. 1 turns a switch on, 0 off.
 boss_start = 1
 # Write what it does to boss-log.txt beside this file (for bug reports).
 boss_log = 0
-# Up to 1.0.2 sanctuaries (Divine Intel) gave no crystal with this mod, so summons did not level up. This gives saves
-# played with those versions their missing crystals back, and Cosmo Canyon's chocobo its side-quest step. It checks the
-# save itself and does nothing on a save that is not missing anything. What it did goes to repair-log.txt.
+# Earlier versions lost things the game hands out after the "World Intel Complete" notice, which the pak hides: up to
+# 1.0.2 the sanctuaries' summon crystals (summons did not level up) and Cosmo Canyon's chocobo side-quest step, and
+# Junon's Wainwright quest stopped after Belle was caught. This gives such saves what they missed. It checks the save
+# itself, acts about a minute after you load, and does nothing on a save that is not missing anything. What it did goes
+# to repair-log.txt.
 repair = 1
 """
 
