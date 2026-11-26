@@ -19,7 +19,8 @@
   to repair-log.txt only when it repairs something. Rechecked in
   game with the wait: a sanctuary cleared with 1.0.2 got its crystal (one trigger, about a minute after loading), and
   a save missing Gilgamesh's tutorial flag and the Nibelheim chocobo Manual entry got both back. Protorelic scenes are
-  still not replayed.
+  still not replayed. With the released build, the stuck save and the sanctuary save were each repaired once and
+  the repair then went quiet; a save with nothing missing wrote nothing in three minutes.
 
 ## 1.0.3 - 2026-11-25
 
