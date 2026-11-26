@@ -7,6 +7,8 @@ DataBuilder, then checks:
   - the 13 world intel configs have the notice switch on, and no other config changed;
   - the Fiend Intel copies exist, equal their source config except the switch (off), and every Hub.Type 3 row points
     at the copy matching its own config (plain, _Demo, _Media);
+  - the chocobo capture copies (1.0.4) exist the same way, and the Junon, Cosmo Canyon and Nibelheim capture hubs point
+    at them;
   - the Classified Intel rows (Hub.Type 10) keep their own config (or, with --classified-panel, point at the
     Classified copies);
   - no other Hub row changed.
@@ -29,6 +31,12 @@ SWITCHED = [
 COPIES = {"HubConfig_NoPopups_FiendIntel": "HubConfig_WorldNormal",
           "HubConfig_NoPopups_FiendIntel_Demo": "HubConfig_WorldNormal_Demo",
           "HubConfig_NoPopups_FiendIntel_Media": "HubConfig_WorldNormal_Media"}
+CHOCOBO_COPIES = {"HubConfig_NoPopups_ChocoboCapture": "HubConfig_WorldNormal",
+                  "HubConfig_NoPopups_ChocoboCapture_Demo": "HubConfig_WorldNormal_Demo"}
+CHOCOBO_HUBS = {"Area_1300_Hub_1_1": "HubConfig_NoPopups_ChocoboCapture",
+                "Area_1300_Hub_1_1_Demo": "HubConfig_NoPopups_ChocoboCapture_Demo",
+                "Area_2500_Hub_1_1": "HubConfig_NoPopups_ChocoboCapture",
+                "Area_2600_Hub_1_1": "HubConfig_NoPopups_ChocoboCapture"}
 CLASSIFIED_COPIES = {"HubConfig_NoPopups_Classified": "HubConfig_WorldReport_SysOpen",
                      "HubConfig_NoPopups_Classified_Demo": "HubConfig_WorldReport_SysOpen_Demo",
                      "HubConfig_NoPopups_Classified_Media": "HubConfig_WorldReport_SysOpen_Media"}
@@ -67,7 +75,7 @@ def main():
     bc, oc = export(builder, os.path.join(base_dir, "HubConfig.uasset")), export(builder, os.path.join(out_dir, "HubConfig.uasset"))
     bh, oh = export(builder, os.path.join(base_dir, "Hub.uasset")), export(builder, os.path.join(out_dir, "Hub.uasset"))
 
-    copies = dict(COPIES)
+    copies = dict(COPIES, **CHOCOBO_COPIES)
     if panel:
         copies.update(CLASSIFIED_COPIES)
     for name, row in oc.items():
@@ -98,7 +106,12 @@ def main():
             continue
         kind = row.get("Type", "").split()[0] if row.get("Type") else ""
         changed = {k for k in row if row[k] != before.get(k)}
-        if kind == "3":
+        if name in CHOCOBO_HUBS:
+            if row["ConfigID"] != CHOCOBO_HUBS[name]:
+                fails.append(f"{name}.ConfigID is {row['ConfigID']}, want {CHOCOBO_HUBS[name]}")
+            if changed - {"ConfigID"}:
+                fails.append(f"{name} also changed {sorted(changed - {'ConfigID'})}")
+        elif kind == "3":
             types["3"] += 1
             want = "HubConfig_NoPopups_FiendIntel" + suffix(before["ConfigID"])
             if row["ConfigID"] != want:

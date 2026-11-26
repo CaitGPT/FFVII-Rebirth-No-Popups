@@ -84,16 +84,19 @@ def without_commands(row, drop):
 
 
 def silent_notice_configs(spec_path):
-    """The HubConfig rows data\\no-popups.json gives DisableWorldReportNotify = 1 (whole-line // comments allowed)."""
+    """The HubConfig rows data\\no-popups.json gives DisableWorldReportNotify = 1 (whole-line // comments allowed),
+    and the Hub rows it points at another config ({hub: config})."""
     text = "\n".join(line for line in Path(spec_path).read_text(encoding="utf-8").splitlines()
                      if not line.lstrip().startswith("//"))
-    out = set()
+    out, hub_configs = set(), {}
     for table in json.loads(text)["tables"]:
         if table["asset"].endswith("/HubConfig.uasset"):
             out.update(r["name"] for r in table["rows"] if r.get("set", {}).get("DisableWorldReportNotify") == "1")
+        if table["asset"].endswith("/Hub.uasset"):
+            hub_configs.update({r["name"]: r["set"]["ConfigID"] for r in table["rows"] if "ConfigID" in r.get("set", {})})
     if not out:
         raise SystemExit(f"{spec_path}: no HubConfig row turns the notice off")
-    return out
+    return out, hub_configs
 
 
 def array_padded(row, field):
@@ -333,11 +336,13 @@ def main():
     #    rewards and some chocobo intel follow-ups. PreCompleteNotify still runs with the switch (tower startups, Chadley's
     #    talks), and none of these reports uses it, so the action moves there.
     hubs = load(base / "Hub.csv")
-    silent_configs = silent_notice_configs(Path(__file__).resolve().parent.parent / "data" / "no-popups.json")
+    #    A hub that data\no-popups.json points at a config of its own (Fiend Intel; the chocobo captures, 1.0.4) is
+    #    judged by that config: those keep the notice, and their reports keep the game's order.
+    silent_configs, hub_configs = silent_notice_configs(Path(__file__).resolve().parent.parent / "data" / "no-popups.json")
     report_hubs = collections.defaultdict(set)
-    for row in hubs.values():
+    for name, row in hubs.items():
         if row.get("WorldReportID"):
-            report_hubs[row["WorldReportID"]].add(row.get("ConfigID"))
+            report_hubs[row["WorldReportID"]].add(hub_configs.get(name, row.get("ConfigID")))
     report_rows = {}
     for name, row in sorted(world_reports.items()):
         post = row.get("PostCompleteNotifyActionOrActionGroupID")

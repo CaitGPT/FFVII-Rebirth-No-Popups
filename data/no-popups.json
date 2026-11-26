@@ -32,7 +32,16 @@
         // checklist and its completion banner.
         { "name": "HubConfig_NoPopups_FiendIntel", "cloneFrom": "HubConfig_WorldNormal", "set": { "DisableWorldReportNotify": "0" } },
         { "name": "HubConfig_NoPopups_FiendIntel_Demo", "cloneFrom": "HubConfig_WorldNormal_Demo", "set": { "DisableWorldReportNotify": "0" } },
-        { "name": "HubConfig_NoPopups_FiendIntel_Media", "cloneFrom": "HubConfig_WorldNormal_Media", "set": { "DisableWorldReportNotify": "0" } }
+        { "name": "HubConfig_NoPopups_FiendIntel_Media", "cloneFrom": "HubConfig_WorldNormal_Media", "set": { "DisableWorldReportNotify": "0" } },
+        // 1.0.4: the chocobo captures of Junon, Cosmo Canyon and Nibelheim (Chocobo Intel, Hub.Type 1 with a capture
+        // point) share HubConfig_WorldNormal too. The game finishes a capture after the "World Intel Complete" notice:
+        // Junon's side quest 07 (Wainwright, Belle) waits for the hub's completion trigger and then for the end of the
+        // chocobo tutorial the report runs after that notice, so with the switch the quest stopped at "capture Belle".
+        // A player also reported that a capture could not be resumed after the lookouts spotted them. These hubs get
+        // their own copies with the switch left off and behave as in the base game (Grasslands' capture uses a config
+        // that never had the notice).
+        { "name": "HubConfig_NoPopups_ChocoboCapture", "cloneFrom": "HubConfig_WorldNormal", "set": { "DisableWorldReportNotify": "0" } },
+        { "name": "HubConfig_NoPopups_ChocoboCapture_Demo", "cloneFrom": "HubConfig_WorldNormal_Demo", "set": { "DisableWorldReportNotify": "0" } }
       ]
     },
     {
@@ -80,7 +89,12 @@
         { "name": "Area_2600_Hub_1_3", "set": { "ConfigID": "HubConfig_NoPopups_FiendIntel" } },
         { "name": "Area_2600_Hub_2_3", "set": { "ConfigID": "HubConfig_NoPopups_FiendIntel" } },
         { "name": "Area_2600_Hub_3_3", "set": { "ConfigID": "HubConfig_NoPopups_FiendIntel" } },
-        { "name": "Area_2600_Hub_4_2", "set": { "ConfigID": "HubConfig_NoPopups_FiendIntel" } }
+        { "name": "Area_2600_Hub_4_2", "set": { "ConfigID": "HubConfig_NoPopups_FiendIntel" } },
+        // The chocobo capture hubs (1.0.4), pointed at their copies above.
+        { "name": "Area_1300_Hub_1_1", "set": { "ConfigID": "HubConfig_NoPopups_ChocoboCapture" } },
+        { "name": "Area_1300_Hub_1_1_Demo", "set": { "ConfigID": "HubConfig_NoPopups_ChocoboCapture_Demo" } },
+        { "name": "Area_2500_Hub_1_1", "set": { "ConfigID": "HubConfig_NoPopups_ChocoboCapture" } },
+        { "name": "Area_2600_Hub_1_1", "set": { "ConfigID": "HubConfig_NoPopups_ChocoboCapture" } }
       ]
     }
   ]

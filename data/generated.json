@@ -4867,13 +4867,6 @@
      }
     },
     {
-     "name": "WorldReport_CSMOA_02",
-     "set": {
-      "PreCompleteNotifyActionOrActionGroupID": "acg2500_COSMA_Chocobo_END_Action",
-      "PostCompleteNotifyActionOrActionGroupID": ""
-     }
-    },
-    {
      "name": "WorldReport_CSMOA_09",
      "set": {
       "PreCompleteNotifyActionOrActionGroupID": "acg2500_Summon_NeoBahamut_GetItemTrigger_001",
@@ -4993,20 +4986,6 @@
      }
     },
     {
-     "name": "WorldReport_JUNOA_02",
-     "set": {
-      "PreCompleteNotifyActionOrActionGroupID": "actCmn_Tutorial_World_Chocobo_Mountain",
-      "PostCompleteNotifyActionOrActionGroupID": ""
-     }
-    },
-    {
-     "name": "WorldReport_JUNOA_02_Demo",
-     "set": {
-      "PreCompleteNotifyActionOrActionGroupID": "actCmn_Tutorial_World_Chocobo_Mountain",
-      "PostCompleteNotifyActionOrActionGroupID": ""
-     }
-    },
-    {
      "name": "WorldReport_JUNOA_05",
      "set": {
       "PreCompleteNotifyActionOrActionGroupID": "acg1300_Summon_Phoenix_GetItemTrigger_001",
@@ -5059,13 +5038,6 @@
      "name": "WorldReport_JUNOA_23_Demo",
      "set": {
       "PreCompleteNotifyActionOrActionGroupID": "acg1300_Summon_Phoenix_GetItemTrigger_003",
-      "PostCompleteNotifyActionOrActionGroupID": ""
-     }
-    },
-    {
-     "name": "WorldReport_NIBLA_02",
-     "set": {
-      "PreCompleteNotifyActionOrActionGroupID": "actCmn_Tutorial_World_Chocobo_Ocean",
       "PostCompleteNotifyActionOrActionGroupID": ""
      }
     },

@@ -16,6 +16,14 @@
 --   while the report is finished and the flag is not.
 -- * Flags whose action only showed something: the Gilgamesh finale's tutorial (stfStory_Chadlie_GILGA_Tutorial_01) and
 --   the three chocobo tutorials' Manual entries. Set when their report is finished and they are not.
+-- * Junon's side quest 07 (and its later copy, 10): its step 110, "capture Belle", clears when the capture hub's
+--   completion trigger and then the end of the mountain chocobo tutorial (the report's after-notice action) have both
+--   come, so with the notice hidden it never cleared, and each load puts the step back to waiting for a completion that
+--   has already happened. Its flag (stfStory_Ch04_Quest<n>_Step110_MT_clear) is set while the step is current and the
+--   capture hub (Area_1300_Hub_1_1) is complete (1.0.4).
+--
+-- Every repair waits until its mismatch has held for M.SETTLE checks in a row with the field playable (about a minute
+-- of play), so a payout the game is still making, a crystal on its way or a tutorial still open, is never doubled.
 --
 -- Left alone: Chadley's call after each sanctuary, and Gilgamesh's scene after each Protorelic with the music cues
 -- and party limits it starts (replaying those at an arbitrary moment could do more harm than missing them).
@@ -59,6 +67,15 @@ M.FLAGS = {
     { report = "stfWorldReport_Finish_CSMOA_002", flag = "stfManual_Field_Tutorial_World_0060" },
     { report = "stfWorldReport_Finish_NIBLA_002", flag = "stfManual_Field_Tutorial_World_0070" },
 }
+-- Quest steps whose flag is set while the step is current, its flag is not, and the hub it waits for is complete.
+M.STEPS = {
+    { name = "Junon side quest 07, capture Belle", now = "stfStory_Ch04_Quest07_Step110_AT_now",
+      flag = "stfStory_Ch04_Quest07_Step110_MT_clear", hub = "stfArea1300_Hub1_01_Clear" },
+    { name = "Junon side quest 10, capture the chocobo", now = "stfStory_Ch04_Quest10_Step110_AT_now",
+      flag = "stfStory_Ch04_Quest10_Step110_MT_clear", hub = "stfArea1300_Hub1_01_Clear" },
+}
+-- Checks in a row (one every 2 s while the field is playable) a mismatch must hold before anything is done about it.
+M.SETTLE = 30
 -- How long a sent trigger has to show its result, how long before trying again, and how many tries per game session.
 M.WAIT, M.RETRY, M.TRIES = 15, 60, 3
 M.PROHIBIT = "stfWorldMap_Hub_Prohibition"
@@ -97,6 +114,20 @@ end
 -- Per summon or trigger: { sent = time, before = count, tries = n, next = time }
 local work = {}
 local done_flags = {}
+-- Per repair key: playable checks in a row its mismatch has held.
+local held_for = {}
+local function settled(key, wrong)
+    if not wrong then held_for[key] = nil return false end
+    held_for[key] = (held_for[key] or 0) + 1
+    return held_for[key] >= M.SETTLE
+end
+
+local function set_flag(name)
+    local db = cdo(DB_API)
+    local ok = db and pcall(function() db:SetStoryFlagBP(FName(name), true) end)
+    done_flags[name] = true
+    M.trace("flag", name .. (ok and " set" or " (call failed)") .. " -> " .. tostring(flag(name)))
+end
 
 local function ready()
     local field, statics, battle = cdo(FIELD_API), cdo(STATICS), cdo(BATTLE_API)
@@ -159,7 +190,7 @@ function M.tick()
             end
             readable = false
         end
-        if readable and finished > held then
+        if settled(s.god, readable and finished > held) then
             busy = true
             if not waiting(s.god, now, held) then send(field, s.god, s.trigger, now, held) end
         elseif readable and work[s.god] and work[s.god].sent then
@@ -167,7 +198,7 @@ function M.tick()
         end
     end
     for _, t in ipairs(M.TRIGGERS) do
-        if flag(t.report) and not flag(t.flag) then
+        if settled(t.name, flag(t.report) and not flag(t.flag)) then
             busy = true
             if not waiting(t.name, now, 0) then send(field, t.name, t.trigger, now, 0) end
         elseif work[t.name] and work[t.name].sent then
@@ -175,11 +206,12 @@ function M.tick()
         end
     end
     for _, f in ipairs(M.FLAGS) do
-        if not done_flags[f.flag] and flag(f.report) and not flag(f.flag) then
-            local db = cdo(DB_API)
-            local ok = db and pcall(function() db:SetStoryFlagBP(FName(f.flag), true) end)
-            done_flags[f.flag] = true
-            M.trace("flag", f.flag .. (ok and " set" or " (call failed)") .. " -> " .. tostring(flag(f.flag)))
+        if not done_flags[f.flag] and settled(f.flag, flag(f.report) and not flag(f.flag)) then set_flag(f.flag) end
+    end
+    for _, q in ipairs(M.STEPS) do
+        if not done_flags[q.flag] and settled(q.flag, flag(q.now) and flag(q.hub) and not flag(q.flag)) then
+            M.trace("step", q.name)
+            set_flag(q.flag)
         end
     end
     return busy
