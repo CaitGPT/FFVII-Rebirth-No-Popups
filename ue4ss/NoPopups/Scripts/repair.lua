@@ -140,7 +140,18 @@ local function ready()
     if safe(function() return statics:IsGamePaused(lead) end) == true then return nil end
     if safe(function() return field:IsEnableFieldControler(true) end) == false then return nil end
     if flag(M.PROHIBIT) then return nil end
-    return now, field
+    return now, field, lead
+end
+
+-- A load (or any level change) gives the party a new leader object: start over then, so a save loaded again in the same
+-- game session, still missing what it missed before, is repaired again.
+local last_lead
+local function new_load(lead)
+    local address = safe(function() return lead:GetAddress() end)
+    if address == nil or address == last_lead then return end
+    if last_lead ~= nil then M.trace("load", "new party leader: repairs start over") end
+    last_lead = address
+    work, done_flags, held_for = {}, {}, {}
 end
 
 local function send(field, key, trigger, now, before)
@@ -169,8 +180,9 @@ end
 
 -- One pass; does nothing until the field is playable. Returns true while it has something in progress.
 function M.tick()
-    local now, field = ready()
+    local now, field, lead = ready()
     if not now then return false end
+    new_load(lead)
     local busy = false
     for _, s in ipairs(M.SUMMONS) do
         local finished, held = 0, 0

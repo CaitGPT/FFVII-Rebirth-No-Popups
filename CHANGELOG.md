@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.0.4 - 2026-11-26
+
+- Fixed: Junon's chocobo side quest stopped after Belle was caught: the yellow chocobos stayed and Wainwright could
+  not be woken (reported on Nexus with 1.0.0; we did not test whether 1.0.3 also stopped it). The quest's "catch Belle" step waits for the capture to finish and then for the
+  chocobo tutorial that the game shows after the "World Intel Complete" notice, which the mod hid. The chocobo captures
+  in Junon, Cosmo Canyon and Nibelheim now keep the game's own world intel panel and completion banner (Grasslands'
+  capture never had them), so they finish as in the game without the mod. The same report said a capture could not
+  be resumed after the lookouts spotted you; with the panel back the game's own retry applies. We did not replay a
+  capture in testing (our harness cannot catch chocobos): this fix was checked in the game's tables and by reading the
+  running game's memory, where the new setting for these captures is loaded.
+- New: saves already stuck at "catch Belle" are repaired on load (UE4SS part, `repair = 1`). Checked in game on a save
+  edited into that state: about a minute after loading, the step cleared and the quest moved on to "Head to the
+  Wainwright's Hut". We did not walk to Wainwright and talk to him.
+- Changed: every repair now waits about a minute of play after a load before it acts, so a reward the game is still
+  handing out is never given twice, and it runs again when a save is loaded again in the same session. Rechecked in
+  game with the wait: a sanctuary cleared with 1.0.2 got its crystal (one trigger, about a minute after loading), and
+  a save missing Gilgamesh's tutorial flag and the Nibelheim chocobo Manual entry got both back. Protorelic scenes are
+  still not replayed.
+
 ## 1.0.3 - 2026-11-25
 
 - Fixed: Divine Intel sanctuaries gave no crystal, so summon materia never levelled up (issue #4). The game hands out

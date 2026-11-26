@@ -11,7 +11,8 @@ SRC = sys.argv[1] if len(sys.argv) > 1 else str(__import__("pathlib").Path(__fil
 MOCK = r"""
 flags, inv, sent, set_calls, now = {}, {}, {}, {}, 0
 local function obj(t) t.IsValid = function() return true end return t end
-local lead = obj({})
+lead_addr = 1
+local lead = obj({ GetAddress = function() return lead_addr end })
 local db = obj({
   IsStoryFlag = function(self, n) return flags[n] == true end,
   SetStoryFlagBP = function(self, n, v) flags[n] = v; set_calls[#set_calls + 1] = n end,
@@ -130,6 +131,21 @@ for f in ("stfWorldReport_Finish_GRASA_007", "stfMg_SUM_GRASA_ClearCheck001", "s
 g.inv[3808] = 1
 lua.eval("tick_n")(M, 300)
 check(count(g.sent) == 0 and count(g.set_calls) == 0, "unaffected save: nothing sent or set")
+
+# 7. The same stuck save loaded again in the same game session (a new party leader): repaired again.
+lua, M = fresh()
+g = lua.globals()
+for f in ("stfStory_Ch04_Quest07_Step110_AT_now", "stfArea1300_Hub1_01_Clear"):
+    g.flags[f] = True
+lua.eval("tick_n")(M, M.SETTLE)
+check(g.flags["stfStory_Ch04_Quest07_Step110_MT_clear"] is True, "reload: first load repaired")
+g.flags["stfStory_Ch04_Quest07_Step110_MT_clear"] = False
+lua.eval("tick_n")(M, 100)
+check(count(g.set_calls) == 1, "reload: same leader, nothing more")
+g.lead_addr = 2
+lua.eval("tick_n")(M, M.SETTLE)
+check(g.flags["stfStory_Ch04_Quest07_Step110_MT_clear"] is True and count(g.set_calls) == 2,
+      "reload: new leader, repaired again after the settle time")
 
 print("FAILED" if fails else "all repair checks pass")
 sys.exit(1 if fails else 0)

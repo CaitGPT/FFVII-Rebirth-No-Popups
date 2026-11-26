@@ -7,7 +7,7 @@ harness) built and tested it.
 
 | Element | Change | Tested |
 | --- | --- | --- |
-| The "World Intel — *name* — Completed" banner after each world intel activity, and the Results panel with it | Removed, except after combat assignments (Fiend Intel), which keep the game's panel since 1.0.1 | A lifespring, a tower and a Titan sanctuary (and a combat assignment, in 1.0.0) |
+| The "World Intel — *name* — Completed" banner after each world intel activity, and the Results panel with it | Removed, except after combat assignments (Fiend Intel), which keep the game's panel since 1.0.1, and after the chocobo captures in Junon, Cosmo Canyon and Nibelheim (since 1.0.4) | A lifespring, a tower and a Titan sanctuary (and a combat assignment, in 1.0.0) |
 | Region boss fights (Classified Intel), whose start is in the panel the mod hides | Started from the game's own "Hold" icon over Cloud in the boss's area (UE4SS part, 1.0.1) | All six bosses, first fight and rematch, controller and keyboard |
 | Chadley's video calls (he appears on Cloud's communicator and the camera cuts to it) | 60 calls play as earpiece calls: the same voiced lines and subtitles over normal play | Lifespring and Titan Sanctuary calls |
 | Chadley's calls inside completion sequences (after Lifesprings, the "Excavation" unlock, fiend intel, towers) | Removed: the game holds Cloud until they end, even as earpiece calls. Their flags and triggers still fire | Lifesprings 1 and 4 |
@@ -25,6 +25,11 @@ the notice. With UE4SS it also repairs saves played with the earlier versions on
 quest step and the tutorials' Manual entries (`repair = 1` in settings.txt; it does nothing on a save that is not
 missing anything).
 
+**Junon's chocobo side quest (fixed in 1.0.4).** With 1.0.0-1.0.2 the quest stopped after Belle was caught, because
+its step waits for the tutorial the game shows after the hidden notice (1.0.3 was not tested for it). Since 1.0.4 the chocobo captures in Junon, Cosmo
+Canyon and Nibelheim keep the game's panel and completion banner, and a save already stuck at that step is repaired on
+load. The capture itself was not replayed in our tests.
+
 Measured with 1.0.0 on a combat assignment, from the end of the fight: about **2.4 seconds** before the player can
 move, against about **12.7 seconds** without the mod (since 1.0.1 combat assignments keep their banner, so this one is
 back to the game's time). After the second Grasslands Lifespring, about 10 seconds against about 30. After the first
@@ -40,6 +45,8 @@ the game has no setting between them. Since 1.0.1:
 
 - **Combat assignments (Fiend Intel)** keep that display, because its Retry is the only way to fight a finished one
   again. Their checklist and Retry are there, and so is their completion banner.
+- **Chocobo captures in Junon, Cosmo Canyon and Nibelheim** keep it since 1.0.4: the game finishes Junon's chocobo
+  side quest only after their completion notice.
 - **Region boss fights (Classified Intel)** keep it hidden; the UE4SS part gives them their own start instead. Without
   UE4SS, the "Without UE4SS" builds give them the display back, banner included.
 
