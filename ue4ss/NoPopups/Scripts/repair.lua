@@ -24,6 +24,8 @@
 --
 -- Every repair waits until its mismatch has held for M.SETTLE checks in a row with the field playable (about a minute
 -- of play), so a payout the game is still making, a crystal on its way or a tutorial still open, is never doubled.
+-- About two minutes of play after each load (M.WATCH), with nothing left to do, it goes quiet until the next load: each
+-- check then only reads the party leader. It writes to the log only when it sends or sets something.
 --
 -- Left alone: Chadley's call after each sanctuary, and Gilgamesh's scene after each Protorelic with the music cues
 -- and party limits it starts (replaying those at an arbitrary moment could do more harm than missing them).
@@ -76,6 +78,10 @@ M.STEPS = {
 }
 -- Checks in a row (one every 2 s while the field is playable) a mismatch must hold before anything is done about it.
 M.SETTLE = 30
+-- Playable checks after a load (about two minutes) before the repair goes quiet until the next load, once nothing is
+-- missing or everything it could do is done. What it repairs comes with the save as loaded, so there is nothing to
+-- watch for in between; while quiet, each check only asks for the party leader.
+M.WATCH = 60
 -- How long a sent trigger has to show its result, how long before trying again, and how many tries per game session.
 M.WAIT, M.RETRY, M.TRIES = 15, 60, 3
 M.PROHIBIT = "stfWorldMap_Hub_Prohibition"
@@ -116,6 +122,8 @@ local work = {}
 local done_flags = {}
 -- Per repair key: playable checks in a row its mismatch has held.
 local held_for = {}
+-- Something was sent or set since the load (only then is going quiet written to the log).
+local acted = false
 local function settled(key, wrong)
     if not wrong then held_for[key] = nil return false end
     held_for[key] = (held_for[key] or 0) + 1
@@ -126,6 +134,8 @@ local function set_flag(name)
     local db = cdo(DB_API)
     local ok = db and pcall(function() db:SetStoryFlagBP(FName(name), true) end)
     done_flags[name] = true
+    held_for[name] = nil
+    acted = true
     M.trace("flag", name .. (ok and " set" or " (call failed)") .. " -> " .. tostring(flag(name)))
 end
 
@@ -145,13 +155,26 @@ end
 
 -- A load (or any level change) gives the party a new leader object: start over then, so a save loaded again in the same
 -- game session, still missing what it missed before, is repaired again.
-local last_lead
+local last_lead, checks, quiet = nil, 0, false
+local function leader_address()
+    local battle = cdo(BATTLE_API)
+    local lead = battle and safe(function() return battle:GetPartyLeader() end)
+    return valid(lead) and safe(function() return lead:GetAddress() end) or nil
+end
 local function new_load(lead)
     local address = safe(function() return lead:GetAddress() end)
     if address == nil or address == last_lead then return end
-    if last_lead ~= nil then M.trace("load", "new party leader: repairs start over") end
-    last_lead = address
+    last_lead, checks, quiet, acted = address, 0, false, false
     work, done_flags, held_for = {}, {}, {}
+end
+
+-- Something still to do: a mismatch counting towards M.SETTLE, or a sent trigger with tries left.
+local function pending()
+    for key in pairs(held_for) do
+        local w = work[key]
+        if not (w and w.tries >= M.TRIES and not w.sent) then return true end
+    end
+    return false
 end
 
 local function send(field, key, trigger, now, before)
@@ -160,6 +183,7 @@ local function send(field, key, trigger, now, before)
     if w.tries >= M.TRIES or (w.next and now < w.next) then return end
     local ok = pcall(function() field:SendStateTrigger(trigger) end)
     w.tries, w.sent, w.before = w.tries + 1, now, before
+    acted = true
     M.trace("send", key .. " " .. trigger .. " try " .. w.tries .. (ok and "" or " (call failed)"))
 end
 
@@ -180,9 +204,11 @@ end
 
 -- One pass; does nothing until the field is playable. Returns true while it has something in progress.
 function M.tick()
+    if quiet and leader_address() == last_lead then return false end
     local now, field, lead = ready()
     if not now then return false end
     new_load(lead)
+    checks = checks + 1
     local busy = false
     for _, s in ipairs(M.SUMMONS) do
         local finished, held = 0, 0
@@ -225,6 +251,10 @@ function M.tick()
             M.trace("step", q.name)
             set_flag(q.flag)
         end
+    end
+    if checks >= M.WATCH and not pending() then
+        quiet = true
+        if acted then M.trace("quiet", "nothing left to do until the next load") end
     end
     return busy
 end

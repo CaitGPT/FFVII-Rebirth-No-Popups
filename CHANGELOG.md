@@ -14,7 +14,9 @@
   edited into that state: about a minute after loading, the step cleared and the quest moved on to "Head to the
   Wainwright's Hut". We did not walk to Wainwright and talk to him.
 - Changed: every repair now waits about a minute of play after a load before it acts, so a reward the game is still
-  handing out is never given twice, and it runs again when a save is loaded again in the same session. Rechecked in
+  handing out is never given twice, and it runs again when a save is loaded again in the same session. About two
+  minutes after a load, once there is nothing left to give back, it stops checking until the next load, and it writes
+  to repair-log.txt only when it repairs something. Rechecked in
   game with the wait: a sanctuary cleared with 1.0.2 got its crystal (one trigger, about a minute after loading), and
   a save missing Gilgamesh's tutorial flag and the Nibelheim chocobo Manual entry got both back. Protorelic scenes are
   still not replayed.

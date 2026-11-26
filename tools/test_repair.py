@@ -9,12 +9,12 @@ from lupa import LuaRuntime
 SRC = sys.argv[1] if len(sys.argv) > 1 else str(__import__("pathlib").Path(__file__).resolve().parent.parent / "ue4ss" / "NoPopups" / "Scripts" / "repair.lua")
 
 MOCK = r"""
-flags, inv, sent, set_calls, now = {}, {}, {}, {}, 0
+flags, inv, sent, set_calls, now, reads, traces = {}, {}, {}, {}, 0, 0, {}
 local function obj(t) t.IsValid = function() return true end return t end
 lead_addr = 1
 local lead = obj({ GetAddress = function() return lead_addr end })
 local db = obj({
-  IsStoryFlag = function(self, n) return flags[n] == true end,
+  IsStoryFlag = function(self, n) reads = reads + 1; return flags[n] == true end,
   SetStoryFlagBP = function(self, n, v) flags[n] = v; set_calls[#set_calls + 1] = n end,
   GetItemNumBP = function(self, uid) return inv[uid] or 0 end,
 })
@@ -44,6 +44,8 @@ def fresh():
     lua = LuaRuntime(unpack_returned_tuples=True)
     lua.execute(MOCK)
     M = lua.execute(open(SRC, encoding="utf-8").read())
+    lua.execute("function trace_into(M) M.trace = function(k, m) traces[#traces + 1] = k end end")
+    lua.eval("trace_into")(M)
     return lua, M
 
 
@@ -131,6 +133,35 @@ for f in ("stfWorldReport_Finish_GRASA_007", "stfMg_SUM_GRASA_ClearCheck001", "s
 g.inv[3808] = 1
 lua.eval("tick_n")(M, 300)
 check(count(g.sent) == 0 and count(g.set_calls) == 0, "unaffected save: nothing sent or set")
+
+# 8. An unaffected save: after M.WATCH playable checks the repair stops reading flags, writes nothing, and starts again
+#    on the next load.
+lua, M = fresh()
+g = lua.globals()
+lua.eval("tick_n")(M, M.WATCH)
+before = g.reads
+lua.eval("tick_n")(M, 200)
+check(g.reads == before, "quiet: no flag reads after the watch time on an unaffected save")
+check(count(g.traces) == 0, "quiet: nothing written to the log on an unaffected save")
+g.lead_addr = 99
+g.flags["stfStory_Ch04_Quest07_Step110_AT_now"] = True
+g.flags["stfArea1300_Hub1_01_Clear"] = True
+lua.eval("tick_n")(M, M.SETTLE)
+check(g.flags["stfStory_Ch04_Quest07_Step110_MT_clear"] is True, "quiet: a new load is checked again and repaired")
+lua.eval("tick_n")(M, M.WATCH)
+check(list(g.traces.values())[-1] == "quiet", "quiet: after a repair, going quiet is logged once")
+before = g.reads
+lua.eval("tick_n")(M, 100)
+check(g.reads == before and count(g.traces) == 3, "quiet: nothing read or written afterwards")
+
+# 9. A trigger that never shows a result: after its tries the repair still goes quiet.
+lua, M = fresh()
+g = lua.globals()
+g.flags["stfWorldReport_Finish_CSMOA_002"] = True
+lua.eval("tick_n")(M, 400)
+before = g.reads
+lua.eval("tick_n")(M, 50)
+check(count(g.sent) == 3 and g.reads == before, "quiet: gives up after three tries and goes quiet")
 
 # 7. The same stuck save loaded again in the same game session (a new party leader): repaired again.
 lua, M = fresh()
